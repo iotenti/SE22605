@@ -8,7 +8,8 @@
  */
 $first = "Ian";
 $last = "Otenti";
-echo "$first $last"; //inline string interpolation
-//echo '$first $last';
+echo "$first $last<br />";
+echo $first . " " . $last; // string concatenation
+
 
 
