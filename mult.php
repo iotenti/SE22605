@@ -1,7 +1,10 @@
 <?php
 $table = "<table>\n"; //empty table var
-for($rows = 0; $rows < 5; $rows++){
+for($rows = 1; $rows <= 5; $rows++){
     $table .= "\t<tr>";
+    for($cols = 1; $cols <= 5; $cols++){
+        $table .= "<td>" . $rows * $cols . "</td>";
+    }
     $table .= "</tr>\n";
 }
 $table .="</table>";
