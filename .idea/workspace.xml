@@ -26,10 +26,10 @@
       <file leaf-file-name="mult.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mult.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="4" column="27" lean-forward="false" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="27" />
+            <state relative-caret-position="102">
+              <caret line="6" column="11" lean-forward="false" selection-start-line="6" selection-start-column="11" selection-end-line="6" selection-end-column="11" />
               <folding>
-                <marker date="1506956406000" expanded="true" signature="296:315" ph="..." />
+                <marker date="1506956614000" expanded="true" signature="302:321" ph="..." />
               </folding>
             </state>
           </provider>
@@ -136,7 +136,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3177000" />
+    <option name="totallyTimeSpent" value="3387000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="238" y="15" width="1400" height="1000" extended-state="0" />
@@ -185,7 +185,7 @@
         <state relative-caret-position="170">
           <caret line="10" column="7" lean-forward="true" selection-start-line="10" selection-start-column="7" selection-end-line="10" selection-end-column="7" />
           <folding>
-            <marker date="1506956406000" expanded="true" signature="296:315" ph="..." />
+            <marker date="1506956614000" expanded="true" signature="302:321" ph="..." />
           </folding>
         </state>
       </provider>
@@ -200,10 +200,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mult.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="27" lean-forward="false" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="27" />
+        <state relative-caret-position="102">
+          <caret line="6" column="11" lean-forward="false" selection-start-line="6" selection-start-column="11" selection-end-line="6" selection-end-column="11" />
           <folding>
-            <marker date="1506956406000" expanded="true" signature="296:315" ph="..." />
+            <marker date="1506956614000" expanded="true" signature="302:321" ph="..." />
           </folding>
         </state>
       </provider>
