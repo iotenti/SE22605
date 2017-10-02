@@ -6,5 +6,9 @@
  * Date: 10/2/2017
  * Time: 9:58 AM
  */
+$first = "Ian";
+$last = "Otenti";
+echo "$first $last"; //inline string interpolation
+//echo '$first $last';
 
 
