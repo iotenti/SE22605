@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: 005501496
- * Date: 10/11/2017
- * Time: 9:46 AM
- */
 
 $dsn = "mysql:host=localhost;dbname=dogs";
 $username = "dogs";
@@ -32,7 +26,6 @@ try {
 }
 
 ?>
-
     <form method="get" action="#">
         <input type="text" name="name" value="" /><br />
         <input type="radio" name="gender" value="M" /><br />
