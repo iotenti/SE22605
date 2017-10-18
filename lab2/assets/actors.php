@@ -18,8 +18,13 @@ function getActorsAsTable($db){
                 $table .= "<tr><td>" . $actor['lName'] . "</td></tr>";
                 $table .= "<tr><td>" . $actor['dob'] . "</td></tr>";
                 $table .= "<tr><td>" . $actor['height'] . "</td></tr>";
-
             }
+            $table .= "</table>" . PHP_EOL;
+        } else {
+            $table = "NO DATA" . PHP_EOL;
         }
+        return $table;
+    }catch(PDOException $e){
+        die("There was a problem");
     }
 }
