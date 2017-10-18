@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: 005501496
- * Date: 10/16/2017
- * Time: 8:45 AM
- */
+
 function dbConn()
 {
     $dsn = "mysql:host=localhost;dbname=dogs";
@@ -15,7 +10,6 @@ function dbConn()
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         return $db;
     } catch (PDOException $e) {
-        die("There was a problem connecting to the db.");
+        die("The was problem connecting to the db.");
     }
-
 }
