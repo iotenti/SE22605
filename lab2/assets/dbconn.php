@@ -5,7 +5,7 @@
  * Date: 10/18/2017
  * Time: 10:25 AM
  */
-function dbConn(){
+function dbConn(){ 
     $dsn = "mysql:host=localhost;dbname=phpclassfall2017";
     $username = "actors";
     $password = "se266";

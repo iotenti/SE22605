@@ -28,3 +28,6 @@ function getActorsAsTable($db){
         die("There was a problem");
     }
 }
+function getActor($db, $){
+    $sql = $db->prepare("INSERT INTO actors VALUES ()")
+}
