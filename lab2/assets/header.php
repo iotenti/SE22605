@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Actors Database</title>
     <!-- css links goes here -->
     <!-- javascript goes here -->
 </head>

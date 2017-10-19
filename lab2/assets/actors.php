@@ -10,7 +10,7 @@ function getActorsAsTable($db){
         $sql = "SELECT * FROM actors";
         $sql = $db->prepare($sql);
         $sql->execute();
-        $dogs = $sql->fetchALL(PDO::FETCH_ASSOC);
+        $actors = $sql->fetchALL(PDO::FETCH_ASSOC);
         if($sql->rowCount() > 0){
             $table = "<table>" . PHP_EOL;
             foreach($actors as $actor){
@@ -28,6 +28,24 @@ function getActorsAsTable($db){
         die("There was a problem");
     }
 }
-function getActor($db, $){
-    $sql = $db->prepare("INSERT INTO actors VALUES ()")
+function addActor($db, $fName, $lName, $dob, $height){
+    try{
+        $sql = $db->prepare("INSERT INTO actors VALUES (null, :fName, :lName, :dob, :height)");
+        $sql->bindParam(':fName', $fName);
+        $sql->bindParam(':lName', $lName);
+        $sql->bindParam(':dob', $dob);
+        $sql->bindParam(':height', $height);
+        $sql->execute();
+        return $sql->rowCount();
+    }catch (PDOException $e) {
+        die("There was a problem adding actor");
+    }
 }
+function getActor($db, $id){
+    $sql = $db->prepare("SELECT * FROM actors WHERE id = :id");
+    $sql->bindParam(':id', $id, PDO::PARAM_INT);
+    $sql->execute();
+    $row = $sql->fetch(PDO::FETCH_ASSOC);
+    return $row;
+}
+

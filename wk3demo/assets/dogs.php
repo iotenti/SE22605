@@ -1,6 +1,6 @@
 <?php
 
-function getDogsAsTable($db) {
+function getDogsAsTable($db){
     try {
         $sql = "SELECT * FROM dogs";
         $sql = $db->prepare($sql);
