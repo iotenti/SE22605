@@ -14,10 +14,10 @@ function getActorsAsTable($db){
         if($sql->rowCount() > 0){
             $table = "<table>" . PHP_EOL;
             foreach($actors as $actor){
-                $table .= "<tr><td>" . $actor['fName'] . "</td></tr>";
-                $table .= "<tr><td>" . $actor['lName'] . "</td></tr>";
-                $table .= "<tr><td>" . $actor['dob'] . "</td></tr>";
-                $table .= "<tr><td>" . $actor['height'] . "</td></tr>";
+                $table .= "<tr><td>" . $actor['firstname'] . "</td>";
+                $table .= "<td>" . $actor['lastname'] . "</td>";
+                $table .= "<td>" . $actor['dob'] . "</td>";
+                $table .= "<td>" . $actor['height'] . "</td></tr>";
             }
             $table .= "</table>" . PHP_EOL;
         } else {
