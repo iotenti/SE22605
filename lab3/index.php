@@ -19,7 +19,6 @@ $id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT) ?? null;
 
 switch ($action){ //switch, if the button has a value of "Add" then run the addActor function and pass it the information.
     case "Add":
-        require_once("assets/corpform.php");//this has the meat of the html page. The form being filled out. Called once.
         addCorp($db, $corp, $incorp_dt, $email, $zipcode, $owner, $phone);
         $button ="Add";
         break;
@@ -42,12 +41,7 @@ switch ($action){ //switch, if the button has a value of "Add" then run the addA
 <?php
 echo getCorpName($db);
 //echo getCorpsAsTable($db); //print out db records
-?>
-    <form method="post" action="#">
-        <input type="submit" id="btn" name="action" value="Add" />
-    </form>
 
-<?php
 //include_once("assets/corpform.php");//this has the meat of the html page. The form being filled out. Called once.
 include_once("assets/footer.php"); //call the footer once.
 ?>
