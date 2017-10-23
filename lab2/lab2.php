@@ -18,6 +18,15 @@ switch ($action){ //switch, if the button has a value of "Add" then run the addA
         addActor($db, $fName, $lName, $dob, $height);
         $button ="Add";
         break;
+    case "Edit":
+        $dog = getDog($db, $id);
+        $button = "Update";
+        echo $button;
+        break;
+    case "Update":
+        break;
+    case "Delete":
+        break;
 }
 echo getActorsAsTable($db); //print out db records
 
