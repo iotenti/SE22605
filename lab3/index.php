@@ -36,7 +36,7 @@ switch ($action){ //switch, if the button has a value of "Add" then run the addA
         echo $button;
         break;
 }
-echo getActorsAsTable($db); //print out db records
+echo getCorpsAsTable($db); //print out db records
 
 include_once("assets/corpform.php");//this has the meat of the html page. The form being filled out. Called once.
 include_once("assets/footer.php"); //call the footer once.

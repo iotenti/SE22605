@@ -45,8 +45,8 @@ function addCorp($db, $corp, $incorp_dt, $email, $zipcode, $owner, $phone){ //fu
         die("There was a problem adding the corporation");
     }
 }
-function getActor($db, $id){ //this will be used to update and delete, I think. Will be used to grab a specific record by primary key number.
-    $sql = $db->prepare("SELECT * FROM actors WHERE id = :id"); //select all with a particular id (primary key)
+function getCorp($db, $id){ //this will be used to update and delete, I think. Will be used to grab a specific record by primary key number.
+    $sql = $db->prepare("SELECT * FROM corps WHERE id = :id"); //select all with a particular id (primary key)
     $sql->bindParam(':id', $id, PDO::PARAM_INT);
     $sql->execute();
     $row = $sql->fetch(PDO::FETCH_ASSOC);//get all columns in associated array. ? I think
