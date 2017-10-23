@@ -40,10 +40,11 @@ function getCorpName($db){
             $table = "<table>" . PHP_EOL;
             foreach($corps as $corp){
                 $table .= "<tr><td>" . $corp['corp'] . "</td>";
-                $table .= "<td><input type='submit' id='btn' name='action' value='Read' /></td>";
-                $table .= "<td><input type='submit' id='btn' name='action' value='Update' /></td>";
-                $table .= "<td><input type='submit' id='btn' name='action' value='Delete' /></td></tr>";
+                $table .= "<td><form method='post' action='#'><input type='hidden' name='id' value='". $corp['id'] ."' /><input type='submit' name='action' value='Read' /></form></td>";
+                $table .= "<td><form method='post' action='#'><input type='hidden' name='id' value='". $corp['id'] ."' /><input type='submit' name='action' value='Update' /></form></td>";
+                $table .= "<td><form method='post' action='#'><input type='hidden' name='id' value='". $corp['id'] ."' /><input type='submit' name='action' value='Delete' /></form></td>";
             }
+
             $table .= "</table>" . PHP_EOL;
         } else { //if there is not any data, say so.
             $table = "NO DATA" . PHP_EOL;
