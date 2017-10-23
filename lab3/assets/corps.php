@@ -30,6 +30,26 @@ function getCorpsAsTable($db){
         die("There was a problem");
     }
 }
+function getCorpName($db){
+    try{
+        $sql = "SELECT * FROM corps";  //select statement. selects all from actors. Set to a var.
+        $sql = $db->prepare($sql); //I think this plugs the statement into a method which helps to protect from sql injections.
+        $sql->execute(); //executes statement
+        $corps = $sql->fetchALL(PDO::FETCH_ASSOC); //gets data and dumps it into var called corps.
+        if($sql->rowCount() > 0){ //if there is data, pop it out into a table.
+            $table = "<table>" . PHP_EOL;
+            foreach($corps as $corp){
+                $table .= "<tr><td>" . $corp['corp'] . "</td>";
+            } //**********************ADD ID STUFF******************************
+            $table .= "</table>" . PHP_EOL;
+        } else { //if there is not any data, say so.
+            $table = "NO DATA" . PHP_EOL;
+        }
+        return $table; //return it.
+    }catch(PDOException $e){ //if it fails, throw the exception and display error message.
+        die("There was a problem");
+    }
+}
 function addCorp($db, $corp, $incorp_dt, $email, $zipcode, $owner, $phone){ //function to add actor to the database
     try{
         $sql = $db->prepare("INSERT INTO corps VALUES (null, :corp, :incorp_dt, :email, :zipcode, :owner, :phone)"); //create a var = to sql insert statement.
