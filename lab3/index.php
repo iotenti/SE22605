@@ -26,24 +26,8 @@ switch ($action){ //switch, if the button has a value of "Add" then run the addA
         addCorp($db, $corp, $incorp_dt, $email, $zipcode, $owner, $phone);
         $button ="Add";
         break;
-    case "Read":
-        $corp = getCorp($db, $id);
-        $button = "Read";
-        $table = "<table>";
-        $table .= "<tr><th style='padding:5px;'>" . "Corporation" . "</th>";
-        $table .= "<th style='padding:15px;'>" . "Email" . "</th>";
-        $table .= "<th style='padding:15px;'>" . "Date Added" . "</th>";
-        $table .= "<th style='padding:15px;'>" . "Owner" . "</th>";
-        $table .= "<th style='padding:15px;'>" . "Phone" . "</th>";
-        $table .= "<th style='padding:15px;'>" . "Zip Code" . "</th></tr>";
-        $table .= "<tr><td style='padding:5px;'>" . $corp['corp'] . "</td>";
-        $table .= "<td style='padding:15px;'>" . $corp['email'] . "</td>";
-        $table .= "<td style='padding:15px;'>" . $corp['incorp_dt'] . "</td>";
-        $table .= "<td style='padding:15px;'>" . $corp['owner'] . "</td>";
-        $table .= "<td style='padding:15px;'>" . $corp['phone'] . "</td>";
-        $table .= "<td style='padding:15px;'>" . $corp['zipcode'] . "</td></tr>";
-        $table .= "</table>";
-        echo $table;
+    case "Read": ?>
+        <a href="assets/read.php">Read</a><?php
         break;
     case "Update":
         include_once("assets/corpform.php");
