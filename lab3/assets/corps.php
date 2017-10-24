@@ -74,6 +74,21 @@ function addCorp($db, $corp, $incorp_dt, $email, $zipcode, $owner, $phone){ //fu
         die("There was a problem adding the corporation");
     }
 }
+function updateCorp($db, $id, $corp, $email, $zipcode, $owner, $phone){ //function to add actor to the database
+    try{
+        $sql = $db->prepare("UPDATE corps set  corp = :corp, email = :email, zipcode = :zipcode, owner = :owner, phone = :phone WHERE id = :id"); //create a var = to sql insert statement.
+        $sql->bindParam(':id', $id, PDO::PARAM_INT);
+        $sql->bindParam(':corp', $corp); //bind "place holders" to vars passed from forms. helps with security.
+        $sql->bindParam(':email', $email);
+        $sql->bindParam(':zipcode', $zipcode);
+        $sql->bindParam(':owner', $owner);
+        $sql->bindParam(':phone', $phone);
+        $sql->execute();
+        return $sql->rowCount();
+    }catch (PDOException $e) { //if it fails, throw the exception and display error message.
+        die("There was a problem adding the corporation");
+    }
+}
 function getCorp($db, $id){ //this will be used to update and delete, I think. Will be used to grab a specific record by primary key number.
     $sql = $db->prepare("SELECT * FROM corps WHERE id = :id"); //select all with a particular id (primary key)
     $sql->bindParam(':id', $id, PDO::PARAM_INT);
