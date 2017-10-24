@@ -26,8 +26,8 @@ switch ($action){ //switch, if the button has a value of "Add" then run the addA
         addCorp($db, $corp, $incorp_dt, $email, $zipcode, $owner, $phone);
         $button ="Add";
         break;
-    case "Read": ?>
-        <a href="assets/read.php">Read</a><?php
+    case "Read":
+
         break;
     case "Update":
         include_once("assets/corpform.php");

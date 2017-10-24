@@ -13,15 +13,6 @@ include_once("header.php"); //include header once.
 $db = dbConn(); // run function that connects to the db and store that connection in a var called db.
 $id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT) ?? null;
 
-function getCorp($db, $id){ //this will be used to update and delete, I think. Will be used to grab a specific record by primary key number.
-    $sql = $db->prepare("SELECT * FROM corps WHERE id = :id"); //select all with a particular id (primary key)
-    $sql->bindParam(':id', $id, PDO::PARAM_INT);
-    $sql->execute();
-    $row = $sql->fetch(PDO::FETCH_ASSOC);//get all columns in associated array. ? I think
-    return $row;//return the data
-}
-    $corp = getCorp($db, $id);
-
 function printCompany($corp){
 
     //$button = "Read";
@@ -41,8 +32,7 @@ function printCompany($corp){
     $table .= "</table>";
     return $table;
 }
-    $table = printCompany($corp);
-var_dump($corp);
+
       echo $table;
 
 ?>

@@ -39,8 +39,10 @@ function getCorpName($db){
         if($sql->rowCount() > 0){ //if there is data, pop it out into a table.
             $table = "<table>" . PHP_EOL;
             foreach($corps as $corp){
+                $id = $corp['id'];
+                $readLink = "<a href='assets/read.php?id=$id'>Read</a>";
                 $table .= "<tr><td>" . $corp['corp'] . "</td>";
-                $table .= "<td><form method='post' action='#'><input type='hidden' name='id' value='". $corp['id'] ."' /><input type='submit' name='action' value='Read' /></form></td>";
+                $table .= "<td>$readLink</td>";
                 $table .= "<td><form method='post' action='#'><input type='hidden' name='id' value='". $corp['id'] ."' /><input type='submit' name='action' value='Update' /></form></td>";
                 $table .= "<td><form method='post' action='#'><input type='hidden' name='id' value='". $corp['id'] ."' /><input type='submit' name='action' value='Delete' /></form></td>";
             }
@@ -69,7 +71,6 @@ function addCorp($db, $corp, $incorp_dt, $email, $zipcode, $owner, $phone){ //fu
         die("There was a problem adding the corporation");
     }
 }
-/*
 function getCorp($db, $id){ //this will be used to update and delete, I think. Will be used to grab a specific record by primary key number.
     $sql = $db->prepare("SELECT * FROM corps WHERE id = :id"); //select all with a particular id (primary key)
     $sql->bindParam(':id', $id, PDO::PARAM_INT);
@@ -77,5 +78,5 @@ function getCorp($db, $id){ //this will be used to update and delete, I think. W
     $row = $sql->fetch(PDO::FETCH_ASSOC);//get all columns in associated array. ? I think
     return $row;//return the data
 }
-*/
+
 

@@ -18,7 +18,7 @@
     <br />
     <table>
         <tr><td><input type="submit" id="btn" name="action" value="Add" /></td><!-- button used to add. Connects to add switch in lab2.php -->
-        <td><input type="submit" id="btn" name="action" value="Read" /></td>
+        <td> <a href="assets/read.php?id=<?php echo $row['id']; ?>">Read</a></td>
         <td><input type="submit" id="btn" name="action" value="Update" /></td>
         <td><input type="submit" id="btn" name="action" value="Delete" /></td></tr>
     </table>
