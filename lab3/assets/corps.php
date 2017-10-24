@@ -112,9 +112,15 @@ function getCorp($db, $id){ //this will be used to update and delete, I think. W
     return $table;
 }
 function deleteCorp($db, $id){
-    $sql = $db->prepare("DELETE * FROM corps WHERE id = :id"); //select all with a particular id (primary key)
-    $sql->bindParam(':id', $id, PDO::PARAM_INT);
-    $sql->execute();
-    $corp = $sql->fetch(PDO::FETCH_ASSOC);//get all columns in associated array. ? I think
+    try{
+        $sql = $db->prepare("DELETE FROM corps WHERE id = :id"); //select all with a particular id (primary key)
+        $sql->bindParam(':id', $id, PDO::PARAM_INT);
+        $sql->execute();
+        $success = "Record successfully deleted" . "<br /><br />" . " <a href='../index.php'>Home</a>" ;
+        echo $success;
+        }catch(PDOException $e){ //if it fails, throw the exception and display error message.
+    die("There was a problem");
+    }
+
 }
 

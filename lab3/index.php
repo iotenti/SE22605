@@ -49,10 +49,6 @@ switch ($action){ //switch, if the button has a value of "Add" then run the addA
 <?php
 echo getCorpName($db);
 ?>
-
-<form method="post" action="#">
-    <input type="submit" id="btn" name="action" value="Add A Record" />
-</form>
 <?php
 //include_once("assets/corpform.php");//this has the meat of the html page. The form being filled out. Called once.
 include_once("assets/footer.php"); //call the footer once.
