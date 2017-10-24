@@ -61,9 +61,9 @@ function getCorpName($db){
 }
 function addCorp($db, $corp, $incorp_dt, $email, $zipcode, $owner, $phone){ //function to add actor to the database
     try{
-        $sql = $db->prepare("INSERT INTO corps VALUES (null, :corp, :incorp_dt, :email, :zipcode, :owner, :phone)"); //create a var = to sql insert statement.
+        $sql = $db->prepare("INSERT INTO corps VALUES (null, :corp, NOW(), :email, :zipcode, :owner, :phone)"); //create a var = to sql insert statement.
         $sql->bindParam(':corp', $corp); //bind "place holders" to vars passed from forms. helps with security.
-        $sql->bindParam(':incorp_dt', $incorp_dt);
+       // $sql->bindParam(':incorp_dt', $incorp_dt);
         $sql->bindParam(':email', $email);
         $sql->bindParam(':zipcode', $zipcode);
         $sql->bindParam(':owner', $owner);
