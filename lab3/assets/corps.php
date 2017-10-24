@@ -69,7 +69,8 @@ function addCorp($db, $corp, $incorp_dt, $email, $zipcode, $owner, $phone){ //fu
         $sql->bindParam(':owner', $owner);
         $sql->bindParam(':phone', $phone);
         $sql->execute();
-        return $sql->rowCount();
+        $message = $sql->rowCount() . " rows inserted" . "<br />";
+        echo $message;
     }catch (PDOException $e) { //if it fails, throw the exception and display error message.
         die("There was a problem adding the corporation");
     }
