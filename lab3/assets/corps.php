@@ -39,12 +39,15 @@ function getCorpName($db){
         if($sql->rowCount() > 0){ //if there is data, pop it out into a table.
             $table = "<table>" . PHP_EOL;
             foreach($corps as $corp){
-                $id = $corp['id'];
-                $readLink = "<a href='assets/read.php?id=$id'>Read</a>";
+                $id = $corp['id'];  //might be redundant
+                $readLink = "<a href='assets/read.php?id=$id'>Read</a>"; //made a var to dump into link
+                $updateLink = "<a href='assets/update.php?id=$id'>Update</a>";
+                $deleteLink = "<a href='assets/delete.php?id=$id'>Delete</a>";
+
                 $table .= "<tr><td>" . $corp['corp'] . "</td>";
                 $table .= "<td>$readLink</td>";
-                $table .= "<td><form method='post' action='#'><input type='hidden' name='id' value='". $corp['id'] ."' /><input type='submit' name='action' value='Update' /></form></td>";
-                $table .= "<td><form method='post' action='#'><input type='hidden' name='id' value='". $corp['id'] ."' /><input type='submit' name='action' value='Delete' /></form></td>";
+                $table .= "<td>$updateLink</td>";
+                $table .= "<td>$deleteLink</td>";
             }
 
             $table .= "</table>" . PHP_EOL;
@@ -75,8 +78,23 @@ function getCorp($db, $id){ //this will be used to update and delete, I think. W
     $sql = $db->prepare("SELECT * FROM corps WHERE id = :id"); //select all with a particular id (primary key)
     $sql->bindParam(':id', $id, PDO::PARAM_INT);
     $sql->execute();
-    $row = $sql->fetch(PDO::FETCH_ASSOC);//get all columns in associated array. ? I think
-    return $row;//return the data
+    $corp = $sql->fetch(PDO::FETCH_ASSOC);//get all columns in associated array. ? I think
+
+    $table = "<table>";
+    $table .= "<tr><th style='padding:5px;'>" . "Corporation" . "</th>";
+    $table .= "<th style='padding:15px;'>" . "Email" . "</th>";
+    $table .= "<th style='padding:15px;'>" . "Date Added" . "</th>";
+    $table .= "<th style='padding:15px;'>" . "Owner" . "</th>";
+    $table .= "<th style='padding:15px;'>" . "Phone" . "</th>";
+    $table .= "<th style='padding:15px;'>" . "Zip Code" . "</th></tr>";
+    $table .= "<tr><td style='padding:5px;'>" . $corp['corp'] . "</td>";
+    $table .= "<td style='padding:15px;'>" . $corp['email'] . "</td>";
+    $table .= "<td style='padding:15px;'>" . $corp['incorp_dt'] . "</td>";
+    $table .= "<td style='padding:15px;'>" . $corp['owner'] . "</td>";
+    $table .= "<td style='padding:15px;'>" . $corp['phone'] . "</td>";
+    $table .= "<td style='padding:15px;'>" . $corp['zipcode'] . "</td></tr>";
+    $table .= "</table>";
+    return $table;
 }
 
 
