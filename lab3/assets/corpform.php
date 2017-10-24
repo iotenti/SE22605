@@ -5,6 +5,7 @@
  * Date: 10/18/2017
  * Time: 10:24 AM
  */
+
 ?>
 <form method ="post" action="#"><!-- post for inserting information. -->
     <table>
@@ -17,10 +18,8 @@
     </table>
     <br />
     <table>
-        <tr><td><input type="submit" id="btn" name="action" value="Add" /></td><!-- button used to add. Connects to add switch in lab2.php -->
-        <td> <a href="assets/read.php?id=<?php echo $row['id']; ?>">Read</a></td>
-        <td><input type="submit" id="btn" name="action" value="Update" /></td>
-        <td><input type="submit" id="btn" name="action" value="Delete" /></td></tr>
+        <tr><td><input type="submit" id="btn" name="action" value="<?php echo $button; ?>" /></td><!-- button used to add. Connects to add switch in lab2.php -->
+
     </table>
     <br /><br />
 </form>

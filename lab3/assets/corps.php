@@ -111,5 +111,10 @@ function getCorp($db, $id){ //this will be used to update and delete, I think. W
     $table .= "</table>";
     return $table;
 }
-
+function deleteCorp($db, $id){
+    $sql = $db->prepare("DELETE * FROM corps WHERE id = :id"); //select all with a particular id (primary key)
+    $sql->bindParam(':id', $id, PDO::PARAM_INT);
+    $sql->execute();
+    $corp = $sql->fetch(PDO::FETCH_ASSOC);//get all columns in associated array. ? I think
+}
 
