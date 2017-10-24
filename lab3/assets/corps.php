@@ -41,7 +41,8 @@ function getCorpName($db){
             foreach($corps as $corp){
                 $id = $corp['id'];  //might be redundant
                 $readLink = "<a href='assets/read.php?id=$id'>Read</a>"; //made a var to dump into link
-                $updateLink = "<a href='assets/update.php?id=$id'>Update</a>";
+                $updateLink = getUpdate($db, $id);
+                // $updateLink = "<a href='assets/update.php?id=$id'>Update</a>";
                 $deleteLink = "<a href='assets/delete.php?id=$id'>Delete</a>";
 
                 $table .= "<tr><td>" . $corp['corp'] . "</td>";
@@ -59,7 +60,7 @@ function getCorpName($db){
         die("There was a problem");
     }
 }
-function addCorp($db, $corp, $incorp_dt, $email, $zipcode, $owner, $phone){ //function to add actor to the database
+function addCorp($db, $corp, $email, $zipcode, $owner, $phone){ //function to add actor to the database
     try{
         $sql = $db->prepare("INSERT INTO corps VALUES (null, :corp, NOW(), :email, :zipcode, :owner, :phone)"); //create a var = to sql insert statement.
         $sql->bindParam(':corp', $corp); //bind "place holders" to vars passed from forms. helps with security.
@@ -122,6 +123,20 @@ function deleteCorp($db, $id){
         }catch(PDOException $e){ //if it fails, throw the exception and display error message.
     die("There was a problem");
     }
+}
+function getUpdate($db, $id){ //this will be used to update and delete, I think. Will be used to grab a specific record by primary key number.
+    $sql = $db->prepare("SELECT * FROM corps WHERE id = :id"); //select all with a particular id (primary key)
+    $sql->bindParam(':id', $id, PDO::PARAM_INT);
+    $sql->execute();
+    $corp = $sql->fetch(PDO::FETCH_ASSOC);//get all columns in associated array. ? I think
 
+    $name = $corp['corp'];
+    $email = $corp['email'];
+    $owner = $corp['owner'];
+    $phone = $corp['phone'];
+    $zipcode = $corp['zipcode'];
+
+    $updateLink = "<a href='assets/update.php?id=$id&corp=$name&email=$email&zipcode=$zipcode&owner=$owner&phone=$phone'>Update</a>";
+    return $updateLink;
 }
 
