@@ -61,10 +61,11 @@ function getCorpName($db){
     }
 }
 function addCorp($db, $corp, $email, $zipcode, $owner, $phone){ //function to add actor to the database
+    echo "$corp, $email, $zipcode, $owner, $phone";
     try{
         $sql = $db->prepare("INSERT INTO corps VALUES (null, :corp, NOW(), :email, :zipcode, :owner, :phone)"); //create a var = to sql insert statement.
         $sql->bindParam(':corp', $corp); //bind "place holders" to vars passed from forms. helps with security.
-       // $sql->bindParam(':incorp_dt', $incorp_dt);
+        //$sql->bindParam(':incorp_dt', NOW());
         $sql->bindParam(':email', $email);
         $sql->bindParam(':zipcode', $zipcode);
         $sql->bindParam(':owner', $owner);
@@ -77,8 +78,9 @@ function addCorp($db, $corp, $email, $zipcode, $owner, $phone){ //function to ad
     }
 }
 function updateCorp($db, $id, $corp, $email, $zipcode, $owner, $phone){ //function to add actor to the database
+    echo "$id, $corp, $email, $zipcode, $owner, $phone";
     try{
-        $sql = $db->prepare("UPDATE corps set  corp = :corp, email = :email, zipcode = :zipcode, owner = :owner, phone = :phone WHERE id = :id"); //create a var = to sql insert statement.
+        $sql = $db->prepare("UPDATE corps SET corp = :corp, email = :email, zipcode = :zipcode, owner = :owner, phone = :phone WHERE id = :id"); //create a var = to sql insert statement.
         $sql->bindParam(':id', $id, PDO::PARAM_INT);
         $sql->bindParam(':corp', $corp); //bind "place holders" to vars passed from forms. helps with security.
         $sql->bindParam(':email', $email);
@@ -86,7 +88,9 @@ function updateCorp($db, $id, $corp, $email, $zipcode, $owner, $phone){ //functi
         $sql->bindParam(':owner', $owner);
         $sql->bindParam(':phone', $phone);
         $sql->execute();
-        return $sql->rowCount();
+        $message = "HERE";
+        return $message;
+        //return $sql->rowCount() . "row updated.";
     }catch (PDOException $e) { //if it fails, throw the exception and display error message.
         die("There was a problem adding the corporation");
     }

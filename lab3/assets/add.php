@@ -16,7 +16,7 @@ require_once("corpform.php");
     $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT) ?? null;
     $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING) ?? filter_input(INPUT_POST, 'action', FILTER_SANITIZE_STRING) ?? "";
     $corp = filter_input(INPUT_POST, 'corp', FILTER_SANITIZE_STRING) ?? "";
-    $incorp_dt = filter_input(INPUT_POST, 'incorp_dt', FILTER_SANITIZE_STRING) ?? "";
+   // $incorp_dt = filter_input(INPUT_POST, 'incorp_dt', FILTER_SANITIZE_STRING) ?? "";
     $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING) ?? "";
     $zipcode = filter_input(INPUT_POST, 'zipcode', FILTER_SANITIZE_STRING) ?? "";
     $owner = filter_input(INPUT_POST, 'owner', FILTER_SANITIZE_STRING) ?? "";
@@ -25,7 +25,7 @@ require_once("corpform.php");
 
 <?php
     if ($action == "Add"){ //switch, if the button has a value of "Add" then run the addActor function and pass it the information.
-        addCorp($db, $corp, $incorp_dt, $email, $zipcode, $owner, $phone);
+        addCorp($db, $corp, $email, $zipcode, $owner, $phone);
         $button = "Add";
     }
 

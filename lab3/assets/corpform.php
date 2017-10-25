@@ -10,7 +10,6 @@
 <form method ="post" action="#"><!-- post for inserting information. -->
     <table>
         <tr><td>Corporation Name:</td><td> <input type="text" name="corp" value="" /></td></tr><!-- text fields for data -->
-        <tr><td>Date added:</td><td> <input type="text" name="incorp_dt" value="" /></td></tr>
         <tr><td>Email:</td><td> <input type="text" name="email" value="" /></td></tr>
         <tr><td>Zipcode:</td><td> <input type="text" name="zipcode" value="" /></td></tr>
         <tr><td>Owner:</td><td> <input type="text" name="owner" value="" /></td></tr>
