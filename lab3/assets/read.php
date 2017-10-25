@@ -18,9 +18,6 @@ echo getCorp($db, $id);
 
 ?>
     <a href='../index.php'>Home</a>
-    <form method="post" action="#">
-        <input type="submit" id="btn" name="action" value="Add A Record" />
-    </form>
 <?php
 include_once("footer.php"); //call the footer once.
 ?>
