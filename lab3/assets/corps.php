@@ -41,8 +41,7 @@ function getCorpName($db){
             foreach($corps as $corp){
                 $id = $corp['id'];  //might be redundant
                 $readLink = "<a href='assets/read.php?id=$id'>Read</a>"; //made a var to dump into link
-                $updateLink = getUpdate($db, $id);
-                // $updateLink = "<a href='assets/update.php?id=$id'>Update</a>";
+                $updateLink = "<a href='assets/update.php?id=$id'>Update</a>";
                 $deleteLink = "<a href='assets/delete.php?id=$id'>Delete</a>";
 
                 $table .= "<tr><td>" . $corp['corp'] . "</td>";
@@ -61,11 +60,9 @@ function getCorpName($db){
     }
 }
 function addCorp($db, $corp, $email, $zipcode, $owner, $phone){ //function to add actor to the database
-    echo "$corp, $email, $zipcode, $owner, $phone";
     try{
         $sql = $db->prepare("INSERT INTO corps VALUES (null, :corp, NOW(), :email, :zipcode, :owner, :phone)"); //create a var = to sql insert statement.
         $sql->bindParam(':corp', $corp); //bind "place holders" to vars passed from forms. helps with security.
-        //$sql->bindParam(':incorp_dt', NOW());
         $sql->bindParam(':email', $email);
         $sql->bindParam(':zipcode', $zipcode);
         $sql->bindParam(':owner', $owner);
@@ -78,7 +75,6 @@ function addCorp($db, $corp, $email, $zipcode, $owner, $phone){ //function to ad
     }
 }
 function updateCorp($db, $id, $corp, $email, $zipcode, $owner, $phone){ //function to add actor to the database
-    echo "$id, $corp, $email, $zipcode, $owner, $phone";
     try{
         $sql = $db->prepare("UPDATE corps SET corp = :corp, email = :email, zipcode = :zipcode, owner = :owner, phone = :phone WHERE id = :id"); //create a var = to sql insert statement.
         $sql->bindParam(':id', $id, PDO::PARAM_INT);
@@ -88,7 +84,7 @@ function updateCorp($db, $id, $corp, $email, $zipcode, $owner, $phone){ //functi
         $sql->bindParam(':owner', $owner);
         $sql->bindParam(':phone', $phone);
         $sql->execute();
-        $message = "HERE";
+        $message = " ****** " . "$id, $corp, $email, $zipcode, $owner, $phone";
         return $message;
         //return $sql->rowCount() . "row updated.";
     }catch (PDOException $e) { //if it fails, throw the exception and display error message.
@@ -134,13 +130,6 @@ function getUpdate($db, $id){ //this will be used to update and delete, I think.
     $sql->execute();
     $corp = $sql->fetch(PDO::FETCH_ASSOC);//get all columns in associated array. ? I think
 
-    $name = $corp['corp'];
-    $email = $corp['email'];
-    $owner = $corp['owner'];
-    $phone = $corp['phone'];
-    $zipcode = $corp['zipcode'];
-
-    $updateLink = "<a href='assets/update.php?id=$id&corp=$name&email=$email&zipcode=$zipcode&owner=$owner&phone=$phone'>Update</a>";
-    return $updateLink;
+    return $corp;
 }
 
