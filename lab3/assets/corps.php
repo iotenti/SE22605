@@ -68,7 +68,7 @@ function addCorp($db, $corp, $email, $zipcode, $owner, $phone){ //function to ad
         $sql->bindParam(':owner', $owner);
         $sql->bindParam(':phone', $phone);
         $sql->execute();
-        $message = $sql->rowCount() . " rows inserted" . "<br />";
+        $message = $sql->rowCount() . " record added.";
         echo $message;
     }catch (PDOException $e) { //if it fails, throw the exception and display error message.
         die("There was a problem adding the corporation");
@@ -84,9 +84,7 @@ function updateCorp($db, $id, $corp, $email, $zipcode, $owner, $phone){ //functi
         $sql->bindParam(':owner', $owner);
         $sql->bindParam(':phone', $phone);
         $sql->execute();
-        $message = " ****** " . "$id, $corp, $email, $zipcode, $owner, $phone";
-        return $message;
-        //return $sql->rowCount() . "row updated.";
+        return $sql->rowCount() . " row updated.";
     }catch (PDOException $e) { //if it fails, throw the exception and display error message.
         die("There was a problem adding the corporation");
     }
@@ -106,7 +104,7 @@ function getCorp($db, $id){ //this will be used to update and delete, I think. W
     $table .= "<th style='padding:15px;'>" . "Zip Code" . "</th></tr>";
     $table .= "<tr><td style='padding:5px;'>" . $corp['corp'] . "</td>";
     $table .= "<td style='padding:15px;'>" . $corp['email'] . "</td>";
-    $table .= "<td style='padding:15px;'>" . $corp['incorp_dt'] . "</td>";
+    $table .= "<td style='padding:15px;'>" . date("m/d/Y", strtotime($corp['incorp_dt'])) . "</td>";
     $table .= "<td style='padding:15px;'>" . $corp['owner'] . "</td>";
     $table .= "<td style='padding:15px;'>" . $corp['phone'] . "</td>";
     $table .= "<td style='padding:15px;'>" . $corp['zipcode'] . "</td></tr>";

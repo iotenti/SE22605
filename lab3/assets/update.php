@@ -20,27 +20,25 @@ include_once("header.php"); //include header once.
     $owner = filter_input(INPUT_POST, 'owner', FILTER_SANITIZE_STRING) ?? "";
     $phone = filter_input(INPUT_POST, 'phone', FILTER_SANITIZE_STRING) ?? "";
 
-    $gotCorpForUpdate = getUpdate($db, $id);
+    $corps = getUpdate($db, $id);
 ?>
 <form method ="post" action="#"><!-- post for inserting information. -->
         <table>
-            <tr><td><input type="hidden" name="id" value="<?php echo $gotCorpForUpdate['id'] ?>" /></td></tr>
-            <tr><td>Corporation Name:</td><td> <input type="text" name="corp" value="<?php echo $gotCorpForUpdate['corp'] ?>" /></td></tr><!-- text fields for data -->
-            <tr><td>Email:</td><td> <input type="text" name="email" value="<?php echo $gotCorpForUpdate['email'] ?>" /></td></tr>
-            <tr><td>Zipcode:</td><td> <input type="text" name="zipcode" value="<?php echo $gotCorpForUpdate['zipcode'] ?>" /></td></tr>
-            <tr><td>Owner:</td><td> <input type="text" name="owner" value="<?php echo $gotCorpForUpdate['owner'] ?>" /></td></tr>
-            <tr><td>Phone:</td><td> <input type="text" name="phone" value="<?php echo $gotCorpForUpdate['phone'] ?>" /></td></tr>
+            <tr><td><input type="hidden" name="id" value="<?php echo $corps['id'] ?>" /></td></tr>
+            <tr><td>Corporation Name:</td><td> <input type="text" name="corp" value="<?php echo $corps['corp'] ?>" /></td></tr><!-- text fields for data -->
+            <tr><td>Email:</td><td> <input type="text" name="email" value="<?php echo $corps['email'] ?>" /></td></tr>
+            <tr><td>Zipcode:</td><td> <input type="text" name="zipcode" value="<?php echo $corps['zipcode'] ?>" /></td></tr>
+            <tr><td>Owner:</td><td> <input type="text" name="owner" value="<?php echo $corps['owner'] ?>" /></td></tr>
+            <tr><td>Phone:</td><td> <input type="text" name="phone" value="<?php echo $corps['phone'] ?>" /></td></tr>
         </table>
         <br />
         <table>
             <tr><td><input type="submit" id="btn" name="action" value="Update" /></td><!-- button used to add. Connects to add switch in lab2.php -->
-
         </table>
         <br /><br />
     </form>
 <?php
     if ($action == "Update"){
-        echo "$id, $corp, $email, $zipcode, $owner, $phone";
         echo updateCorp($db, $id, $corp, $email, $zipcode, $owner, $phone);
         $button = "Update";
     }

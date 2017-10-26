@@ -15,9 +15,10 @@ $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT) ?? null;
 
 echo getCorp($db, $id);
 
-
 ?>
     <a href='../index.php'>Home</a>
+    <a href='update.php?id=<?php echo $id ?>'>Update</a>
+    <a href='delete.php?id=<?php echo $id ?>'>Delete</a>
 <?php
 include_once("footer.php"); //call the footer once.
 ?>

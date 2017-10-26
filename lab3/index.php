@@ -7,7 +7,7 @@ include_once("assets/header.php"); //include header once.
 ?>
 
 <h1>Corporation Name:</h1>
-    <a href='assets/add.php'>Add</a>
+    <a href='assets/add.php'>Add A Record</a>
 
 <?php
     echo getCorpName($db);
