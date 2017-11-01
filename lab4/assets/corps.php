@@ -16,7 +16,7 @@ function getCorpsAsTable($db){
             foreach($corps as $corp){
                 $table .= "<tr><td>" . $corp['corp'] . "</td>";
                 $table .= "<td>" . $corp['email'] . "</td>";
-                $table .= "<td>" . $corp['incorp_dt'] . "</td>";
+                $table .= "<td>" . date("m/d/Y", strtotime($corp['incorp_dt'])) . "</td>";
                 $table .= "<td>" . $corp['owner'] . "</td>";
                 $table .= "<td>" . $corp['phone'] . "</td>";
                 $table .= "<td>" . $corp['zipcode'] . "</td></tr>";
