@@ -5,22 +5,28 @@
  * Date: 10/18/2017
  * Time: 10:24 AM
  */
-function getCorpsAsTable($db){
+function getCorpsAsTable($db, $corps, $cols = null){ //PROBLEM COULD BE WITH TRY/CATCH
     try{
-        $sql = "SELECT * FROM corps";  //select statement. selects all from actors. Set to a var.
-        $sql = $db->prepare($sql); //I think this plugs the statement into a method which helps to protect from sql injections.
-        $sql->execute(); //executes statement
-        $corps = $sql->fetchALL(PDO::FETCH_ASSOC); //gets data and dumps it into var called corps.
-        if($sql->rowCount() > 0){ //if there is data, pop it out into a table.
+        setlocale(LC_MONETARY, 'en_US.UTF-8');
+        if(count($corps) > 0) { //if there is data, pop it out into a table.
             $table = "<table>" . PHP_EOL;
-            foreach($corps as $corp){
-                $table .= "<tr><td>" . $corp['corp'] . "</td>";
+            if ($cols) {
+                $table .= "\t<tr>";
+                foreach ($cols as $col) {
+                    $table .= "<th>$col</th>"; //build column headers as anchors ********************might need to re-purpose later***************************
+                }
+                $table .= "</tr>" . PHP_EOL;
+            }
+            foreach ($corps as $corp) {
+                $table .= "<tr><td>" . $corp['id'] . "</td>";
+                $table .= "<td>" . $corp['corp'] . "</td>";
+                $table .= "<td>" . date('m/d/Y', strtotime($corp['incorp_dt'])) . "</td>";
                 $table .= "<td>" . $corp['email'] . "</td>";
-                $table .= "<td>" . $corp['incorp_dt'] . "</td>";
+                $table .= "<td>" . $corp['zipcode'] . "</td>";
                 $table .= "<td>" . $corp['owner'] . "</td>";
                 $table .= "<td>" . $corp['phone'] . "</td>";
-                $table .= "<td>" . $corp['zipcode'] . "</td></tr>";
-            } //**********************ADD ID STUFF******************************
+                $table .= "</tr>" . PHP_EOL;
+            }
             $table .= "</table>" . PHP_EOL;
         } else { //if there is not any data, say so.
             $table = "NO DATA" . PHP_EOL;
@@ -30,32 +36,18 @@ function getCorpsAsTable($db){
         die("There was a problem");
     }
 }
-function getCorpsAsTable($db){
-    try{
-        $sql = "SELECT * FROM corps";  //select statement. selects all from actors. Set to a var.
-        $sql = $db->prepare($sql); //I think this plugs the statement into a method which helps to protect from sql injections.
-        $sql->execute(); //executes statement
-        $corps = $sql->fetchALL(PDO::FETCH_ASSOC); //gets data and dumps it into var called corps.
-        if($sql->rowCount() > 0){ //if there is data, pop it out into a table.
-            $table = "<table>" . PHP_EOL;
-            foreach($corps as $corp){
-                $table .= "<tr><td>" . $corp['corp'] . "</td>";
-                $table .= "<td>" . $corp['email'] . "</td>";
-                $table .= "<td>" . $corp['incorp_dt'] . "</td>";
-                $table .= "<td>" . $corp['owner'] . "</td>";
-                $table .= "<td>" . $corp['phone'] . "</td>";
-                $table .= "<td>" . $corp['zipcode'] . "</td></tr>";
-            } //**********************ADD ID STUFF******************************
-            $table .= "</table>" . PHP_EOL;
-        } else { //if there is not any data, say so.
-            $table = "NO DATA" . PHP_EOL;
-        }
-        return $table; //return it.
-    }catch(PDOException $e){ //if it fails, throw the exception and display error message.
-        die("There was a problem");
+function getCorpsAsSortedTable($db, $col, $dir){
+    try {
+        //$sql = "SELECT * FROM `employees`";
+        $sql = "SELECT `employees`.`emp_id`, `departments`.`dept_name`, `employees`.`first_name`, `employees`.`last_name`, `employees`.`hire_date`, `employees`.`term_date`, `employees`.`salary` FROM `departments`, `employees` WHERE `employees`.`dept_id` = `departments`.`dept_id` ORDER BY $col $dir";
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        die ("There was a problem getting the table of employees");
     }
+    return $employees;
 }
-
 function getCorpName($db){
     try{
         $sql = "SELECT * FROM corps";  //select statement. selects all from actors. Set to a var.
@@ -161,9 +153,9 @@ function getCorporations($db) {
         $sql = "SELECT * FROM corps";
         $stmt = $db->prepare($sql);
         $stmt->execute();
-        $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $corps = $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         die ("There was a problem getting the table of employees");
     }
-    return $corporations;
+    return $corps;
 }

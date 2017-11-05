@@ -21,7 +21,6 @@ function getColumnNames($db, $tbl){
 
     $sql = "select column_name from information_schema.columns where lower(table_name)=lower('". $tbl . "')";
     $stmt = $db->prepare($sql);
-
     try {
         if($stmt->execute()):
             $raw_column_data = $stmt->fetchAll(PDO::FETCH_ASSOC);
