@@ -36,18 +36,6 @@ function getCorpsAsTable($db, $corps, $cols = null){ //PROBLEM COULD BE WITH TRY
         die("There was a problem");
     }
 }
-function getCorpsAsSortedTable($db, $col, $dir){
-    try {
-        //$sql = "SELECT * FROM `employees`";
-        $sql = "SELECT `employees`.`emp_id`, `departments`.`dept_name`, `employees`.`first_name`, `employees`.`last_name`, `employees`.`hire_date`, `employees`.`term_date`, `employees`.`salary` FROM `departments`, `employees` WHERE `employees`.`dept_id` = `departments`.`dept_id` ORDER BY $col $dir";
-        $stmt = $db->prepare($sql);
-        $stmt->execute();
-        $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
-        die ("There was a problem getting the table of employees");
-    }
-    return $employees;
-}
 function getCorpName($db){
     try{
         $sql = "SELECT * FROM corps";  //select statement. selects all from actors. Set to a var.
@@ -156,6 +144,19 @@ function getCorporations($db) {
         $corps = $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         die ("There was a problem getting the table of employees");
+    }
+    return $corps;
+}
+
+function getCorpsAsSortedTable($db, $col, $dir){
+    try {
+        $sql = "SELECT * FROM corps ORDER BY $col $dir";
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        $corps = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    } catch (PDOException $e) {
+        die ("There was a problem getting the table of corporations");
     }
     return $corps;
 }
