@@ -160,3 +160,15 @@ function getCorpsAsSortedTable($db, $col, $dir){
     }
     return $corps;
 }
+function searchCorp($db, $col, $search){
+    try {
+        $sql = "SELECT * FROM corps WHERE email LIKE '%aliquet'";
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        $corps = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    } catch (PDOException $e) {
+        die ("There was a problem getting the table of corporationsss");
+    }
+    return $corps;
+}
