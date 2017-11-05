@@ -3,10 +3,10 @@ require_once("dbconn.php"); //require this file or fatal error.
 require_once("corps.php");
 $db = dbConn(); // run function that connects to the db and store that connection in a var called db.
 ?>
+<br /><br />
 <table>
     <tr>
-        <td>Search Column:</td>
-        <td>
+        <td>Search Column:
             <select name="searchCol">
                 <option value="">Select...</option>
                 <option value="id">id</option>
@@ -18,10 +18,9 @@ $db = dbConn(); // run function that connects to the db and store that connectio
                 <option value="zipcode">Zip Code</option>
             </select>
         </td>
-    </tr>
-    <tr>
-        <td>Term:</td><td><input type="search" name="action" /></td>
-        <td><input type="submit" id="btn" name="action" value="Submit" /></td>
-        <td><input type="submit" id="btn" name="action" value="Reset" /></td>
+        <td>Term: <input type="search" name="action" /></td>
     </tr>
 </table>
+<input type="submit" id="btn" name="action" value="Submit" />
+<input type="submit" id="btn" name="action" value="Reset" />
+
