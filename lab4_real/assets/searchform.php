@@ -8,7 +8,7 @@ $db = dbConn(); // run function that connects to the db and store that connectio
     <table>
         <tr>
             <td>Search Column:
-                <select name="col">
+                <select name="colSearch">
                     <option value="">Select...</option>
                     <option value="id">id</option>
                     <option value="corp">Corporation</option>

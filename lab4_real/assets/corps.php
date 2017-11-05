@@ -95,9 +95,9 @@ function updateCorp($db, $id, $corp, $email, $zipcode, $owner, $phone){ //functi
         die("There was a problem adding the corporation");
     }
 }
-function getCorp($db, $id){ //this will be used to update and delete, I think. Will be used to grab a specific record by primary key number.
+function getCorp($db, $searchID){ //this will be used to update and delete, I think. Will be used to grab a specific record by primary key number.
     $sql = $db->prepare("SELECT * FROM corps WHERE id = :id"); //select all with a particular id (primary key)
-    $sql->bindParam(':id', $id, PDO::PARAM_INT);
+    $sql->bindParam(':id', $searchID, PDO::PARAM_INT);
     $sql->execute();
     $corp = $sql->fetch(PDO::FETCH_ASSOC);//get all columns in associated array. ? I think
 
@@ -160,15 +160,37 @@ function getCorpsAsSortedTable($db, $col, $dir){
     }
     return $corps;
 }
-function searchCorp($db, $col, $search){
+function searchCorp($db, $cols, $colSearch, $search){
     try {
-        $sql = "SELECT * FROM corps WHERE email LIKE '%aliquet'";
+        $sql = "SELECT * FROM corps WHERE $colSearch LIKE '%$search%'";
         $stmt = $db->prepare($sql);
         $stmt->execute();
         $corps = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+        $table = "<table>" . PHP_EOL;
+
+        if ($cols) {
+            $table .= "\t<tr>";
+            foreach ($cols as $col) {
+                $table .= "<th>$col</th>"; //build column headers as anchors ********************might need to re-purpose later***************************
+            }
+            $table .= "</tr>" . PHP_EOL;
+        }
+        foreach ($corps as $corp) {
+            $table .= "<tr><td>" . $corp['id'] . "</td>";
+            $table .= "<td>" . $corp['corp'] . "</td>";
+            $table .= "<td>" . date('m/d/Y', strtotime($corp['incorp_dt'])) . "</td>";
+            $table .= "<td>" . $corp['email'] . "</td>";
+            $table .= "<td>" . $corp['zipcode'] . "</td>";
+            $table .= "<td>" . $corp['owner'] . "</td>";
+            $table .= "<td>" . $corp['phone'] . "</td>";
+            $table .= "</tr>" . PHP_EOL;
+        }
+        $table .= "</table>" . PHP_EOL;
+        return $table;
+
     } catch (PDOException $e) {
         die ("There was a problem getting the table of corporationsss");
     }
-    return $corps;
+
 }

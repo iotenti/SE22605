@@ -10,7 +10,8 @@ include_once("assets/searchform.php");
 
     $dir = filter_input(INPUT_GET, 'dir', FILTER_SANITIZE_STRING) ?? NULL;
     $col = filter_input(INPUT_GET, 'col', FILTER_SANITIZE_STRING) ?? NULL;
-    $search = filter_input(INPUT_GET, 'col', FILTER_SANITIZE_STRING) ?? NULL;
+    $colSearch = filter_input(INPUT_GET, 'colSearch', FILTER_SANITIZE_STRING) ?? NULL;
+    $search = filter_input(INPUT_GET, 'search', FILTER_SANITIZE_STRING) ?? NULL;
 ?>
 
 <h1>Corporation Name:</h1>
@@ -63,9 +64,8 @@ switch ($action) {
         break;
     case 'search':
         include_once ('assets/header.php');
-        $corps = searchCorp($db, $col, $search);
         $cols = getColumnNames($db, 'corps');
-        echo getCorpsAsTable($db, $corps, $cols);
+        echo searchCorp($db, $cols, $colSearch, $search);
         break;
     default:
         include_once ('assets/header.php');
