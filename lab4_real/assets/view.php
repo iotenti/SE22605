@@ -37,7 +37,7 @@ switch ($action) {
     case 'search':
         include_once ('header.php');
         $cols = getColumnNames($db, 'corps');
-        echo searchCorp($db, $cols, $colSearch, $search);
+        echo viewAllSearchCorp($db, $cols, $colSearch, $search);
         break;
     default:
         include_once ('header.php');

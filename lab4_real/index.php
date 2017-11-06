@@ -43,6 +43,7 @@ switch ($action) {
         include_once ('assets/header.php');
         $corps = getCorporations($db);
         $cols = getColumnNames($db, 'corps');
+        var_dump($cols);
         echo getCorpsAsTable($db, $corps, $cols);
         break;
 }
