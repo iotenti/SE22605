@@ -178,6 +178,17 @@ function searchCorp($db, $cols, $colSearch, $search){
             $table .= "</tr>" . PHP_EOL;
         }
         foreach ($corps as $corp) {
+            foreach($corps as $corp){
+                $id = $corp['id'];  //might be redundant
+                $readLink = "<a href='assets/read.php?id=$id'>Read</a>"; //made a var to dump into link
+                $updateLink = "<a href='assets/update.php?id=$id'>Update</a>";
+                $deleteLink = "<a href='assets/delete.php?id=$id'>Delete</a>";
+
+                $table .= "<tr><td>" . $corp['corp'] . "</td>";
+                $table .= "<td>$readLink</td>";
+                $table .= "<td>$updateLink</td>";
+                $table .= "<td>$deleteLink</td>";
+            }
             $table .= "<tr><td>" . $corp['id'] . "</td>";
             $table .= "<td>" . $corp['corp'] . "</td>";
             $table .= "<td>" . date('m/d/Y', strtotime($corp['incorp_dt'])) . "</td>";
