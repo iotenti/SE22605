@@ -166,7 +166,7 @@ function searchCorp($db, $cols, $colSearch, $search){
         $stmt = $db->prepare($sql);
         $stmt->execute();
         $corps = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+        print_r($corps);
         $table = "<table>" . PHP_EOL;
 
         if ($cols) {
@@ -190,7 +190,7 @@ function searchCorp($db, $cols, $colSearch, $search){
         return $table;
 
     } catch (PDOException $e) {
-        die ("There was a problem getting the table of corporationsss");
+        die ("There was a problem getting the table of corporations");
     }
 
 }

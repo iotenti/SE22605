@@ -65,7 +65,7 @@ switch ($action) {
     case 'search':
         include_once ('assets/header.php');
         $cols = getColumnNames($db, 'corps');
-        echo searchCorp($db, $cols, $colSearch, $search);
+        echo searchCorp($db, $cols, $colsSearch, $search);
         break;
     default:
         include_once ('assets/header.php');
