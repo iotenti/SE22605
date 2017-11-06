@@ -16,6 +16,7 @@ require_once("assets/dbconn.php"); //require this file or fatal error.
 
 <h1>Corporation Name:</h1>
     <a href='assets/add.php'>Add A Record</a>
+    <br/>
     <a href='assets/view.php'>View All</a>
 
 <?php
@@ -25,26 +26,21 @@ switch ($action) {
     case 'reset':
         include_once ('assets/header.php');
         $corps = getCorporations($db);
-        $cols = getColumnNames($db, 'corps');
-        echo getCorpsAsTable($db, $corps, $cols);
+        echo getCorpsAsTable($db, $corps);
         break;
     case 'sort':
         include_once ('assets/header.php');
         $corps = getCorpsAsSortedTable($db, $col, $dir);
-        $cols = getColumnNames($db, 'corps');
-        echo getCorpsAsTable($db, $corps, $cols);
+        echo getCorpsAsTable($db, $corps);
         break;
     case 'search':
         include_once ('assets/header.php');
-        $cols = getColumnNames($db, 'corps');
-        echo searchCorp($db, $cols, $colSearch, $search);
+        echo searchCorp($db, $colSearch, $search);
         break;
     default:
         include_once ('assets/header.php');
         $corps = getCorporations($db);
-        $cols = getColumnNames($db, 'corps');
-        var_dump($cols);
-        echo getCorpsAsTable($db, $corps, $cols);
+        echo getCorpsAsTable($db, $corps);
         break;
 }
 

@@ -16,7 +16,8 @@ $search = filter_input(INPUT_GET, 'search', FILTER_SANITIZE_STRING) ?? NULL;
 
     <h1>Corporation Name:</h1>
     <a href='add.php'>Add A Record</a>
-    <a href='index.php'>Home</a>
+    <br/>
+    <a href='../index.php'>Home</a>
 
 <?php
 //  echo getCorpName($db);
@@ -25,14 +26,13 @@ switch ($action) {
     case 'reset':
         include_once ('header.php');
         $corps = getCorporations($db);
-        $cols = getColumnNames($db, 'corps');
-        echo getCorpsAsTable($db, $corps, $cols);
+        echo getViewAllCorpsAsTable($db, $corps, $cols);
         break;
     case 'sort':
         include_once ('header.php');
         $corps = getCorpsAsSortedTable($db, $col, $dir);
         $cols = getColumnNames($db, 'corps');
-        echo getCorpsAsTable($db, $corps, $cols);
+        echo getViewAllCorpsAsTable($db, $corps, $cols);
         break;
     case 'search':
         include_once ('header.php');

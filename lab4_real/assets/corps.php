@@ -5,18 +5,11 @@
  * Date: 10/18/2017
  * Time: 10:24 AM
  */
-function getCorpsAsTable($db, $corps, $cols = null){ //PROBLEM COULD BE WITH TRY/CATCH
+function getCorpsAsTable($db, $corps){ //PROBLEM COULD BE WITH TRY/CATCH
     try{
         setlocale(LC_MONETARY, 'en_US.UTF-8');
         if(count($corps) > 0) { //if there is data, pop it out into a table.
             $table = "<table>" . PHP_EOL;
-            if ($cols) {
-                $table .= "\t<tr>";
-                foreach ($cols as $col) {
-                    $table .= "<th>$col</th>"; //build column headers as anchors ********************might need to re-purpose later***************************
-                }
-                $table .= "</tr>" . PHP_EOL;
-            }
             foreach($corps as $corp){
                 $id = $corp['id'];  //might be redundant
                 $readLink = "<a href='assets/read.php?id=$id'>Read</a>"; //made a var to dump into link
@@ -197,7 +190,7 @@ function getCorpsAsSortedTable($db, $col, $dir){
     }
     return $corps;
 }
-function searchCorp($db, $cols, $colSearch, $search){
+function searchCorp($db, $colSearch, $search){
     try {
         if($colSearch == NULL){
             $colSearch = 'id';
@@ -207,14 +200,7 @@ function searchCorp($db, $cols, $colSearch, $search){
         $stmt->execute();
         $corps = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $table = "<table>" . PHP_EOL;
-
-        if ($cols) {
-            $table .= "\t<tr>";
-            foreach ($cols as $col) {
-                $table .= "<th>$col</th>"; //build column headers as anchors ********************might need to re-purpose later***************************
-            }
-            $table .= "</tr>" . PHP_EOL;
-        }
+        $table .= "<tr><td>" . $stmt->rowCount() . " records found.</td></tr>". PHP_EOL;
         foreach($corps as $corp){
             $id = $corp['id'];  //might be redundant
             $readLink = "<a href='assets/read.php?id=$id'>Read</a>"; //made a var to dump into link
@@ -230,7 +216,7 @@ function searchCorp($db, $cols, $colSearch, $search){
         return $table;
 
     } catch (PDOException $e) {
-        die ("There was a problem getting the table of corporations");
+        die ("No Records Found");
     }
 
 }
@@ -240,9 +226,9 @@ function viewAllSearchCorp($db, $cols, $colSearch, $search){
         $stmt = $db->prepare($sql);
         $stmt->execute();
         $corps = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        print_r($corps);
-        $table = "<table>" . PHP_EOL;
 
+        $table = "<table>" . PHP_EOL;
+        $table .= "<tr><td>" . $stmt->rowCount() . " records found.</td></tr>". PHP_EOL;
         if ($cols) {
             $table .= "\t<tr>";
             foreach ($cols as $col) {
@@ -264,37 +250,14 @@ function viewAllSearchCorp($db, $cols, $colSearch, $search){
         return $table;
 
     } catch (PDOException $e) {
-        die ("There was a problem getting the table of corporations");
+        die ("No Records Found");
     }
 }
-function getSearch($cols){
-    $form = "<form method ='get' action ='#'>" . PHP_EOL;
-    $form .= "<table>" . PHP_EOL;
-    $form .= "<td>Sort Column</td>" . PHP_EOL;
-    $form .= "<td>" . PHP_EOL;
-    $form .= "<select name='col' value=''>" . PHP_EOL;
+function getDropDown($cols){
+    $form =  "<option value=''>Select...</option>" . PHP_EOL;
     foreach($cols as $col){
-        $form .=  "<option value=''>Select...</option>" . PHP_EOL;
-        $form .= "<option value='" . $col['id'] . "'>" . "id" . "</option>";
-        $form .= "<option value='" . $col['corp'] . "'>" . "Corporation" . "</option>";
-        $form .= "<option value='" . $col['incorp_dt'] . "'>" . "Email" . "</option>";
-        $form .= "<option value='" . $col['email'] . "'>" . "Owner" . "</option>";
-        $form .= "<option value='" . $col['zipcode'] . "'>" . "Zip Code" . "</option>";
-        $form .= "<option value='" . $col['owner'] . "'>" . "Owner" . "</option>";
-        $form .= "<option value='" . $col['phone'] . "'>" . "Phone" . "</option>";
+        $form .= "<option value='" . $col . "'>" . $col . "</option>";
     }
-    $form .= "</select>" . PHP_EOL;
-    $form .= "</td>" . PHP_EOL;
-    $form .= "<td>Ascending:</td><td><input type=\"radio\" name=\"dir\" value=\"ASC\" /></td>" . PHP_EOL;
-    $form .= "<td>Descending:</td><td><input type=\"radio\" name=\"dir\" value=\"DESC\" /></td>" . PHP_EOL;
-    $form .= "</table>" . PHP_EOL;
-
-    $form .= "<input type=\"submit\" id=\"btn\" name=\"action\" value=\"sort\" />". PHP_EOL;
-   // $form .= "<input type=\"hidden\" name=\"action\" value=\"sort\" />". PHP_EOL;
-
-    $form .= "<input type=\"submit\" id=\"btn\" name=\"action\" value=\"reset\" />>". PHP_EOL;
-   // $form .= "<input type=\"hidden\" name=\"action\" value=\"reset\" />". PHP_EOL;
-    $form .= "</form>";
     return $form;
 }
 
