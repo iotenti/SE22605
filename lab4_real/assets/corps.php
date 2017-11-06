@@ -37,6 +37,36 @@ function getCorpsAsTable($db, $corps, $cols = null){ //PROBLEM COULD BE WITH TRY
         die("There was a problem");
     }
 }
+function getViewALLCorpsAsTable($db, $corps, $cols = null){ //PROBLEM COULD BE WITH TRY/CATCH
+    try{
+        setlocale(LC_MONETARY, 'en_US.UTF-8');
+        if(count($corps) > 0) { //if there is data, pop it out into a table.
+            $table = "<table>" . PHP_EOL;
+            if ($cols) {
+                $table .= "\t<tr>";
+                foreach ($cols as $col) {
+                    $table .= "<th>$col</th>"; //build column headers as anchors ********************might need to re-purpose later***************************
+                }
+                $table .= "</tr>" . PHP_EOL;
+            }
+            foreach($corps as $corp){
+                $table .= "<tr><td>" . $corp['corp'] . "</td>";
+                $table .= "<td>" . $corp['email'] . "</td>";
+                $table .= "<td>" . date("m/d/Y", strtotime($corp['incorp_dt'])) . "</td>";
+                $table .= "<td>" . $corp['owner'] . "</td>";
+                $table .= "<td>" . $corp['phone'] . "</td>";
+                $table .= "<td>" . $corp['zipcode'] . "</td></tr>";
+                $table .= "</table>";
+            }
+            $table .= "</table>" . PHP_EOL;
+        } else { //if there is not any data, say so.
+            $table = "NO DATA" . PHP_EOL;
+        }
+        return $table; //return it.
+    }catch(PDOException $e){ //if it fails, throw the exception and display error message.
+        die("There was a problem");
+    }
+}
 function getCorpName($db){
     try{
         $sql = "SELECT * FROM corps";  //select statement. selects all from actors. Set to a var.
@@ -151,6 +181,12 @@ function getCorporations($db) {
 
 function getCorpsAsSortedTable($db, $col, $dir){
     try {
+        if($col == NULL){
+            $col = "id";
+        }
+        if($dir == NULL){
+            $dir = "ASC";
+        }
         $sql = "SELECT * FROM corps ORDER BY $col $dir";
         $stmt = $db->prepare($sql);
         $stmt->execute();
@@ -163,11 +199,13 @@ function getCorpsAsSortedTable($db, $col, $dir){
 }
 function searchCorp($db, $cols, $colSearch, $search){
     try {
+        if($colSearch == NULL){
+            $colSearch = 'id';
+        }
         $sql = "SELECT * FROM corps WHERE $colSearch LIKE '%$search%'";
         $stmt = $db->prepare($sql);
         $stmt->execute();
         $corps = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        print_r($corps);
         $table = "<table>" . PHP_EOL;
 
         if ($cols) {
@@ -177,26 +215,16 @@ function searchCorp($db, $cols, $colSearch, $search){
             }
             $table .= "</tr>" . PHP_EOL;
         }
-        foreach ($corps as $corp) {
-            foreach($corps as $corp){
-                $id = $corp['id'];  //might be redundant
-                $readLink = "<a href='assets/read.php?id=$id'>Read</a>"; //made a var to dump into link
-                $updateLink = "<a href='assets/update.php?id=$id'>Update</a>";
-                $deleteLink = "<a href='assets/delete.php?id=$id'>Delete</a>";
+        foreach($corps as $corp){
+            $id = $corp['id'];  //might be redundant
+            $readLink = "<a href='assets/read.php?id=$id'>Read</a>"; //made a var to dump into link
+            $updateLink = "<a href='assets/update.php?id=$id'>Update</a>";
+            $deleteLink = "<a href='assets/delete.php?id=$id'>Delete</a>";
 
-                $table .= "<tr><td>" . $corp['corp'] . "</td>";
-                $table .= "<td>$readLink</td>";
-                $table .= "<td>$updateLink</td>";
-                $table .= "<td>$deleteLink</td>";
-            }
-            $table .= "<tr><td>" . $corp['id'] . "</td>";
-            $table .= "<td>" . $corp['corp'] . "</td>";
-            $table .= "<td>" . date('m/d/Y', strtotime($corp['incorp_dt'])) . "</td>";
-            $table .= "<td>" . $corp['email'] . "</td>";
-            $table .= "<td>" . $corp['zipcode'] . "</td>";
-            $table .= "<td>" . $corp['owner'] . "</td>";
-            $table .= "<td>" . $corp['phone'] . "</td>";
-            $table .= "</tr>" . PHP_EOL;
+            $table .= "<tr><td>" . $corp['corp'] . "</td>";
+            $table .= "<td>$readLink</td>";
+            $table .= "<td>$updateLink</td>";
+            $table .= "<td>$deleteLink</td>";
         }
         $table .= "</table>" . PHP_EOL;
         return $table;
