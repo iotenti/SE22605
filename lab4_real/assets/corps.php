@@ -17,15 +17,16 @@ function getCorpsAsTable($db, $corps, $cols = null){ //PROBLEM COULD BE WITH TRY
                 }
                 $table .= "</tr>" . PHP_EOL;
             }
-            foreach ($corps as $corp) {
-                $table .= "<tr><td>" . $corp['id'] . "</td>";
-                $table .= "<td>" . $corp['corp'] . "</td>";
-                $table .= "<td>" . date('m/d/Y', strtotime($corp['incorp_dt'])) . "</td>";
-                $table .= "<td>" . $corp['email'] . "</td>";
-                $table .= "<td>" . $corp['zipcode'] . "</td>";
-                $table .= "<td>" . $corp['owner'] . "</td>";
-                $table .= "<td>" . $corp['phone'] . "</td>";
-                $table .= "</tr>" . PHP_EOL;
+            foreach($corps as $corp){
+                $id = $corp['id'];  //might be redundant
+                $readLink = "<a href='assets/read.php?id=$id'>Read</a>"; //made a var to dump into link
+                $updateLink = "<a href='assets/update.php?id=$id'>Update</a>";
+                $deleteLink = "<a href='assets/delete.php?id=$id'>Delete</a>";
+
+                $table .= "<tr><td>" . $corp['corp'] . "</td>";
+                $table .= "<td>$readLink</td>";
+                $table .= "<td>$updateLink</td>";
+                $table .= "<td>$deleteLink</td>";
             }
             $table .= "</table>" . PHP_EOL;
         } else { //if there is not any data, say so.
