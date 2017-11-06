@@ -1,8 +1,12 @@
 <?php
 require_once("assets/dbconn.php"); //require this file or fatal error.
     require_once("assets/corps.php");
+    ?>
+    <div style="float:right; margin-top:105px; margin-right:700px"><?php
     include_once("assets/sortform.php");
-    include_once("assets/searchform.php");
+    include_once("assets/searchform.php");?>
+    </div>
+<?php
     $db = dbConn(); // run function that connects to the db and store that connection in a var called db.
 
     $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING) ??
@@ -13,7 +17,7 @@ require_once("assets/dbconn.php"); //require this file or fatal error.
     $colSearch = filter_input(INPUT_GET, 'colSearch', FILTER_SANITIZE_STRING) ?? NULL;
     $search = filter_input(INPUT_GET, 'search', FILTER_SANITIZE_STRING) ?? NULL;
     ?>
-
+<div style="margin-left:25px">
 <h1>Corporation Name:</h1>
     <a href='assets/add.php'>Add A Record</a>
     <br/>
@@ -46,3 +50,4 @@ switch ($action) {
 
 include_once("assets/footer.php"); //call the footer once.
 ?>
+</div>

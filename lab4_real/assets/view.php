@@ -1,8 +1,11 @@
 <?php
 require_once("dbconn.php"); //require this file or fatal error.
-require_once("corps.php");
-include_once("sortform.php");
-include_once("searchform.php");
+require_once("corps.php");?>
+<div style="float:right; margin-top:105px; margin-right:20px"><?php
+    include_once("sortform.php");
+    include_once("searchform.php");?>
+</div>
+<?php
 $db = dbConn(); // run function that connects to the db and store that connection in a var called db.
 
 $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING) ??
@@ -13,7 +16,7 @@ $col = filter_input(INPUT_GET, 'col', FILTER_SANITIZE_STRING) ?? NULL;
 $colSearch = filter_input(INPUT_GET, 'colSearch', FILTER_SANITIZE_STRING) ?? NULL;
 $search = filter_input(INPUT_GET, 'search', FILTER_SANITIZE_STRING) ?? NULL;
 ?>
-
+<div style="margin-left:25px">
     <h1>Corporation Name:</h1>
     <a href='add.php'>Add A Record</a>
     <br/>
@@ -49,3 +52,4 @@ switch ($action) {
 
 include_once("footer.php"); //call the footer once.
 ?>
+</div>
