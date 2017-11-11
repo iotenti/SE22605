@@ -30,15 +30,16 @@ function getCorpsAsTable($db, $corps){ //PROBLEM COULD BE WITH TRY/CATCH
         die("There was a problem");
     }
 }
-function getViewAllCorpsAsTable($db, $corps, $cols = null){ //PROBLEM COULD BE WITH TRY/CATCH
-    try{
+function getViewAllCorpsAsTable($db, $corps, $cols = null) //I made a sortable table to show all columns. this is it
+{
+    try {
         setlocale(LC_MONETARY, 'en_US.UTF-8');
-        if(count($corps) > 0) { //if there is data, pop it out into a table.
+        if (count($corps) > 0) { //if there is data, pop it out into a table.
             $table = "<table>" . PHP_EOL;
             if ($cols) {
                 $table .= "\t<tr>";
                 foreach ($cols as $col) {
-                    $table .= "<th>$col</th>"; //build column headers as anchors ********************might need to re-purpose later***************************
+                    $table .= "<th>$col</th>"; //build column headers as anchors
                 }
                 $table .= "</tr>" . PHP_EOL;
             }
@@ -57,8 +58,8 @@ function getViewAllCorpsAsTable($db, $corps, $cols = null){ //PROBLEM COULD BE W
             $table = "NO DATA" . PHP_EOL;
         }
         return $table; //return it.
-    }catch(PDOException $e){ //if it fails, throw the exception and display error message.
-        die("There was a problem");
+    } catch (PDOException $e) {
+        die("There was a problem"); //if it fails, throw the exception and display error message.
     }
 }
 function getCorpName($db){
@@ -174,10 +175,10 @@ function getCorporations($db) {
 }
 function getCorpsAsSortedTable($db, $col, $dir){
     try {
-        if($col == NULL){
+        if($col == NULL){ //make a default value for sorting
             $col = "id";
         }
-        if($dir == NULL){
+        if($dir == NULL){ //default value of ORDER BY
             $dir = "ASC";
         }
         $sql = "SELECT * FROM corps ORDER BY $col $dir";
@@ -192,10 +193,10 @@ function getCorpsAsSortedTable($db, $col, $dir){
 }
 function searchCorp($db, $colSearch, $search){
     try {
-        if($colSearch == NULL){
+        if($colSearch == NULL){ //default value for where if it's NULL
             $colSearch = 'id';
         }
-        $sql = "SELECT * FROM corps WHERE $colSearch LIKE '%$search%'";
+        $sql = "SELECT * FROM corps WHERE $colSearch LIKE '%$search%'"; //search statement
         $stmt = $db->prepare($sql);
         $stmt->execute();
         $corps = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -220,7 +221,7 @@ function searchCorp($db, $colSearch, $search){
     }
 
 }
-function viewAllSearchCorp($db, $cols, $colSearch, $search){
+function viewAllSearchCorp($db, $cols, $colSearch, $search){ //I made a searchable table that displays all columns, also.
     try {
         $sql = "SELECT * FROM corps WHERE $colSearch LIKE '%$search%'";
         $stmt = $db->prepare($sql);
@@ -253,7 +254,7 @@ function viewAllSearchCorp($db, $cols, $colSearch, $search){
         die ("No Records Found");
     }
 }
-function getDropDown($cols){
+function getDropDown($cols){ //builds drop down menu for forms.
     $form =  "<option value=''>Select...</option>" . PHP_EOL;
     foreach($cols as $col){
         $form .= "<option value='" . $col . "'>" . $col . "</option>";
