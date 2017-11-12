@@ -12,21 +12,20 @@ $db = dbConn();
 $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING) ??
 filter_input(INPUT_POST, 'action', FILTER_SANITIZE_STRING) ?? NULL;
 
-$site = filter_input(INPUT_GET, 'url', FILTER_SANITIZE_STRING) ?? NULL;
+$url = filter_input(INPUT_GET, 'url', FILTER_SANITIZE_STRING) ?? NULL;
 
 switch ($action){
     case 'url':
         $pattern = "@^(http\:\/\/|https\:\/\/)?([a-z0-9][a-z0-9\-]*\.)+[a-z0-9][a-z0-9\-]*$@i";
-        $valid = preg_match($pattern, $site);
+        $valid = preg_match($pattern, $url);
 
         if ($valid) {
-            addSite($db, $site);
-            echo getSitesAsTable($db);
+            addSite($db, $url);
+            echo doesRecordExist($db, $url);
+            //echo getSitesAsTable($db);
         } else {
-            echo "u stink";
+            echo "Please input a valid website.";
         }
-//preg_match_all($pattern, )
-
 }
 
 

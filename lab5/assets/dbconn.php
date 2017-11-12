@@ -17,6 +17,7 @@ function dbConn(){ //function to connect to database
         die("There was a problem connecting to the database, please do a better job.");
     }
 }
+/*
 function getColumnNames($db, $tbl){
 
     $sql = "select column_name from information_schema.columns where lower(table_name)=lower('". $tbl . "')";
@@ -38,3 +39,4 @@ function getColumnNames($db, $tbl){
     }
     return $column_names;
 }
+*/

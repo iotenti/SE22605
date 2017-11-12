@@ -43,3 +43,22 @@ function addSite($db, $site){ //function to add actor to the database
         die("There was a problem adding the corporation");
     }
 }
+function doesRecordExist($db, $url){
+    try{
+        $sql = $db->prepare("SELECT * FROM sites WHERE `site` LIKE '%$url%'");
+        $sql->execute();
+        $sites = $sql->fetchALL(PDO::FETCH_ASSOC);
+        $table = "<table>" . PHP_EOL;
+        foreach($sites as $site){
+            $table .= "<tr><td>" . $site['site'] . "</td>";
+            $table .= "<td>" . date("m/d/Y", strtotime($site['date'])) . "</td>";
+            $table .= "</tr>";
+        }
+        $table .= "</table>" . PHP_EOL;
+
+        return $table; //return it
+    }catch(PDOException $e){//if it fails, throw the exception and display error message.
+        die("There was a problem");
+    }
+
+}
