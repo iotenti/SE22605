@@ -15,7 +15,8 @@ $site = filter_input(INPUT_GET, 'url', FILTER_SANITIZE_STRING) ?? NULL;
             <td><input type="text" name="url" value="<?php $site ?>"></td>
         </tr>
        <tr>
-           <td><input type="Submit" name="action" value="url" /></td>
+           <td><input type="Submit" name="action" value="Submit" /></td>
+           <td><input type="Submit" name="action" value="View All" /></td>
        </tr>
 
     </table>
