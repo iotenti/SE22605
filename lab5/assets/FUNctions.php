@@ -33,8 +33,9 @@ function addSite($db, $url){ //function to add actor to the database
         $sql = $db->prepare("INSERT INTO sites VALUES (null, :site, NOW())"); //create a var = to sql insert statement.
         $sql->bindParam(':site', $url); //bind "place holders" to vars passed from forms. helps with security.
         $sql->execute();
-        $message = $sql->rowCount() . " record added.";
-        echo $message;
+        $pk = $db->lastInsertId();
+        //$message = $sql->rowCount() . " record added.";
+        return $pk;
     }catch (PDOException $e) { //if it fails, throw the exception and display error message.
         die("There was a problem adding the corporation");
     }
@@ -50,8 +51,11 @@ function URLisValid($db, $url){
             curlIt($url);
             include_once("assets/form.php");
         }else{
-            echo addSite($db, $url); //if not, add it.
-            curlIt($url);
+            $pk = addSite($db, $url); //if not, add it.
+            echo "1 record added.";
+            $file = curlIt($url);
+            findLinks($db, $file, $pk);
+            //displayLinks($file);
         }
     }catch(PDOException $e){//if it fails, throw the exception and display error message.
         die("There was a problem");
@@ -62,40 +66,50 @@ function curlIt($url){
     if($file == false){
         echo "There was an error getting file contents";
     }else{
-        echo findLinks($file);
         return $file;
     }
 }
-function findLinks($file){
+function displayLinks($file){ //MAKE DROP BOX LATER**********
     $pattern = "/(https?:\/\/[\da-z\.-]+\.[a-z\.]{2,6}[\/\w \.-]+)/";
     preg_match_all($pattern, $file, $matches, PREG_PATTERN_ORDER);
-    $table = "<table>";
+
+    $table = "<h1>Links</h1>" . PHP_EOL;
+    $table .= "<table>" . PHP_EOL;
     if (is_array($matches) || is_object($matches))
     {
-
         $tempArray = array_unique($matches[1]);
         $tempArray = array_values($tempArray);
-        print_r($tempArray);
+
         foreach ($tempArray as $url){
             $table .= "<tr><td>" . $url . "</td></tr>";
         }
+
     }  else {
         echo "NOT AN ARRAY";
     }
     $table .= "</table>";
     return $table;
 }
-/*function unique_multidim_array($matches, $key) {
-    $temp_array = array();
-    $i = 0;
-    $key_array = array();
+function findLinks($db, $file, $pk){
+    $pattern = "/(https?:\/\/[\da-z\.-]+\.[a-z\.]{2,6}[\/\w \.-]+)/";
+    preg_match_all($pattern, $file, $matches, PREG_PATTERN_ORDER);
 
-    foreach($matches as $val) {
-        if (!in_array($val[$key], $key_array)) {
-            $key_array[$i] = $val[$key];
-            $temp_array[$i] = $val;
+    if (is_array($matches) || is_object($matches))
+    {
+        $tempArray = array_unique($matches[1]);
+        $tempArray = array_values($tempArray);
+
+        foreach ($tempArray as $url){
+
+             $sql = $db->perpare("INSERT INTO sitelinks VALUES (:link, :site_id)");
+             $sql ->bindParams(':link', $url);
+             $sql ->bindParams(':site_id', $pk);
+             $sql->execute();
+             $message = $sql->rowCount() . "records added.";
         }
-        $i++;
+
+    }  else {
+        echo "NOT AN ARRAY";
     }
-    return $temp_array;
-}*/
+    return $message;
+}
