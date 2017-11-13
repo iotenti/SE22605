@@ -5,14 +5,14 @@
  * Date: 11/12/2017
  * Time: 12:36 PM
  */
-
-$site = filter_input(INPUT_GET, 'url', FILTER_SANITIZE_STRING) ?? NULL;
+require_once ("assets/dbconn.php");
+$url = filter_input(INPUT_GET, 'url', FILTER_SANITIZE_STRING) ?? NULL;
 ?>
 <form method="get" action="#">
     <table>
         <tr>
             <td>Site:</td>
-            <td><input type="text" name="url" value="<?php $site ?>"></td>
+            <td><input type="text" name="url" value="<?php echo $url ?>"></td>
         </tr>
        <tr>
            <td><input type="Submit" name="action" value="Submit" /></td>

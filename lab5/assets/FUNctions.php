@@ -28,10 +28,10 @@ function getSitesAsTable($db){
         die("There was a problem");
     }
 }
-function addSite($db, $site){ //function to add actor to the database
+function addSite($db, $url){ //function to add actor to the database
     try{
         $sql = $db->prepare("INSERT INTO sites VALUES (null, :site, NOW())"); //create a var = to sql insert statement.
-        $sql->bindParam(':site', $site); //bind "place holders" to vars passed from forms. helps with security.
+        $sql->bindParam(':site', $url); //bind "place holders" to vars passed from forms. helps with security.
         $sql->execute();
         $message = $sql->rowCount() . " record added.";
         echo $message;
@@ -39,19 +39,29 @@ function addSite($db, $site){ //function to add actor to the database
         die("There was a problem adding the corporation");
     }
 }
-function doesRecordExist($db, $url){
-    try{
+function validURL($db, $url){
+    try{//CHECK TO SEE IF RECORD EXISTS
         $sql = $db->prepare("SELECT * FROM sites WHERE `site` LIKE '%$url%'");
         $sql->execute();
         $sites = $sql->fetchALL(PDO::FETCH_ASSOC);
 
-        if (count($sites) > 0){ //checks if record exists, if not adds the record
+        if (count($sites) > 0){ //checks if record exists, if it does, display error message and fall repopulated form
             echo "This record already exists";
-            include_once("form.php");
+            include_once("assets/form.php");
         }else{
-            echo addSite($db, $url);
+            echo addSite($db, $url); //if not, add it.
         }
     }catch(PDOException $e){//if it fails, throw the exception and display error message.
         die("There was a problem");
     }
+}
+function curlIt($url){
+    try{
+        $file = file_get_contents('$url'); //curl
+        return $file;
+    }catch(PDOException $e){
+        die("There was an error getting file contents");
+    }
+
+
 }
