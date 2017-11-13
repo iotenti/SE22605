@@ -39,7 +39,7 @@ function addSite($db, $url){ //function to add actor to the database
         die("There was a problem adding the corporation");
     }
 }
-function validURL($db, $url){
+function URLisValid($db, $url){
     try{//CHECK TO SEE IF RECORD EXISTS
         $sql = $db->prepare("SELECT * FROM sites WHERE `site` LIKE '%$url%'");
         $sql->execute();
@@ -68,6 +68,34 @@ function curlIt($url){
 }
 function findLinks($file){
     $pattern = "/(https?:\/\/[\da-z\.-]+\.[a-z\.]{2,6}[\/\w \.-]+)/";
-    $array = preg_split($pattern, $file);
-    echo print_r($array);
+    preg_match_all($pattern, $file, $matches, PREG_PATTERN_ORDER);
+    $table = "<table>";
+    if (is_array($matches) || is_object($matches))
+    {
+
+        $tempArray = array_unique($matches[1]);
+        $tempArray = array_values($tempArray);
+        print_r($tempArray);
+        foreach ($tempArray as $url){
+            $table .= "<tr><td>" . $url . "</td></tr>";
+        }
+    }  else {
+        echo "NOT AN ARRAY";
+    }
+    $table .= "</table>";
+    return $table;
 }
+/*function unique_multidim_array($matches, $key) {
+    $temp_array = array();
+    $i = 0;
+    $key_array = array();
+
+    foreach($matches as $val) {
+        if (!in_array($val[$key], $key_array)) {
+            $key_array[$i] = $val[$key];
+            $temp_array[$i] = $val;
+        }
+        $i++;
+    }
+    return $temp_array;
+}*/
