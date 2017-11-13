@@ -47,21 +47,27 @@ function validURL($db, $url){
 
         if (count($sites) > 0){ //checks if record exists, if it does, display error message and fall repopulated form
             echo "This record already exists";
+            curlIt($url);
             include_once("assets/form.php");
         }else{
             echo addSite($db, $url); //if not, add it.
+            curlIt($url);
         }
     }catch(PDOException $e){//if it fails, throw the exception and display error message.
         die("There was a problem");
     }
 }
 function curlIt($url){
-    try{
-        $file = file_get_contents('$url'); //curl
+    $file = file_get_contents($url);
+    if($file == false){
+        echo "There was an error getting file contents";
+    }else{
+        echo findLinks($file);
         return $file;
-    }catch(PDOException $e){
-        die("There was an error getting file contents");
     }
-
-
+}
+function findLinks($file){
+    $pattern = "/(https?:\/\/[\da-z\.-]+\.[a-z\.]{2,6}[\/\w \.-]+)/";
+    $array = preg_split($pattern, $file);
+    echo print_r($array);
 }
