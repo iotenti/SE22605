@@ -5,7 +5,7 @@
  * Date: 11/12/2017
  * Time: 12:06 PM
  */
-function getSitesAsTable($db){
+function getSitesAsDropDown($db){
     try{
         $sql = "SELECT * FROM sites";  //select statement. selects all from actors. Set to a var.
         $sql = $db->prepare($sql); //I think this plugs the statement into a method which helps to protect from sql injections.
@@ -52,9 +52,10 @@ function URLisValid($db, $url){
             include_once("assets/form.php");
         }else{
             $pk = addSite($db, $url); //if not, add it.
-            echo "1 record added.";
+            echo "<b>" . $url . "</b>" . " added to the database.";
             $file = curlIt($url);
-            findLinks($db, $file, $pk);
+            insertLinks($db, $file, $pk);
+            echo displayLinks($file, $url);
             //displayLinks($file);
         }
     }catch(PDOException $e){//if it fails, throw the exception and display error message.
@@ -69,11 +70,12 @@ function curlIt($url){
         return $file;
     }
 }
-function displayLinks($file){ //MAKE DROP BOX LATER**********
+function displayLinks($file, $url){ //MAKE DROP BOX LATER**********
     $pattern = "/(https?:\/\/[\da-z\.-]+\.[a-z\.]{2,6}[\/\w \.-]+)/";
     preg_match_all($pattern, $file, $matches, PREG_PATTERN_ORDER);
 
-    $table = "<h1>Links</h1>" . PHP_EOL;
+    $table = "<h1>Success!</h1>" . PHP_EOL;
+    $table .= "<h4>Links from " . $url ."</h4>" . PHP_EOL;
     $table .= "<table>" . PHP_EOL;
     if (is_array($matches) || is_object($matches))
     {
@@ -90,26 +92,29 @@ function displayLinks($file){ //MAKE DROP BOX LATER**********
     $table .= "</table>";
     return $table;
 }
-function findLinks($db, $file, $pk){
-    $pattern = "/(https?:\/\/[\da-z\.-]+\.[a-z\.]{2,6}[\/\w \.-]+)/";
-    preg_match_all($pattern, $file, $matches, PREG_PATTERN_ORDER);
+function insertLinks($db, $file, $pk){
+    try{
+        $pattern = "/(https?:\/\/[\da-z\.-]+\.[a-z\.]{2,6}[\/\w \.-]+)/";
+        preg_match_all($pattern, $file, $matches, PREG_PATTERN_ORDER);
 
-    if (is_array($matches) || is_object($matches))
-    {
-        $tempArray = array_unique($matches[1]);
-        $tempArray = array_values($tempArray);
+        if (is_array($matches) || is_object($matches))
+        {
+            $tempArray = array_unique($matches[1]);
+            $tempArray = array_values($tempArray);
 
-        foreach ($tempArray as $url){
-
-             $sql = $db->perpare("INSERT INTO sitelinks VALUES (:link, :site_id)");
-             $sql ->bindParams(':link', $url);
-             $sql ->bindParams(':site_id', $pk);
-             $sql->execute();
-             $message = $sql->rowCount() . "records added.";
+            foreach ($tempArray as $url){
+                $sql = $db->prepare("INSERT INTO sitelinks (site_id, link) VALUES (:site_id, :link)");
+                $sql->bindParam(':site_id', $pk);
+                $sql->bindParam(':link', $url);
+                $sql->execute();
+                $message = $sql->rowCount() . "records added.";
+            }
+        }  else {
+            echo "NOT AN ARRAY";
         }
-
-    }  else {
-        echo "NOT AN ARRAY";
+        return $message;
+    }catch(PDOException $e){
+        die("there was an error inserting links into the database");
     }
-    return $message;
+
 }
