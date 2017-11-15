@@ -24,6 +24,10 @@ function getSitesAsDropDown($db){
         die("There was a problem creating drop down");
     }
 }
+/*
+function getLinksAsTable($db){
+    $sql = "SELECT * FROM sitelinks WHERE site_id = "
+}*/
 function addSite($db, $url){ //function to add actor to the database
     try{
         $sql = $db->prepare("INSERT INTO sites VALUES (null, :site, NOW())"); //create a var = to sql insert statement.
@@ -112,5 +116,9 @@ function insertLinks($db, $file, $pk){
     }catch(PDOException $e){
         die("there was an error inserting links into the database");
     }
-
+}
+function getPK($db, $url){
+    $sql = $db->prepare("SELECT * FROM sites WHERE site=$url");
+    $sql->execute();
+    //OUTPUT RECORD ID< USE IT FROM DROPDOWN LIST.
 }

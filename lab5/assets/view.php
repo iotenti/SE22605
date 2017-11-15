@@ -16,6 +16,6 @@ $dropDown = getSitesAsDropDown($db);
     <select name="url" value="">
         <?php echo $dropDown ?>
     </select>
-    <input type="Submit" name="action" value="Submit">
+    <input type="Submit" name="action" value="view links">
 </form>
 

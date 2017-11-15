@@ -15,6 +15,7 @@ filter_input(INPUT_POST, 'action', FILTER_SANITIZE_STRING) ?? NULL;
 
 $url = filter_input(INPUT_GET, 'url', FILTER_SANITIZE_STRING) ?? NULL;
 $url = filter_var($url, FILTER_SANITIZE_URL);
+
 switch ($action){
     case 'Submit':
         //$pattern = "@^(http\:\/\/|https\:\/\/)?([a-z0-9][a-z0-9\-]*\.)+[a-z0-9][a-z0-9\-]*$@i";
@@ -24,9 +25,10 @@ switch ($action){
         } else {
             echo "Please input a valid URL EX: http://google.com";
         }
-    case 'View All':
+    case 'view links':
         include_once ("assets/header.php");
         echo getSitesAsTable($db);
+        getPK($db, $url);
         include_once ("assets/footer.php");
 }
 include_once ("assets/footer.php");
