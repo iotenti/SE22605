@@ -12,20 +12,16 @@ function getSitesAsDropDown($db){
         $sql->execute(); //executes statement
         $sites = $sql->fetchALL(PDO::FETCH_ASSOC); //gets data and dumps it into var called corps.
         if($sql->rowCount() > 0){ //if there is data, pop it out into a table.
-            $table = "<div style='padding:15px; margin-top:25px;'>" . PHP_EOL;
-            $table .= "<table>" . PHP_EOL;
+            $dropDown = "<option value=''>Select...</option>" . PHP_EOL;
             foreach($sites as $site){
-                $table .= "<tr><td>" . $site['site'] . "</td>";
-                $table .= "<td>" . date("m/d/Y", strtotime($site['date'])) . "</td>";
+                $dropDown .= "<option value='" . $site['site'] . "'>" . $site['site'] . "</option>";
             }
-            $table .= "</table>" . PHP_EOL;
-            $table .= "</div>" . PHP_EOL;
         } else { //if there is not any data, say so.
-            $table = "NO DATA" . PHP_EOL;
+            $dropDown = "NO DATA" . PHP_EOL;
         }
-        return $table; //return it.
+        return $dropDown; //return it.
     }catch(PDOException $e){ //if it fails, throw the exception and display error message.
-        die("There was a problem");
+        die("There was a problem creating drop down");
     }
 }
 function addSite($db, $url){ //function to add actor to the database

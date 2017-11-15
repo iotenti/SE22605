@@ -11,6 +11,9 @@
 </head>
 <body>
 <header>
-    <nav></nav>
+    <nav>
+        <a href="index.php">Home</a> |
+        <a href="assets/view.php">View Sites</a>
+    </nav>
 </header>
 <section>
