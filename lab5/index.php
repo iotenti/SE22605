@@ -27,8 +27,11 @@ switch ($action){
         }
     case 'view links':
         include_once ("assets/header.php");
-        echo getSitesAsTable($db);
-        getPK($db, $url);
+        //echo getSitesAsTable($db);
+        echo "POOOPPPYY FARTSSSS CRAP";
+        echo $url;
+
+        //getPK($db, $url);
         include_once ("assets/footer.php");
 }
 include_once ("assets/footer.php");
