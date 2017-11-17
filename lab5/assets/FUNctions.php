@@ -11,6 +11,7 @@ function getSitesAsDropDown($db){
         $sql = $db->prepare($sql); //I think this plugs the statement into a method which helps to protect from sql injections.
         $sql->execute(); //executes statement
         $sites = $sql->fetchALL(PDO::FETCH_ASSOC); //gets data and dumps it into var called corps.
+
         if($sql->rowCount() > 0){ //if there is data, pop it out into a dropdown.
             $dropDown = "<option value=''>Select...</option>" . PHP_EOL;
             foreach($sites as $site){
@@ -20,6 +21,7 @@ function getSitesAsDropDown($db){
             $dropDown = "NO DATA" . PHP_EOL;
         }
         return $dropDown; //return it.
+
     }catch(PDOException $e){ //if it fails, throw the exception and display error message.
         die("There was a problem creating drop down");
     }
@@ -30,8 +32,8 @@ function addSite($db, $url){ //function to add actor to the database
         $sql->bindParam(':site', $url); //bind "place holders" to vars passed from forms. helps with security.
         $sql->execute();
         $pk = $db->lastInsertId();
-        //$message = $sql->rowCount() . " record added.";
-        return $pk;
+
+        return $pk; //return primary key
     }catch (PDOException $e) { //if it fails, throw the exception and display error message.
         die("There was a problem adding the corporation");
     }
@@ -44,10 +46,10 @@ function URLisValid($db, $url){
 
         if (count($sites) > 0){ //checks if record exists, if it does, display error message and repopulated form
             echo "This record already exists"; //error message if record exists
-            include_once("form.php");
+            include_once("submitForm.php");
         }else{ //if not, add it.
             $pk = addSite($db, $url); //function to add record to database // returns the primary key
-            echo "<b>" . $url . "</b>" . " added to the database."; //return success message
+            echo "<b>" . $url . "</b>" . " added to the database.<br />" ; //return success message
             $file = curlIt($url); //sends url to file that grabs all text and returns a string
             insertLinks($db, $file, $pk); //send primary key and file contents to this function which adds all the links to sitelinks table
             echo displayLinks($file, $url); //displays links in table
@@ -57,33 +59,32 @@ function URLisValid($db, $url){
     }
 }
 function curlIt($url){
-    $file = file_get_contents($url); //get file contents and stick it in $file var.
-    if($file == false){
-        echo "There was an error getting file contents";
-    }else{
+    $file = @file_get_contents($url); //get file contents and stick it in $file var.
         return $file;
-    }
 }
-function displayLinks($file, $url){ //MAKE DROP BOX LATER**********
+function displayLinks($file, $url){
     $pattern = "/(https?:\/\/[\da-z\.-]+\.[a-z\.]{2,6}[\/\w \.-]+)/";
-    preg_match_all($pattern, $file, $matches, PREG_PATTERN_ORDER);
+    preg_match_all($pattern, $file, $matches, PREG_PATTERN_ORDER); //finds all links
 
-    $table = "<h1>Success!</h1>" . PHP_EOL; //message
-    $table .= "<h4>Links from " . $url ."</h4>" . PHP_EOL;
-    $table .= "<table>" . PHP_EOL;
-    if (is_array($matches) || is_object($matches)) //check if it is an array
+    if ($file === false) //check file get_contents was successful
     {
+        $table = "<table>";
+        //error message being printed out by insertLinks()
+    }  else { //if so, print out table of links
+
+        $table = "<h1>Success!</h1>" . PHP_EOL; //message
+        $table .= "<h4>Links from " . $url ."</h4>" . PHP_EOL;
+        $table .= "<table>" . PHP_EOL;
+
         $tempArray = array_unique($matches[1]); //method used to take out duplicate links
         $tempArray = array_values($tempArray); //method used to squash array down after duplicates were removed
 
         foreach ($tempArray as $url){
             $table .= "<tr><td>" . $url . "</td></tr>"; //stick it in a table
         }
-
-    }  else { //if not an array, say so.
-        echo "NOT AN ARRAY";
     }
     $table .= "</table>";
+
     return $table; //return table
 }
 function insertLinks($db, $file, $pk){
@@ -91,8 +92,10 @@ function insertLinks($db, $file, $pk){
         $pattern = "/(https?:\/\/[\da-z\.-]+\.[a-z\.]{2,6}[\/\w \.-]+)/"; //pattern used to find links in the string
         preg_match_all($pattern, $file, $matches, PREG_PATTERN_ORDER); // searches the string for matches using the pattern above.
 
-        if (is_array($matches) || is_object($matches))//checks if this is an array
+        if ($file === false)//checks if this is an array
         {
+            echo "There was a problem inserting links into database. No links found <br />";
+        }  else {
             $tempArray = array_unique($matches[1]);
             $tempArray = array_values($tempArray);
 
@@ -102,11 +105,10 @@ function insertLinks($db, $file, $pk){
                 $sql->bindParam(':link', $url);
                 $sql->execute();
                 $message = $sql->rowCount() . "records added.";
+
+                return $message; //return message if successful
             }
-        }  else {
-            echo "NOT AN ARRAY"; //if not an array, print error.
         }
-        return $message; //return message if successful
     }catch(PDOException $e){ //if failure, catch here and print out message.
         die("there was an error inserting links into the database");
     }

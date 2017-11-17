@@ -16,20 +16,6 @@ $url = filter_input(INPUT_GET, 'url', FILTER_SANITIZE_STRING) ?? NULL;
         </tr>
        <tr>
            <td><input type="Submit" name="action" value="Submit" /></td>
-           <td><input type="Submit" name="action" value="View All" /></td>
        </tr>
-
     </table>
 </form>
-<?php
-// create an array to store valid links
-// loop through all the links
-// use this for each one:
-// if (subpos($whatever[$i], "http")) {
-    //found one
-    // so therefore add it to the array of valid links
-// } else {
-    // didnt
-// }
-
-?>
