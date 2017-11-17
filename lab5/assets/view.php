@@ -30,7 +30,6 @@ switch($action){
         $rowCount = getRowCountForSiteLinks($db, $pk); //gets rowCount of all associated links
         echo getDateStored($db, $url, $rowCount); //pass rowcount to this function which displays it along with the date the record was stored, and retrieved.
         echo getLinksForDropDown($db, $pk); //displays links for selected record.
-
         include_once ("footer.php");
 }
 ?>
