@@ -20,7 +20,7 @@ switch ($action){
     case 'Submit':
         //$pattern = "@^(http\:\/\/|https\:\/\/)?([a-z0-9][a-z0-9\-]*\.)+[a-z0-9][a-z0-9\-]*$@i";
         //$valid = preg_match($pattern, $url);
-        if (filter_var($url, FILTER_VALIDATE_URL)) { //checks if URL is valid. if so, kick into this function.
+        if (filter_var($url, FILTER_VALIDATE_URL)) { //checks if URL is valid. if so, kick into this function. That adds the record
             echo URLisValid($db, $url);
         } else {
             echo "Please input a valid URL EX: http://google.com";
@@ -28,8 +28,6 @@ switch ($action){
     case 'view links':
         include_once ("assets/header.php");
         //echo getSitesAsTable($db);
-        echo "POOOPPPYY FARTSSSS CRAP";
-        echo $url;
 
         //getPK($db, $url);
         include_once ("assets/footer.php");

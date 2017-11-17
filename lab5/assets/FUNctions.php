@@ -42,24 +42,22 @@ function URLisValid($db, $url){
         $sql->execute();
         $sites = $sql->fetchALL(PDO::FETCH_ASSOC);
 
-        if (count($sites) > 0){ //checks if record exists, if it does, display error message and fall repopulated form
-            echo "This record already exists";
-            curlIt($url);
-            include_once("assets/form.php");
-        }else{
-            $pk = addSite($db, $url); //if not, add it.
-            echo "<b>" . $url . "</b>" . " added to the database.";
-            $file = curlIt($url);
-            insertLinks($db, $file, $pk);
-            echo displayLinks($file, $url);
-            //displayLinks($file);
+        if (count($sites) > 0){ //checks if record exists, if it does, display error message and repopulated form
+            echo "This record already exists"; //error message if record exists
+            include_once("form.php");
+        }else{ //if not, add it.
+            $pk = addSite($db, $url); //function to add record to database // returns the primary key
+            echo "<b>" . $url . "</b>" . " added to the database."; //return success message
+            $file = curlIt($url); //sends url to file that grabs all text and returns a string
+            insertLinks($db, $file, $pk); //send primary key and file contents to this function which adds all the links to sitelinks table
+            echo displayLinks($file, $url); //displays links in table
         }
     }catch(PDOException $e){//if it fails, throw the exception and display error message.
         die("There was a problem");
     }
 }
 function curlIt($url){
-    $file = file_get_contents($url);
+    $file = file_get_contents($url); //get file contents and stick it in $file var.
     if($file == false){
         echo "There was an error getting file contents";
     }else{
@@ -118,12 +116,34 @@ function getPK($db, $url){ //passed url from drop down menu
         $sql = $db->prepare("SELECT site_id FROM sites WHERE site='$url'"); //ping the db to get the primary key
         $sql->bindParam(':site', $url);
         $sql->execute();
-        $pk = $sql->fetchALL(PDO::FETCH_ASSOC); //get primary key
+        $pk = $sql->fetchALL(PDO::FETCH_ASSOC);
 
+        foreach ($pk as $primaryKey){ //assign primary key to a variable to return.
+            $result = $primaryKey['site_id'];
+        }
     }catch(PDOException $e){
         die("There was a problem getting records from the db");
     }
-    return $pk;
+    return $result;
+}
+function getDateStored($db, $url, $rowCount){ //passed url from drop down menu
+    try{
+        $sql = $db->prepare("SELECT date FROM sites WHERE site='$url'"); //ping the db to get the primary key
+        $sql->bindParam(':site', $url);
+        $sql->execute();
+        $date = $sql->fetchALL(PDO::FETCH_ASSOC);
+
+        foreach ($date as $dateStored){ //assign primary key to a variable to return.
+            $result =  date('m/d/Y', strtotime( $dateStored['date']));
+        }
+        date_default_timezone_set("America/New_York"); //set time zone
+        $now = date("m/d/y g:i a"); //get current date and time
+        $message = "<h3>" . $rowCount . " links from " . $url . "</h3>";
+        $message .= "<h5> Stored on " .$result. ". Retrieved " . $now . "</h5>"; //message of the url, along with date stored and current date/time
+    }catch(PDOException $e){
+        die("There was a problem getting records from the db");
+    }
+    return $message;
 }
 function getLinksForDropDown($db, $pk){
     try{
@@ -136,7 +156,8 @@ function getLinksForDropDown($db, $pk){
 
             $table = "<table>" . PHP_EOL;
             foreach($links as $link){
-                $table .= "<tr><td><a href='" . $link . "'></a></td></tr>";
+                $table .= "<tr><td><a href='" . $link['link'] . "' target='popup'>" . $link['link'] . "</a></td></tr>"; //it's hard to tell if this
+                // "target="popup" attribute is doing anything because it pops up in a new window anyway. would target="_blank" be better?
             }
             $table .= "</table>" . PHP_EOL;
         }else{
@@ -146,4 +167,13 @@ function getLinksForDropDown($db, $pk){
         die("There was a problem getting the links from the db");
     }
     return $table;
+}
+function getRowCountForSiteLinks($db, $pk){
+    $sql = $db->prepare("SELECT * FROM sitelinks WHERE site_id ='$pk'"); //search sitelinks table for links with foreign key = primary key just retrieved
+    $sql->bindParam(':site_id', $pk);
+    $sql->execute();
+   // $links = $sql->fetchALL(PDO::FETCH_ASSOC); //get array of sites.
+
+    $rowCount = $sql->rowCount();
+    return $rowCount;
 }

@@ -25,9 +25,12 @@ $dropDown = getSitesAsDropDown($db);
 <?php
 switch($action){
     case 'view links':
-        include_once ("header.php");
-        $pk = getPK($db, $url);
-        echo getLinksForDropDown($db, $pk);
+        include_once ("header.php"); //choose a website
+        $pk = getPK($db, $url); //gets primary key of website
+        $rowCount = getRowCountForSiteLinks($db, $pk); //gets rowCount of all associated links
+        echo getDateStored($db, $url, $rowCount); //pass rowcount to this function which displays it along with the date the record was stored, and retrieved.
+        echo getLinksForDropDown($db, $pk); //displays links for selected record.
+
         include_once ("footer.php");
 }
 ?>

@@ -12,8 +12,8 @@
 <body>
 <header>
     <nav>
-        <a href="index.php">Home</a> |
-        <a href="assets/view.php">View Sites</a>
+        <a href="/index.php">Home</a> |
+        <a href="view.php">View Sites</a>
     </nav>
 </header>
 <section>
