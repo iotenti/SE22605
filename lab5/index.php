@@ -21,7 +21,7 @@ $url = filter_var($url, FILTER_SANITIZE_URL);
 
 switch ($action){
     case 'Submit':
-        if (filter_var($url, FILTER_VALIDATE_URL)) { //checks if URL is valid. if so, kick into this function. That adds the record
+        if (filter_var($url, FILTER_VALIDATE_URL, FILTER_FLAG_HOST_REQUIRED)) { //checks if URL is valid. if so, kick into this function. That adds the record
             echo URLisValid($db, $url);
         } else {
             echo "Please input a valid URL EX: http://google.com";

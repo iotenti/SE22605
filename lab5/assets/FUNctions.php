@@ -52,7 +52,7 @@ function URLisValid($db, $url){
             echo "<b>" . $url . "</b>" . " added to the database.<br />" ; //return success message
             $file = curlIt($url); //sends url to file that grabs all text and returns a string
             insertLinks($db, $file, $pk); //send primary key and file contents to this function which adds all the links to sitelinks table
-            echo displayLinks($file, $url); //displays links in table
+            echo getLinksAsTable($file, $url); //displays links in table
         }
     }catch(PDOException $e){//if it fails, throw the exception and display error message.
         die("There was a problem");
@@ -62,7 +62,7 @@ function curlIt($url){
     $file = @file_get_contents($url); //get file contents and stick it in $file var.
         return $file;
 }
-function displayLinks($file, $url){
+function getLinksAsTable($file, $url){
     $pattern = "/(https?:\/\/[\da-z\.-]+\.[a-z\.]{2,6}[\/\w \.-]+)/";
     preg_match_all($pattern, $file, $matches, PREG_PATTERN_ORDER); //finds all links
 
@@ -95,7 +95,8 @@ function insertLinks($db, $file, $pk){
         if ($file === false)//checks if this is an array
         {
             echo "There was a problem inserting links into database. No links found <br />";
-        }  else {
+           // include_once("submitForm.php");
+        }else{
             $tempArray = array_unique($matches[1]);
             $tempArray = array_values($tempArray);
 
@@ -105,9 +106,8 @@ function insertLinks($db, $file, $pk){
                 $sql->bindParam(':link', $url);
                 $sql->execute();
                 $message = $sql->rowCount() . "records added.";
-
-                return $message; //return message if successful
             }
+            return $message; //return message if successful
         }
     }catch(PDOException $e){ //if failure, catch here and print out message.
         die("there was an error inserting links into the database");
@@ -147,7 +147,7 @@ function getDateStored($db, $url, $rowCount){ //passed url from drop down menu
     }
     return $message;
 }
-function getLinksForDropDown($db, $pk){
+function getLinksFromDropDown($db, $pk){
     try{
         $sql = $db->prepare("SELECT * FROM sitelinks WHERE site_id ='$pk'"); //search sitelinks table for links with foreign key = primary key just retrieved
         $sql->bindParam(':site_id', $pk);
@@ -162,13 +162,14 @@ function getLinksForDropDown($db, $pk){
                 // "target="popup" attribute is doing anything because it pops up in a new window anyway. would target="_blank" be better?
             }
             $table .= "</table>" . PHP_EOL;
+
+            return $table;
         }else{
             echo "No link data returned;";
         }
     }catch(PDOException $e){
         die("There was a problem getting the links from the db");
     }
-    return $table;
 }
 function getRowCountForSiteLinks($db, $pk){
     $sql = $db->prepare("SELECT * FROM sitelinks WHERE site_id ='$pk'"); //search sitelinks table for links with foreign key = primary key just retrieved
