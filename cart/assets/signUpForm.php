@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: 005505537
  * Date: 11/27/2017
- * Time: 8:51 AM
+ * Time: 10:00 AM
  */
-
 ?>
-<h1>Log In</h1>
+<h1>Sign Up</h1>
 <form method="post" action="#">
     <table>
         <tr>
@@ -21,7 +20,7 @@
         <tr>
             <td></td>
             <td>
-                <input type="submit" name="action" value="log in" />
+                <input type="submit" name="action" value="sign up" />
             </td>
         </tr>
     </table>

@@ -12,8 +12,7 @@
 <body>
 <header>
     <nav>
-        <a href="/lab5/index.php">Home</a> |
-        <a href="/lab5/assets/view.php">View Sites</a>
+
     </nav>
 </header>
 <section>
