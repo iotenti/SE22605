@@ -17,29 +17,32 @@ $action = filter_input(INPUT_POST, 'action', FILTER_SANITIZE_STRING) ?? NULL;
 $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING) ?? NULL;
 $pwd = filter_input(INPUT_POST, 'pwd', FILTER_SANITIZE_STRING) ?? NULL;
 ?>
-    <div style="height:100px">
-        <a href="loginPage.php">Log in</a>
-    </div>
-    <div style="height:300px">
-        <?php
-        include_once("signupForm.php");
-        switch($action){
+<div style="height:100px">
+    <a href="loginPage.php">Log in</a>
+</div>
+<div style="height:300px">
+<?php
+include_once("signupForm.php");
+switch($action){
 
-            case 'sign up':
-                //call a function that checks whether the username is already in the db. if so, show error message
-                $result = checkUserName($db, $email);
-                if($result > 0){
-                    $error = "There is already an account associated with this email address.";
-                    echo $error;
-                }else{
-                    //validate email
-                    //validate password
+    case 'sign up':
+        //validate email
+        //validate password
 
-                    //if username is valid and not in the db, hash the password and store the record
-                    echo addUser($db, $email, $pwd);
-                }
+        //call a function that checks whether the username is already in the db. if so, show error message
+        $result = checkUserName($db, $email);
+        if($result > 0){
+            $error = "There is already an account associated with this email address.";
+            echo $error;
+        }else{
+
+            //if username is valid and not in the db, hash the password and store the record
+            echo addUser($db, $email, $pwd);
+
+            //redirect to login page
         }
-        ?>
-    </div>
+}
+?>
+</div>
 <?php
 include_once ("footer.php");
