@@ -8,17 +8,18 @@
 require_once ("assets/dbconn.php");
 require_once ("assets/functions.php");
 include_once ("assets/header.php");
-include_once("assets/loginForm.php");
+
 $db = dbConn();
 
 
 $action = filter_input(INPUT_POST, 'action', FILTER_SANITIZE_STRING) ?? NULL;
 $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING) ?? NULL;
 $pwd = filter_input(INPUT_POST, 'pwd', FILTER_SANITIZE_STRING) ?? NULL;
+
+
 switch($action){
     case 'log in':
         //check username and password against the one stored in the db.
-
         //give login token
         //redirect to admin page
 
