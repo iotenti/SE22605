@@ -31,7 +31,7 @@ $pwd = filter_input(INPUT_POST, 'pwd', FILTER_SANITIZE_STRING) ?? NULL;
             if($result > 0){
                 //give log in token
                 $_SESSION['username'] = 'TRUE';
-                //redirect to admin page
+                header('Location: admin.php');
             } else{
                 echo "<div style='margin-top:20px; color:red;'>incorrect username or password</div>";
             }
