@@ -18,6 +18,10 @@
             <td><input type="text" name="pwd" value=""></td>
         </tr>
         <tr>
+            <td>re-password: </td>
+            <td><input type="text" name="pwd2" value=""></td>
+        </tr>
+        <tr>
             <td></td>
             <td>
                 <input type="submit" name="action" value="sign up" />

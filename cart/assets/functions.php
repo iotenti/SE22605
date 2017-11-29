@@ -21,6 +21,7 @@ function addUser($db, $email, $pwd){
         $sql->bindParam(':password', $pwd);
         $sql->execute();
         $message = "Success!  Welcome to the site";
+
         return $message;
     }catch(PDOException $e){
         die("There was a problem connecting to the database");
