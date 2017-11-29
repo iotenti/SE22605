@@ -20,7 +20,7 @@ function addUser($db, $email, $pwd){
         $sql->bindParam(':email', $email);
         $sql->bindParam(':password', $pwd);
         $sql->execute();
-        $message = "Success!  Welcome to the site";
+        $message = "Welcome to the site! Please log in";
 
         return $message;
     }catch(PDOException $e){

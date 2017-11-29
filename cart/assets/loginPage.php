@@ -1,28 +1,15 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: 005505537
- * Date: 11/27/2017
- * Time: 8:48 AM
- */
 session_start();
-if ( isset($_GET['message']) && $_GET['message'] == 1 )
-{
-    // treat the succes case ex:
-    echo $_GET['message'];
-}
 require_once ("dbconn.php");
 require_once ("functions.php");
 include_once ("header.php");
 
-
 $db = dbConn();
-
-
 $action = filter_input(INPUT_POST, 'action', FILTER_SANITIZE_STRING) ?? NULL;
 $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING) ?? NULL;
 $pwd = filter_input(INPUT_POST, 'pwd', FILTER_SANITIZE_STRING) ?? NULL;
 $error = "<div style='margin-top:20px; color:red;'>";
+
 ?>
 <div style="height:100px; margin:auto;">
     <a href="signupPage.php">Sign up</a>
@@ -30,7 +17,13 @@ $error = "<div style='margin-top:20px; color:red;'>";
 <div style="height:300px;">
     <?php
     include_once ("loginForm.php");
-    var_dump($_SESSION);
+
+    if(isset($_SESSION['message'])){
+
+        echo "<div style='margin-top:20px;'>" . $_SESSION['message'] . "</div>";
+        session_destroy();
+    }
+
     switch($action){
         case 'log in':
             //check username and password against the one stored in the db.

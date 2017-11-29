@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: 005505537
- * Date: 11/27/2017
- * Time: 8:48 AM
- */
+session_start();
 require_once ("dbconn.php");
 require_once ("functions.php");
 include_once ("header.php");
@@ -46,11 +41,10 @@ switch($action){
                         $message = $error . " passwords do not match</div>";
                         echo $message;
                     }else{
-                        //store the record and print out welcome message
-                        $_GET['message'] = addUser($db, $email, $pwd);
+                        //store the record and store welcome message
+                        $_SESSION['message'] = addUser($db, $email, $pwd);
                         //redirect to login page
                         header('Location: loginPage.php');
-
                     }
                 }
             }else{
