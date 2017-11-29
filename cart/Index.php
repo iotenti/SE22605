@@ -22,9 +22,6 @@ switch($action){
         //check username and password against the one stored in the db.
         //give login token
         //redirect to admin page
-
-
-
     case 'sign up':
         //call a function that checks whether the username is already in the db. if so, show error message
         $result = checkUserName($db, $email);
@@ -33,14 +30,11 @@ switch($action){
             echo $error;
         }else{
             //validate email
-
             //if username is valid and not in the db, hash the password and store the record
            // addUser($db, $email, $pwd);
-
-
         }
-
-
+    case 'log out':
+        session_destroy();
 }
 
 

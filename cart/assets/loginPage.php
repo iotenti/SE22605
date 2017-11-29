@@ -24,10 +24,13 @@ $pwd = filter_input(INPUT_POST, 'pwd', FILTER_SANITIZE_STRING) ?? NULL;
 <div style="height:300px;">
     <?php
     include_once ("loginForm.php");
+    var_dump($_SESSION);
     switch($action){
         case 'log in':
             //check username and password against the one stored in the db.
             $result = login($db, $email, $pwd);
+
+            var_dump($result);
             if($result > 0){
                 //give log in token
                 $_SESSION['username'] = 'TRUE';
@@ -35,6 +38,8 @@ $pwd = filter_input(INPUT_POST, 'pwd', FILTER_SANITIZE_STRING) ?? NULL;
             } else{
                 echo "<div style='margin-top:20px; color:red;'>incorrect username or password</div>";
             }
+        case 'log out':
+            //session_destroy();
     }
 
     ?>
