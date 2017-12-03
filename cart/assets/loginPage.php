@@ -7,9 +7,8 @@ include_once ("header.php");
 $db = dbConn();
 $action = filter_input(INPUT_POST, 'action', FILTER_SANITIZE_STRING) ?? NULL;
 $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING) ?? NULL;
-$pwd = filter_input(INPUT_POST, 'pwd', FILTER_SANITIZE_STRING) ?? NULL;
+$logInPwd = filter_input(INPUT_POST, 'pwd', FILTER_SANITIZE_STRING) ?? NULL;
 $error = "<div style='margin-top:20px; color:red;'>";
-
 ?>
 <div style="height:100px; margin:auto;">
     <a href="signupPage.php">Sign up</a>
@@ -27,7 +26,8 @@ $error = "<div style='margin-top:20px; color:red;'>";
     switch($action){
         case 'log in':
             //check username and password against the one stored in the db.
-            $result = login($db, $email, $pwd);
+
+            $result = login($db, $email, $logInPwd); //returns 1 if login is successful, 0 on fail
 
             var_dump($result);
             if($result > 0){

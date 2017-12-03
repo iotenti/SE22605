@@ -12,7 +12,10 @@ $action = filter_input(INPUT_POST, 'action', FILTER_SANITIZE_STRING) ?? NULL;
 $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING) ?? NULL;
 $pwd = filter_input(INPUT_POST, 'pwd', FILTER_SANITIZE_STRING) ?? NULL;
 $pwd2 = filter_input(INPUT_POST, 'pwd2', FILTER_SANITIZE_STRING) ?? NULL;
-$error = "<div style='margin-top:20px; color:red;'>"
+$error = "<div style='margin-top:20px; color:red;'>";
+
+
+
 ?>
 <div style="height:100px">
     <a href="loginPage.php">Log in</a>
@@ -42,6 +45,7 @@ switch($action){
                         echo $message;
                     }else{
                         //store the record and store welcome message
+
                         $_SESSION['message'] = addUser($db, $email, $pwd);
                         //redirect to login page
                         header('Location: loginPage.php');

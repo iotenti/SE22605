@@ -16,9 +16,11 @@ function checkUserName($db, $email){
 }
 function addUser($db, $email, $pwd){
     try{
+        $hash = password_hash($pwd, PASSWORD_DEFAULT);
+
         $sql = $db->prepare("INSERT INTO users VALUES (null, :email, :password, NOW())");
         $sql->bindParam(':email', $email);
-        $sql->bindParam(':password', $pwd);
+        $sql->bindParam(':password', $hash);
         $sql->execute();
         $message = "Welcome to the site! Please log in";
 
@@ -27,13 +29,36 @@ function addUser($db, $email, $pwd){
         die("There was a problem connecting to the database");
     }
 }
-function login($db, $email, $pwd){
+/*
+function login($db, $email, $logInPwd){
     try{
-        $sql = $db->prepare("SELECT * FROM users WHERE `email`='$email' AND `password`='$pwd'"); //find all rows where username and password match.
+        $sql = $db->prepare("SELECT * FROM users WHERE `email`='$email' AND `password`='$logInPwd'"); //find all rows where username and password match.
         $sql->execute();
-        if($sql->RowCount() > 0) {
+        if($sql->RowCount() > 0) {//success
             $message = $sql->RowCount();
-        }else{
+        }else{//fail
+            $message = $sql->RowCount();
+        }
+        return $message;
+    }catch(PDOException $e){
+        die("There was a problem connecting to the database:  " . $e->getMessage());
+    }
+}*/
+function login($db, $email, $logInPwd){
+    try{
+        $sql = $db->prepare("SELECT password FROM users WHERE `email`='$email'"); //find all rows where username and password match.
+        $sql->execute();
+        $result = $sql->fetchALL(PDO::FETCH_ASSOC);
+
+        foreach($result as $hashedPwd){
+            $pw = $hashedPwd['password'];
+        }
+
+        if($sql->RowCount() > 0) {//email address found now check password
+            if(password_verify($logInPwd, $pw)) { //use for validation
+                $message = $sql->RowCount();
+            }
+        }else{//fail
             $message = $sql->RowCount();
         }
         return $message;
