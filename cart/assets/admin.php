@@ -3,11 +3,16 @@ session_start(); //indicates that this script needs access to session vars
 if($_SESSION['username'] == NULL || !isset($_SESSION['username']) ){
     header('Location: loginPage.php');
 }
-$action = filter_input(INPUT_POST, 'action', FILTER_SANITIZE_STRING) ?? NULL;
+include_once ("dbconn.php");
+include_once ('functions.php');
 
+$db = dbConn();
+$action = filter_input(INPUT_POST, 'action', FILTER_SANITIZE_STRING) ?? NULL;
+$prodCategory = filter_input(INPUT_POST, 'prodCategory', FILTER_SANITIZE_STRING) ?? NULL;
 include_once ("adminHeader.php");
 ?>
 <h1>Welcome to the admin page!!</h1>
+
 <?php
 
 switch($action){
@@ -18,9 +23,18 @@ switch($action){
         break;
     case 'Manage Categories':
         include_once ("categoriesForm.php");
+        include_once ("updateCategoryForm.php");
+        break;
+    case 'Add Category' :
+        echo addCategory($db, $prodCategory);
+        break;
+    case 'Update Categories':
+        echo "here";
 
+
+        break;
 
 }
 
-include_once ("AdminForm.php");
+
 
