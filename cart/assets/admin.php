@@ -11,4 +11,6 @@ var_dump($_SESSION);
 echo '</pre>';
 ?>
 <h1>Welcome to the admin page!!</h1>
+<?php
+include_once ("AdminForm.php");
 

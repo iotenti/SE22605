@@ -6,7 +6,7 @@
 session_start(); //indicates that this script needs access to session vars
 $_SESSION['username'] = "Ian";
 if($_SESSION['username'] == NULL || !isset($_SESSION['username']) ){
-    header('Location: Index.php'); //must be nothing sent to the browser before this. ---no html, not even a blank line. check session var before you do anything else.
+    header('Location: index.php'); //must be nothing sent to the browser before this. ---no html, not even a blank line. check session var before you do anything else.
 }
 
 $file = file_get_contents("http://www.cnn.com"); //CURL
