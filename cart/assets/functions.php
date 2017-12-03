@@ -88,7 +88,7 @@ function getLinksFromDropDown($db, $pk){
         die("There was a problem getting the links from the db");
     }
 }*/
-function getCategories($db){
+function getCategoriesDropDown($db){
     try{
         $sql = "SELECT * FROM categories";
         $sql = $db->prepare($sql);
@@ -98,7 +98,7 @@ function getCategories($db){
         if($sql->rowCount() > 0){ //if there is data, pop it out into a dropdown.
             $dropDown = "<option value=''>Select...</option>" . PHP_EOL;
             foreach($categories as $category){
-                $dropDown .= "<option value='" . $category['category'] . "'>" . $category['category'] . "</option>";
+                $dropDown .= "<option value='" . $category['category_id'] . "'>" . $category['category'] . "</option>";
             }
         } else { //if there is not any data, say so.
             $dropDown = "NO DATA" . PHP_EOL;
@@ -108,4 +108,17 @@ function getCategories($db){
     }catch(PDOException $e){ //if it fails, throw the exception and display error message.
         die("There was a problem creating drop down");
     }
+}
+function updateARecord($db, $category, $id){
+        try{
+            $sql = $db->prepare("UPDATE categories SET category=:category WHERE category_id='$id'");
+
+            $sql->bindParam(':id', $id, PDO::PARAM_INT);
+            $sql->bindParam(':category', $category); //bind "place holders" to vars passed from forms. helps with security.
+            $sql->execute();
+
+            return $sql->rowCount() . " row updated.";
+        }catch (PDOException $e) { //if it fails, throw the exception and display error message.
+            die("There was a problem adding the corporation");
+        }
 }
