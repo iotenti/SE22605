@@ -9,11 +9,9 @@
         </tr>
         <tr>
             <td>
-                <input type="submit" name="action" value="a var" />
+                <input type="submit" name="action" value="category" /><!--value="<?php $button ?>!-->
             </td>
         </tr>
-    </table>
-    <table>
         <tr>
             <td>Product Name: </td>
             <td><input type="text" name="prodName" value=""></td>
@@ -33,7 +31,8 @@
             <td><input type="submit" name="action" value="Choose File" /></td>
         </tr>
         <tr>
-            <td><input type="submit" name="action" value="<?php echo $action ?>" /></td>
+            <!-- <td><input type="submit" name="action" value="<?php echo $button ?>" /></td> !-->
+            <td><input type="submit" name="action" value="Add Product" /></td>
         </tr>
     </table>
 </form>
