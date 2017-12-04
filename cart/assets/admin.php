@@ -56,6 +56,11 @@ switch($action){
         break;
 
     case 'Add Product':
+
+
+       //addProduct($db, $id, $prodCategory);
+        break;
+    case 'submit':
         if(!isset($_FILES['file'])){
             $_FILES['file']['name'] = null;
         } else{
@@ -74,10 +79,7 @@ switch($action){
             }
 
         }
-
-       //addProduct($db, $id, $prodCategory);
         break;
-
     case 'Edit':
         if($action === "Edit"){
             $_SESSION['button'] = "Update";

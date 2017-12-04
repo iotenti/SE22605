@@ -22,7 +22,10 @@ if($action === "Add" && isset($_SESSION['category'])){
             </tr>
             <tr>
                 <td>Image:</td>
-                <td><?php include_once("uploadForm.php")?></td>
+                <td><form action="productForm.php" method="post" enctype="multipart/form-data">
+                        <input type="file" name="file"><br /><br />
+                        <input type="submit" value="submit">
+                    </form></td>
             </tr>
         </table>
         <br />

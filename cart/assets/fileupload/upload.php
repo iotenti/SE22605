@@ -6,7 +6,6 @@ if(!isset($_FILES['file'])){
     $temp_name = $_FILES['file']['tmp_name'];
 }
 
-
 if(isset($name)){
     if(!empty($name)){
         $location = '../uploads/';

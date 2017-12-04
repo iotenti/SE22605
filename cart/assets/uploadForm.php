@@ -1,5 +1,4 @@
 <?php
-/*
 if(!isset($_FILES['file'])){
     $_FILES['file']['name'] = null;
 } else{
@@ -18,8 +17,9 @@ if(isset($name)){
     }
 
 }
-*/
+
 ?>
 <form action="productForm.php" method="post" enctype="multipart/form-data">
     <input type="file" name="file"><br /><br />
+    <input type="submit" value="submit">
 </form>
