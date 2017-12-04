@@ -14,6 +14,7 @@ $prodCategory = filter_input(INPUT_POST, 'prodCategory', FILTER_SANITIZE_STRING)
 //$category = filter_input(INPUT_POST, 'cat', FILTER_SANITIZE_STRING) ?? NULL;
 $id =  filter_input(INPUT_GET, 'id', FILTER_SANITIZE_STRING) ?? NULL;
 $error = "<div style='margin-top:20px; color:red;'>";
+$manageProducts = filter_input(INPUT_POST, 'prodCategory', FILTER_SANITIZE_STRING) ?? NULL;
 
 include_once ("adminHeader.php");
 ?>
@@ -34,7 +35,6 @@ switch($action){
             $_SESSION['category'] = null;
         }
 
-
         include_once("controlsForm.php");
         include_once ("categoriesForm.php");
 
@@ -43,6 +43,7 @@ switch($action){
         if($action === "Manage Products"){
             $_SESSION['button'] = "Add Product";
             $_SESSION['category'] = null;
+            $_SESSION["manageProducts"] = "TRUE";
         }
 
         include_once("controlsForm.php");
@@ -55,11 +56,10 @@ switch($action){
         break;
 
     case 'Edit':
-        var_dump($action);
         if($action === "Edit"){
             $_SESSION['button'] = "Update";
         }
-        if($_SESSION['button'] === "Manage Products"){
+        if($_SESSION["manageProducts"] === "TRUE"){
             if(strlen($id) > 0){
                 $result_explode = explode('|', $id);
                 $id = $result_explode[0];
