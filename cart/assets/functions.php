@@ -98,7 +98,8 @@ function getCategoriesDropDown($db){
         if($sql->rowCount() > 0){ //if there is data, pop it out into a dropdown.
             $dropDown = "<option value=''>Select...</option>" . PHP_EOL;
             foreach($categories as $category){
-                $dropDown .= "<option value='" . $category['category_id'] . "'>" . $category['category'] . "</option>";
+
+                $dropDown .= "<option value='" . $category['category_id'] . "|" . $category['category'] . "'>" . $category['category'] . "</option>";
             }
         } else { //if there is not any data, say so.
             $dropDown = "NO DATA" . PHP_EOL;
@@ -109,16 +110,28 @@ function getCategoriesDropDown($db){
         die("There was a problem creating drop down");
     }
 }
-function updateARecord($db, $category, $id){
+function updateARecord($db, $prodCategory, $id){
         try{
             $sql = $db->prepare("UPDATE categories SET category=:category WHERE category_id='$id'");
-
-            $sql->bindParam(':id', $id, PDO::PARAM_INT);
-            $sql->bindParam(':category', $category); //bind "place holders" to vars passed from forms. helps with security.
+            $sql->bindParam(':category', $prodCategory); //bind "place holders" to vars passed from forms. helps with security.
             $sql->execute();
 
             return $sql->rowCount() . " row updated.";
         }catch (PDOException $e) { //if it fails, throw the exception and display error message.
-            die("There was a problem adding the corporation");
+            die($e);
         }
+}
+function deleteARecord($db, $id){
+    try{
+        $sql = $db->prepare("DELETE FROM categories WHERE id = :id"); //select all with a particular id (primary key)
+        $sql->bindParam(':id', $id, PDO::PARAM_INT);
+        $sql->execute();
+        $success = "Record successfully deleted";
+        echo $success;
+    }catch(PDOException $e){ //if it fails, throw the exception and display error message.
+        die("There was a problem");
+    }
+}
+function viewAllRecords($db){
+
 }
