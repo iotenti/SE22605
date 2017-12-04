@@ -1,4 +1,10 @@
-<?php ?>
+<?php
+if($action === "Add" && isset($_SESSION['category'])){
+    $hidden="";
+}else{
+    $hidden="hidden";
+}
+?>
 <div style="margin:20px;">
     <form method="post" action="#">
         <table>
@@ -20,6 +26,6 @@
             </tr>
         </table>
         <br />
-        <input type="submit" name="action" value="<?php echo  $_SESSION['button'] ?>" />
+        <input type="submit" name="action" <?php echo $hidden ?> value="<?php echo  $_SESSION['button'] ?>" />
     </form>
 </div>

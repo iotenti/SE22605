@@ -3,6 +3,12 @@ require_once("dbconn.php"); //require this file or fatal error.
 require_once("functions.php");
 $db = dbConn(); // run function that connects to the db and store that connection in a var called db.
 $dropdown = getCategoriesDropDown($db);
+
+if($_SESSION["manageProducts"] === "TRUE") {
+    $hidden="";
+}else{
+    $hidden="hidden";
+}
 ?>
 <div style="margin:20px;">
     <form method="get" action="#">
@@ -16,6 +22,7 @@ $dropdown = getCategoriesDropDown($db);
             </tr>
         </table>
         <br />
+        <input type="submit" name="action" <?php echo $hidden ?> value="Add" />
         <input type="submit" name="action" value="Edit" />
         <input type="submit" name="action" value="Delete" />
         <input type="submit" name="action" value="view" />

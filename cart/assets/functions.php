@@ -41,6 +41,18 @@ function addCategory($db, $prodCategory){
         die("There was a problem connecting to the database");
     }
 }
+function addProduct($db, $id, $prodCategory){
+    try{
+        $sql = $db->prepare("INSERT INTO `categories`(`category_id`, `category`) VALUES (null, :category)");
+        $sql->bindParam(':category', $prodCategory);
+        $sql->execute();
+        $message = $sql->RowCount() . " Rows inserted.";
+
+        return $message;
+    }catch(PDOException $e){
+        die("There was a problem connecting to the database");
+    }
+}
 function login($db, $email, $logInPwd){
     try{
         $sql = $db->prepare("SELECT password FROM users WHERE `email`='$email'"); //find all rows where username and password match.
@@ -63,31 +75,6 @@ function login($db, $email, $logInPwd){
         die("There was a problem connecting to the database:  " . $e->getMessage());
     }
 }
-/*
-function getLinksFromDropDown($db, $pk){
-    try{
-        $sql = $db->prepare("SELECT * FROM sitelinks WHERE site_id ='$pk'"); //search sitelinks table for links with foreign key = primary key just retrieved
-        $sql->bindParam(':site_id', $pk);
-        $sql->execute();
-        $links = $sql->fetchALL(PDO::FETCH_ASSOC); //get array of sites.
-
-        if($sql->rowCount() > 0){ //if something is returned, put it in a table.
-
-            $table = "<table>" . PHP_EOL;
-            foreach($links as $link){
-                $table .= "<tr><td><a href='" . $link['link'] . "' target='popup'>" . $link['link'] . "</a></td></tr>"; //it's hard to tell if this
-                // "target="popup" attribute is doing anything because it pops up in a new window anyway. would target="_blank" be better?
-            }
-            $table .= "</table>" . PHP_EOL;
-
-            return $table;
-        }else{
-            echo "No link data returned;";
-        }
-    }catch(PDOException $e){
-        die("There was a problem getting the links from the db");
-    }
-}*/
 function getCategoriesDropDown($db){
     try{
         $sql = "SELECT * FROM categories";
@@ -110,7 +97,7 @@ function getCategoriesDropDown($db){
         die("There was a problem creating drop down");
     }
 }
-function updateARecord($db, $prodCategory, $id){
+function updateACategory($db, $prodCategory, $id){
         try{
             $sql = $db->prepare("UPDATE categories SET category=:category WHERE category_id='$id'");
             $sql->bindParam(':category', $prodCategory); //bind "place holders" to vars passed from forms. helps with security.
@@ -121,7 +108,7 @@ function updateARecord($db, $prodCategory, $id){
             die($e);
         }
 }
-function deleteARecord($db, $id){
+function deleteACategory($db, $id){
     try{
         $sql = $db->prepare("DELETE FROM categories WHERE category_id=:id"); //select all with a particular id (primary key)
         $sql->bindParam(':id', $id, PDO::PARAM_INT);
@@ -132,6 +119,4 @@ function deleteARecord($db, $id){
         die($e);
     }
 }
-function viewAllRecords($db){
 
-}
