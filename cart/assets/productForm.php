@@ -22,10 +22,13 @@ if($action === "Add" && isset($_SESSION['category'])){
             </tr>
             <tr>
                 <td>Image:</td>
-                <td><input type="submit" name="action" value="Choose File" /></td>
+                <td><?php include_once("uploadForm.php")?></td>
             </tr>
         </table>
         <br />
         <input type="submit" name="action" <?php echo $hidden ?> value="<?php echo  $_SESSION['button'] ?>" />
     </form>
 </div>
+<?php
+
+?>

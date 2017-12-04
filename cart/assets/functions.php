@@ -43,7 +43,7 @@ function addCategory($db, $prodCategory){
 }
 function addProduct($db, $id, $prodCategory){
     try{
-        $sql = $db->prepare("INSERT INTO `categories`(`category_id`, `category`) VALUES (null, :category)");
+        $sql = $db->prepare("INSERT INTO `products`(`product_id`, `category_id`, `product`, `price`, `image`) VALUES (null, :category)");
         $sql->bindParam(':category', $prodCategory);
         $sql->execute();
         $message = $sql->RowCount() . " Rows inserted.";
