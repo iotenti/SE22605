@@ -5,14 +5,11 @@ var_dump($_SESSION['category']);
     <form method="post" action="#">
         <table>
             <tr>
-                <td>Category Name:</td>
+                <td>Category: </td>
                 <td><input type="text" name="prodCategory" value="<?php echo $_SESSION['category'] ?> "> </td>
             </tr>
-            <tr>
-                <td>
-                    <input type="submit" name="action" value="<?php echo  $_SESSION['button'] ?>" />
-                </td>
-            </tr>
         </table>
+        <br />
+        <input type="submit" name="action" value="<?php echo  $_SESSION['button'] ?>" />
     </form>
 </div>

@@ -15,6 +15,7 @@ $dropdown = getCategoriesDropDown($db);
                 </td>
             </tr>
         </table>
+        <br />
         <input type="submit" name="action" value="Edit" />
         <input type="submit" name="action" value="Delete" />
         <input type="submit" name="action" value="view" />

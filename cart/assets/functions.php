@@ -123,13 +123,13 @@ function updateARecord($db, $prodCategory, $id){
 }
 function deleteARecord($db, $id){
     try{
-        $sql = $db->prepare("DELETE FROM categories WHERE id = :id"); //select all with a particular id (primary key)
+        $sql = $db->prepare("DELETE FROM categories WHERE category_id=:id"); //select all with a particular id (primary key)
         $sql->bindParam(':id', $id, PDO::PARAM_INT);
         $sql->execute();
         $success = "Record successfully deleted";
         echo $success;
     }catch(PDOException $e){ //if it fails, throw the exception and display error message.
-        die("There was a problem");
+        die($e);
     }
 }
 function viewAllRecords($db){
