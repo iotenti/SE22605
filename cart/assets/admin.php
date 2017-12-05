@@ -82,10 +82,12 @@ switch($action){
         $id = $result_explode[0];
 
         $products = getProducts($db, $id);
-        //echo getProductsAsTable($products);
-
+        var_dump($products);
+        $table = getProductsAsTable($products);
+        echo $table;
         include_once("controlsForm.php");
         include_once ("productForm.php");
+
         break;
     case 'Edit':
         if($action === "Edit"){

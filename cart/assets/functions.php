@@ -58,7 +58,7 @@ function addProduct($db, $id, $prodName, $prodPrice, $name){
 }
 function getProducts($db, $id){
     try{
-        $sql = $db->prepare("SELECT * FROM products WHERE category_id=:id"); //get products with primary key of desired category
+        $sql = $db->prepare("SELECT * FROM products WHERE category_id=:category_id"); //get products with primary key of desired category
         $sql->bindParam(':category_id', $id); //bind the var
         $sql->execute(); //do it
         $products = $sql->fetchALL(PDO::FETCH_ASSOC);
