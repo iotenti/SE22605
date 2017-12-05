@@ -27,6 +27,6 @@ if($_SESSION["manageProducts"] === "TRUE") {
         <input type="submit" name="action" <?php echo $hiddenOnCategoryForm ?> value="Add" />
         <input type="submit" name="action"<?php echo $hiddenOnProductsForm ?> value="Edit" />
         <input type="submit" name="action" <?php echo $hiddenOnProductsForm ?> value="Delete" />
-        <input type="submit" name="action" value="view" />
+        <input type="submit" name="action" <?php echo $hiddenOnCategoryForm ?> value="view" />
     </form>
 </div>

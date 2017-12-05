@@ -25,6 +25,7 @@ $error = "<div style='margin-top:20px; color:red;'>";
 
 <?php
 print_r($action);
+echo "<br />";
 switch($action){
     case 'log out':
         session_destroy();
@@ -82,26 +83,31 @@ switch($action){
         $id = $result_explode[0];
 
         $products = getProducts($db, $id);
-        var_dump($products);
         $table = getProductsAsTable($products);
         echo $table;
         include_once("controlsForm.php");
         include_once ("productForm.php");
-
         break;
+
     case 'Edit':
-        if($action === "Edit"){
-            $_SESSION['button'] = "Update";
-        }
-        if($_SESSION["manageProducts"] === "TRUE"){
-            if(strlen($id) > 0){
+        $_SESSION['button'] = "Update";
+        if($_SESSION["manageProducts"] === "TRUE"){ //if we are dealing with products management
+
+            $products =  getProducts($db, $id);
+            foreach($products as $product){
+
                 $result_explode = explode('|', $id);
                 $id = $result_explode[0];
                 $_SESSION['category'] = $result_explode[1];
+
+                $prodName = $product['product'];
+                $prodPrice = $product['price'];
             }
+
             include_once("controlsForm.php");
             include_once ("productForm.php");
-        }else{
+
+        }else{ //else we are dealing with category management
             if(strlen($id) > 0){
                 $result_explode = explode('|', $id);
                 $id = $result_explode[0];
@@ -109,7 +115,6 @@ switch($action){
             }
             include_once("controlsForm.php");
             include_once ("categoriesForm.php");
-
         }
         break;
 

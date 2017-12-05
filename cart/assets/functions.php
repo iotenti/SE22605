@@ -41,6 +41,21 @@ function addCategory($db, $prodCategory){
         die("There was a problem connecting to the database");
     }
 }
+function getCategory($db, $id){
+    try{
+        $sql = $db->prepare("SELECT * FROM categories WHERE category_id=:category_id"); //get products with primary key of desired category
+        $sql->bindParam(':category_id', $id); //bind the var
+        $sql->execute(); //do it
+        $category = $sql->fetchALL(PDO::FETCH_ASSOC);
+        foreach($category as $ukAndCategory){
+            $result = $ukAndCategory['category_id'] . "|" . $ukAndCategory['category'];
+        }
+
+    }catch(PDOException $e) {
+        die("There was a problem getting records from the db ---- " . $e);
+    }
+    return $result;
+}
 function addProduct($db, $id, $prodName, $prodPrice, $name){
     try{
         $sql = $db->prepare("INSERT INTO `products`(`product_id`, `category_id`, `product`, `price`, `image`) VALUES (null, :category_id, :product, :price, :image)");
@@ -71,8 +86,10 @@ function getProducts($db, $id){
 
 function getProductsAsTable($products){
     if(count($products) > 0){ //if there is data...    ////make headers
-        $table = "<table>" . PHP_EOL;
-        $table .= "<caption>Product List For ...</caption>" . PHP_EOL;
+
+        $db = dbConn();
+        $table = "<div style='float:right; margin-right:1000px;'>" . PHP_EOL;
+        $table .= "<table>" . PHP_EOL;
         $table .= "<tr>" . PHP_EOL;
         $table .= "<th>Product ID</th>" . PHP_EOL;
         $table .= "<th>Product Name</th>" . PHP_EOL;
@@ -82,14 +99,19 @@ function getProductsAsTable($products){
         $table .= "</tr>";
         foreach($products as $product){ //make a table
             $table .= "<tr><td>" . $product['product_id'] . "</td>";
-            $table .= "<td>" . $product['category_id'] . "</td>";
+            $id = $product['category_id'];
+            $id = getCategory($db, $id);
             $table .= "<td>" . $product['product'] . "</td>";
             $table .= "<td>" . $product['price'] . "</td>";
             $table .= "<td>" . $product['image'] . "</td>";
+            $table .= "<td>" . "<a href='admin.php?id=$id&action=Edit'>Edit</a>" . "</td>";
         }
         $table .= "</table>" . PHP_EOL;
+        $table .= "</div>" . PHP_EOL;
     }else{ //no data, error message
-        $table = "NO DATA TO TABLE" . PHP_EOL;
+        $table = "<div style='float:right; margin-right:1000px;'>" . PHP_EOL;
+        $table .= "NO DATA TO TABLE" . PHP_EOL;
+        $table .= "</div>" . PHP_EOL;
     }
     return $table;
 }

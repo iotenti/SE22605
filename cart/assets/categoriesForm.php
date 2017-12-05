@@ -1,14 +1,13 @@
 <?php
 ?>
 <div style="margin:20px;">
-    <form method="post" action="#">
+    <form method="post" action="categoriesForm.php">
         <table>
             <tr>
                 <td>Category: </td>
                 <td><input type="text" name="prodCategory" value="<?php echo $_SESSION['category'] ?> "> </td>
             </tr>
         </table>
-
         <br />
         <input type="submit" name="action" value="<?php echo  $_SESSION['button'] ?>" />
     </form>
