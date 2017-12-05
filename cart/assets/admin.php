@@ -3,24 +3,27 @@ session_start(); //indicates that this script needs access to session vars
 if($_SESSION['username'] == NULL || !isset($_SESSION['username']) ){
     header('Location: loginPage.php');
 }
-include_once ("dbconn.php");
-include_once ('functions.php');
-$_SESSION['category'] = "";
-$db = dbConn();
-$action = filter_input(INPUT_POST, 'action', FILTER_SANITIZE_STRING) ??
-    filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING) ?? NULL;
-$prodCategory = filter_input(INPUT_POST, 'prodCategory', FILTER_SANITIZE_STRING) ?? NULL;
-
-$id =  filter_input(INPUT_GET, 'id', FILTER_SANITIZE_STRING) ?? NULL;
-$error = "<div style='margin-top:20px; color:red;'>";
-//$manageProducts = filter_input(INPUT_POST, 'prodCategory', FILTER_SANITIZE_STRING) ?? NULL;
 
 include_once ("adminHeader.php");
+include_once ("dbconn.php");
+include_once ('functions.php');
+
+$db = dbConn();
+
+$_SESSION['category'] = "";
+
+$action = filter_input(INPUT_POST, 'action', FILTER_SANITIZE_STRING) ?? filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING) ?? NULL;
+$prodCategory = filter_input(INPUT_POST, 'prodCategory', FILTER_SANITIZE_STRING) ?? NULL;
+$id =  filter_input(INPUT_GET, 'id', FILTER_SANITIZE_STRING) ?? NULL;
+$prodName = filter_input(INPUT_POST, 'prodName', FILTER_SANITIZE_STRING) ?? NULL;
+$prodPrice = filter_input(INPUT_POST, 'prodPrice', FILTER_SANITIZE_STRING) ?? NULL;
+
+$error = "<div style='margin-top:20px; color:red;'>";
 ?>
+
 <h1>Welcome to admin pag!!</h1>
 
 <?php
-var_dump($action);
 switch($action){
 
     case 'log out':
@@ -34,21 +37,18 @@ switch($action){
             $_SESSION['category'] = null;
             $_SESSION["manageProducts"] = "FALSE";
         }
-
         include_once("controlsForm.php");
         include_once ("categoriesForm.php");
-
         break;
+
     case 'Manage Products':
         if($action === "Manage Products"){
             $_SESSION['button'] = "Add Product";
             $_SESSION['category'] = null;
             $_SESSION["manageProducts"] = "TRUE";
         }
-
         include_once("controlsForm.php");
         include_once ("productForm.php");
-
         break;
 
     case 'Add Category' :
@@ -56,18 +56,12 @@ switch($action){
         break;
 
     case 'Add Product':
-
-
-       //addProduct($db, $id, $prodCategory);
-        break;
-    case 'submit':
         if(!isset($_FILES['file'])){
             $_FILES['file']['name'] = null;
         } else{
             $name = $_FILES['file']['name'];
             $temp_name = $_FILES['file']['tmp_name'];
         }
-
         if(isset($name)){
             if(!empty($name)){
                 $location = 'uploads/';
@@ -77,8 +71,14 @@ switch($action){
             }else{
                 echo "please choose a file";
             }
-
         }
+        include_once("controlsForm.php");
+        include_once ("productForm.php");
+
+       echo addProduct($db, $id, $prodName, $prodPrice, $name);
+        break;
+    case 'submit':
+
         break;
     case 'Edit':
         if($action === "Edit"){

@@ -6,7 +6,7 @@ if($action === "Add" && isset($_SESSION['category'])){
 }
 ?>
 <div style="margin:20px;">
-    <form method="post" action="#">
+    <form method="post" action="#" enctype="multipart/form-data">
         <table>
             <tr>
                 <td>Product Name: </td>
@@ -22,10 +22,7 @@ if($action === "Add" && isset($_SESSION['category'])){
             </tr>
             <tr>
                 <td>Image:</td>
-                <td><form action="productForm.php" method="post" enctype="multipart/form-data">
-                        <input type="file" name="file"><br /><br />
-                        <input type="submit" value="submit">
-                    </form></td>
+                <td><input type="file" name="file"></td>
             </tr>
         </table>
         <br />

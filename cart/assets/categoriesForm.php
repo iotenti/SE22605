@@ -1,5 +1,4 @@
 <?php
-var_dump($_SESSION['category']);
 ?>
 <div style="margin:20px;">
     <form method="post" action="#">
@@ -9,6 +8,7 @@ var_dump($_SESSION['category']);
                 <td><input type="text" name="prodCategory" value="<?php echo $_SESSION['category'] ?> "> </td>
             </tr>
         </table>
+
         <br />
         <input type="submit" name="action" value="<?php echo  $_SESSION['button'] ?>" />
     </form>

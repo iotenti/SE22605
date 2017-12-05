@@ -41,10 +41,13 @@ function addCategory($db, $prodCategory){
         die("There was a problem connecting to the database");
     }
 }
-function addProduct($db, $id, $prodCategory){
+function addProduct($db, $id, $prodName, $prodPrice, $name){
     try{
-        $sql = $db->prepare("INSERT INTO `products`(`product_id`, `category_id`, `product`, `price`, `image`) VALUES (null, :category)");
-        $sql->bindParam(':category', $prodCategory);
+        $sql = $db->prepare("INSERT INTO `products`(`product_id`, `category_id`, `product`, `price`, `image`) VALUES (null, :category_id, :product, :price, :image)");
+        $sql->bindParam(':category_id', $id);
+        $sql->bindParam(':product', $prodName);
+        $sql->bindParam(':price', $prodPrice);
+        $sql->bindParam(':image', $name);
         $sql->execute();
         $message = $sql->RowCount() . " Rows inserted.";
 

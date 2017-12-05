@@ -5,9 +5,11 @@ $db = dbConn(); // run function that connects to the db and store that connectio
 $dropdown = getCategoriesDropDown($db);
 
 if($_SESSION["manageProducts"] === "TRUE") {
-    $hidden="";
+    $hiddenOnCategoryForm = "";
+    $hiddenOnProductsForm = "hidden";
 }else{
-    $hidden="hidden";
+    $hiddenOnCategoryForm = "hidden";
+    $hiddenOnProductsForm = "";
 }
 ?>
 <div style="margin:20px;">
@@ -22,9 +24,9 @@ if($_SESSION["manageProducts"] === "TRUE") {
             </tr>
         </table>
         <br />
-        <input type="submit" name="action" <?php echo $hidden ?> value="Add" />
-        <input type="submit" name="action" value="Edit" />
-        <input type="submit" name="action" value="Delete" />
+        <input type="submit" name="action" <?php echo $hiddenOnCategoryForm ?> value="Add" />
+        <input type="submit" name="action"<?php echo $hiddenOnProductsForm ?> value="Edit" />
+        <input type="submit" name="action" <?php echo $hiddenOnProductsForm ?> value="Delete" />
         <input type="submit" name="action" value="view" />
     </form>
 </div>
