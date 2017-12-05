@@ -1,5 +1,5 @@
 <?php ?>
-<form method="post" action="#">
+<form method="get" action="#">
     <table>
         <caption>Product List For ...</caption>
         <th>Product ID</th>

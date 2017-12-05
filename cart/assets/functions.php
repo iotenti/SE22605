@@ -56,6 +56,43 @@ function addProduct($db, $id, $prodName, $prodPrice, $name){
         die("There was a problem connecting to the database");
     }
 }
+function getProducts($db, $id){
+    try{
+        $sql = $db->prepare("SELECT * FROM products WHERE category_id=:id"); //get products with primary key of desired category
+        $sql->bindParam(':category_id', $id); //bind the var
+        $sql->execute(); //do it
+        $products = $sql->fetchALL(PDO::FETCH_ASSOC);
+
+    }catch(PDOException $e) {
+        die("There was a problem getting records from the db ---- " . $e);
+    }
+   return $products;
+}
+
+function getProductsAsTable($products){
+    if(count($products) > 0){ //if there is data...    ////make headers
+        $table = "<table>" . PHP_EOL;
+        $table .= "<caption>Product List For ...</caption>" . PHP_EOL;
+        $table .= "<tr>" . PHP_EOL;
+        $table .= "<th>Product ID</th>" . PHP_EOL;
+        $table .= "<th>Product Name</th>" . PHP_EOL;
+        $table .= "<th>Price</th>" . PHP_EOL;
+        $table .= "<th>Image</th>" . PHP_EOL;
+        $table .= "<th>&nbsp;</th>" . PHP_EOL;
+        $table .= "</tr>";
+        foreach($products as $product){ //make a table
+            $table .= "<tr><td>" . $product['product_id'] . "</td>";
+            $table .= "<td>" . $product['category_id'] . "</td>";
+            $table .= "<td>" . $product['product'] . "</td>";
+            $table .= "<td>" . $product['price'] . "</td>";
+            $table .= "<td>" . $product['image'] . "</td>";
+        }
+        $table .= "</table>" . PHP_EOL;
+    }else{ //no data, error message
+        $table = "NO DATA TO TABLE" . PHP_EOL;
+    }
+    return $table;
+}
 function getPK($db, $prodName){ //passed url from drop down menu
     try{
         $sql = $db->prepare("SELECT product_id FROM products WHERE product=:product"); //ping the db to get the primary key

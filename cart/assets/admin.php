@@ -24,8 +24,8 @@ $error = "<div style='margin-top:20px; color:red;'>";
 <h1>Welcome to admin pag!!</h1>
 
 <?php
+print_r($action);
 switch($action){
-
     case 'log out':
         session_destroy();
         header('Location: loginPage.php');
@@ -75,10 +75,17 @@ switch($action){
         include_once("controlsForm.php");
         include_once ("productForm.php");
 
-       echo addProduct($db, $id, $prodName, $prodPrice, $name);
+        echo addProduct($db, $id, $prodName, $prodPrice, $name);
         break;
-    case 'submit':
+    case 'view':
+        $result_explode = explode('|', $id);
+        $id = $result_explode[0];
 
+        $products = getProducts($db, $id);
+        //echo getProductsAsTable($products);
+
+        include_once("controlsForm.php");
+        include_once ("productForm.php");
         break;
     case 'Edit':
         if($action === "Edit"){
