@@ -56,6 +56,32 @@ function addProduct($db, $id, $prodName, $prodPrice, $name){
         die("There was a problem connecting to the database");
     }
 }
+function getPK($db, $prodName){ //passed url from drop down menu
+    try{
+        $sql = $db->prepare("SELECT product_id FROM products WHERE product=:product"); //ping the db to get the primary key
+        $sql->bindParam(':product', $prodName);
+        $sql->execute();
+        $pk = $sql->fetchALL(PDO::FETCH_ASSOC);
+
+        foreach ($pk as $primaryKey){ //assign primary key to a variable to return.
+            $result = $primaryKey['product_id'];
+        }
+    }catch(PDOException $e){
+        die("There was a problem getting records from the db");
+    }
+    return $result;
+}
+function deleteProduct($db, $pk){
+    try{
+        $sql = $db->prepare("DELETE FROM products WHERE product_id = :id"); //select all with a particular id (primary key)
+        $sql->bindParam(':id', $pk, PDO::PARAM_INT);
+        $sql->execute();
+        $success = "Record successfully deleted";
+        echo $success;
+    }catch(PDOException $e){ //if it fails, throw the exception and display error message.
+        die("There was a problem");
+    }
+}
 function login($db, $email, $logInPwd){
     try{
         $sql = $db->prepare("SELECT password FROM users WHERE `email`='$email'"); //find all rows where username and password match.
