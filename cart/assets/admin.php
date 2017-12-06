@@ -88,7 +88,7 @@ switch($action){
         $id = $result_explode[0];
 
         $products = getProducts($db, $id);
-        $table = getProductsAsTable($products);
+        $table = getProductsAsAdminTable($products);
         echo $table;
 
         include_once("controlsForm.php");
@@ -111,7 +111,7 @@ switch($action){
             }
             include_once("controlsForm.php");
             include_once ("productForm.php");
-
+            break;
         }else{ //else we are dealing with category management
             if(strlen($id) > 0){
                 $result_explode = explode('|', $id);
@@ -158,10 +158,12 @@ switch($action){
             }
 
             echo updateAProduct($db, $pk, $prodName, $id, $prodPrice, $imageName);
+            break;
             }else{
             echo updateACategory($db, $prodCategory, $id);
+            break;
         }
-        break;
+       // break;
 
     case 'Delete':
         var_dump($action);

@@ -95,7 +95,7 @@ function getAProduct($db, $pk){
     }
     return $products;
 }
-function getProductsAsTable($products){
+function getProductsAsAdminTable($products){
     if(count($products) > 0){ //if there is data...    ////make headers
 
         $db = dbConn();
@@ -117,6 +117,38 @@ function getProductsAsTable($products){
             $table .= "<td>" . $product['price'] . "</td>";
             $table .= "<td>" . $product['image'] . "</td>";
             $table .= "<td>" . "<a href='admin.php?pk=$pk&id=$id&action=Edit'>Edit</a>" . "</td>";
+        }
+        $table .= "</table>" . PHP_EOL;
+        $table .= "</div>" . PHP_EOL;
+    }else{ //no data, error message
+        $table = "<div style='float:right; margin-right:1000px;'>" . PHP_EOL;
+        $table .= "NO DATA TO TABLE" . PHP_EOL;
+        $table .= "</div>" . PHP_EOL;
+    }
+    return $table;
+}
+function getProductsAsFrontEndTable($products){
+    if(count($products) > 0){ //if there is data...    ////make headers
+
+        $db = dbConn();
+        $table = "<div style='float:left; position:absolute; margin-left:500px;'>" . PHP_EOL;
+        $table .= "<table>" . PHP_EOL;
+        $table .= "<tr>" . PHP_EOL;
+        $table .= "<th>Product ID</th>" . PHP_EOL;
+        $table .= "<th>Product Name</th>" . PHP_EOL;
+        $table .= "<th>Price</th>" . PHP_EOL;
+        $table .= "<th>Image</th>" . PHP_EOL;
+        $table .= "<th>&nbsp;</th>" . PHP_EOL;
+        $table .= "</tr>";
+        foreach($products as $product){ //make a table
+            $pk = $product['product_id'];
+            $table .= "<tr><td>" . $product['product_id'] . "</td>";
+            $id = $product['category_id'];
+            $id = getCategory($db, $id);
+            $table .= "<td>" . $product['product'] . "</td>";
+            $table .= "<td>" . $product['price'] . "</td>";
+            $table .= "<td>" . $product['image'] . "</td>";
+            $table .= "<td>" . "<a href='index.php?pk=$pk&id=$id&action=Add'>Add to cart</a>" . "</td>";
         }
         $table .= "</table>" . PHP_EOL;
         $table .= "</div>" . PHP_EOL;
