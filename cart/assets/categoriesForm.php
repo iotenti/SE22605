@@ -1,7 +1,7 @@
 <?php
 ?>
 <div style="margin:20px;">
-    <form method="post" action="categoriesForm.php">
+    <form method="post" action="#">
         <table>
             <tr>
                 <td>Category: </td>

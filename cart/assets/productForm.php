@@ -1,17 +1,10 @@
 <?php
 
-if($action === "Add" && isset($_SESSION['category'])){
+if($action === "Add" || $action ==="Edit" && isset($_SESSION['category'])){
     $hidden="";
 }else{
     $hidden="hidden";
 }
-
-if($action ==="Edit" && $_SESSION['button'] === "Update"){
-    $hidden="";
-}else{
-    $hidden="hidden";
-}
-
 ?>
 <div style="margin:20px;">
     <form method="post" action="#" enctype="multipart/form-data">
@@ -30,7 +23,10 @@ if($action ==="Edit" && $_SESSION['button'] === "Update"){
             </tr>
             <tr>
                 <td>Image:</td>
-                <td><input type="file" name="file"></td>
+                <td>
+                    <input type="file" name="file">
+                    <input type="text" name="hiddenImageName" value="<?php echo $hiddenImageName ?>">
+                </td>
             </tr>
         </table>
         <br />

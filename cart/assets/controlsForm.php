@@ -5,11 +5,11 @@ $db = dbConn(); // run function that connects to the db and store that connectio
 $dropdown = getCategoriesDropDown($db);
 
 if($_SESSION["manageProducts"] === "TRUE") {
-    $hiddenOnCategoryForm = "";
-    $hiddenOnProductsForm = "hidden";
+    $hiddenOnCategoryForm = filter_input(INPUT_POST, 'hiddenOnCategoryForm', FILTER_SANITIZE_STRING) ?? "";
+    $hiddenOnProductsForm = filter_input(INPUT_POST, 'hiddenOnProductsForm', FILTER_SANITIZE_STRING) ?? "hidden";
 }else{
-    $hiddenOnCategoryForm = "hidden";
-    $hiddenOnProductsForm = "";
+    $hiddenOnCategoryForm = filter_input(INPUT_POST, 'hiddenOnCategoryForm', FILTER_SANITIZE_STRING) ?? "hidden";
+    $hiddenOnProductsForm = filter_input(INPUT_POST, 'hiddenOnProductsForm', FILTER_SANITIZE_STRING) ?? "";
 }
 ?>
 <div style="margin:20px;">

@@ -43,12 +43,12 @@ function addCategory($db, $prodCategory){
 }
 function getCategory($db, $id){
     try{
-        $sql = $db->prepare("SELECT * FROM categories WHERE category_id=:category_id"); //get products with primary key of desired category
+        $sql = $db->prepare("SELECT * FROM categories WHERE category_id=:category_id"); //get products with unique key
         $sql->bindParam(':category_id', $id); //bind the var
         $sql->execute(); //do it
         $category = $sql->fetchALL(PDO::FETCH_ASSOC);
         foreach($category as $ukAndCategory){
-            $result = $ukAndCategory['category_id'] . "|" . $ukAndCategory['category'];
+            $result = $ukAndCategory['category_id'] . "|" . $ukAndCategory['category']; //smash unique key and category name together because I take them apart later (explode)
         }
 
     }catch(PDOException $e) {
@@ -56,13 +56,13 @@ function getCategory($db, $id){
     }
     return $result;
 }
-function addProduct($db, $id, $prodName, $prodPrice, $name){
+function addProduct($db, $id, $prodName, $prodPrice, $imageName){
     try{
         $sql = $db->prepare("INSERT INTO `products`(`product_id`, `category_id`, `product`, `price`, `image`) VALUES (null, :category_id, :product, :price, :image)");
         $sql->bindParam(':category_id', $id);
         $sql->bindParam(':product', $prodName);
         $sql->bindParam(':price', $prodPrice);
-        $sql->bindParam(':image', $name);
+        $sql->bindParam(':image', $imageName);
         $sql->execute();
         $message = $sql->RowCount() . " Rows inserted.";
 
@@ -83,12 +83,23 @@ function getProducts($db, $id){
     }
    return $products;
 }
+function getAProduct($db, $pk){
+    try{
+        $sql = $db->prepare("SELECT * FROM products WHERE product_id=:product_id"); //get products with primary key of desired category
+        $sql->bindParam(':product_id', $pk); //bind the var
+        $sql->execute(); //do it
+        $products = $sql->fetchALL(PDO::FETCH_ASSOC);
 
+    }catch(PDOException $e) {
+        die("There was a problem getting records from the db ---- " . $e);
+    }
+    return $products;
+}
 function getProductsAsTable($products){
     if(count($products) > 0){ //if there is data...    ////make headers
 
         $db = dbConn();
-        $table = "<div style='float:right; margin-right:1000px;'>" . PHP_EOL;
+        $table = "<div style='float:left; position:absolute; margin-left:500px;'>" . PHP_EOL;
         $table .= "<table>" . PHP_EOL;
         $table .= "<tr>" . PHP_EOL;
         $table .= "<th>Product ID</th>" . PHP_EOL;
@@ -98,13 +109,14 @@ function getProductsAsTable($products){
         $table .= "<th>&nbsp;</th>" . PHP_EOL;
         $table .= "</tr>";
         foreach($products as $product){ //make a table
+            $pk = $product['product_id'];
             $table .= "<tr><td>" . $product['product_id'] . "</td>";
             $id = $product['category_id'];
             $id = getCategory($db, $id);
             $table .= "<td>" . $product['product'] . "</td>";
             $table .= "<td>" . $product['price'] . "</td>";
             $table .= "<td>" . $product['image'] . "</td>";
-            $table .= "<td>" . "<a href='admin.php?id=$id&action=Edit'>Edit</a>" . "</td>";
+            $table .= "<td>" . "<a href='admin.php?pk=$pk&id=$id&action=Edit'>Edit</a>" . "</td>";
         }
         $table .= "</table>" . PHP_EOL;
         $table .= "</div>" . PHP_EOL;
@@ -195,6 +207,20 @@ function updateACategory($db, $prodCategory, $id){
         }catch (PDOException $e) { //if it fails, throw the exception and display error message.
             die($e);
         }
+}
+function updateAProduct($db, $pk, $prodName, $id, $prodPrice, $imageName){
+    try{ // product_id, category_id=5, product=farts102, price=12, image=fart.jpg WHERE product_id=1
+        $sql = $db->prepare("UPDATE products SET category_id=:category_id, product=:product, price=:price, image=:image WHERE product_id='$pk'");
+        $sql->bindParam(':category_id', $id);
+        $sql->bindParam(':product', $prodName); //bind "place holders" to vars passed from forms. helps with security.
+        $sql->bindParam(':price', $prodPrice);
+        $sql->bindParam(':image', $imageName);
+        $sql->execute();
+
+        return $sql->rowCount() . " row updated.";
+    }catch (PDOException $e) { //if it fails, throw the exception and display error message.
+        die($e);
+    }
 }
 function deleteACategory($db, $id){
     try{
