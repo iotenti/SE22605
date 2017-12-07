@@ -1,6 +1,6 @@
 <?php
 
-if($action === "Add" || $action ==="Edit" && isset($_SESSION['category'])){
+if($action === "Add" || $action ==="Edit" || $action === "Delete" && isset($_SESSION['category'])){
     $hidden="";
 }else{
     $hidden="hidden";
@@ -25,8 +25,11 @@ if($action === "Add" || $action ==="Edit" && isset($_SESSION['category'])){
                 <td>Image:</td>
                 <td>
                     <input type="file" name="file">
-                    <input type="text" name="hiddenImageName" value="<?php echo $hiddenImageName ?>">
+                    <input type="text" name="imageName" hidden value="<?php echo $imageName ?>">
                 </td>
+            </tr>
+            <tr>
+                <td>keep image?  <input type="checkbox" name="keepImage" id="keepImage" /></td>
             </tr>
         </table>
         <br />

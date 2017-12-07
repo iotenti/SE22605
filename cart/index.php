@@ -36,10 +36,9 @@ switch($action) {
         break;
     case 'Add':
         $product = getAProduct($db, $pk);// get product added to cart
-
-
         addToCart($db, $product);
         break;
+
     case 'Clear Cart':
         $_SESSION['cart'] = [];
 }

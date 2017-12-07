@@ -1,5 +1,4 @@
 <?php
-session_start();
 function checkUserName($db, $email){
     try{//CHECK TO SEE IF RECORD EXISTS
         $sql = $db->prepare("SELECT * FROM users WHERE `email`='$email'");
@@ -111,7 +110,7 @@ function getProductsAsAdminTable($products){
             $table .= "<td>" . $product['product'] . "</td>";
             $table .= "<td>" . $product['price'] . "</td>";
             $table .= "<td>" . $product['image'] . "</td>";
-            $table .= "<td>" . "<a href='admin.php?pk=$pk&id=$id&action=Edit'>Edit</a>" . "</td>";
+            $table .= "<td>" . "<a href='admin.php?pk=$pk&id=$id&action=Edit'>Edit</a> | <a href='admin.php?pk=$pk&id=$id&action=Delete'>Delete</a>" . "</td>";
         }
         $table .= "</table>" . PHP_EOL;
         $table .= "</div>" . PHP_EOL;
@@ -187,6 +186,7 @@ function getPK($db, $prodName){ //passed url from drop down menu
         $sql->bindParam(':product', $prodName);
         $sql->execute();
         $pk = $sql->fetchALL(PDO::FETCH_ASSOC);
+        $result = "";
 
         foreach ($pk as $primaryKey){ //assign primary key to a variable to return.
             $result = $primaryKey['product_id'];

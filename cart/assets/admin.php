@@ -19,7 +19,7 @@ $pk =  filter_input(INPUT_GET, 'pk', FILTER_SANITIZE_STRING) ?? NULL;
 $prodName = filter_input(INPUT_POST, 'prodName', FILTER_SANITIZE_STRING) ?? NULL;
 $prodPrice = filter_input(INPUT_POST, 'prodPrice', FILTER_SANITIZE_STRING) ?? NULL;
 $imageName = filter_input(INPUT_POST, 'imageName', FILTER_SANITIZE_STRING) ?? NULL;
-$hiddenImageName = filter_input(INPUT_POST, 'hiddenImageName', FILTER_SANITIZE_STRING) ?? NULL;
+//$hiddenImageName = filter_input(INPUT_POST, 'hiddenImageName', FILTER_SANITIZE_STRING) ?? NULL;
 $error = "<div style='margin-top:20px; color:red;'>";
 ?>
 
@@ -101,14 +101,16 @@ switch($action){
             //get product with pk passed from table function
             $products = getAProduct($db, $pk);
             //loop through array assign data -- use to repopulate update from
-            foreach($products as $product){
-                $result_explode = explode('|', $id);
-                $id = $result_explode[0];
-                $_SESSION['category'] = $result_explode[1];
-                $prodName = $product['product'];
-                $prodPrice = $product['price'];
-                $imageName = $product['image'];
-            }
+
+                foreach($products as $product){
+                    $result_explode = explode('|', $id);
+                    $id = $result_explode[0];
+                    $_SESSION['category'] = $result_explode[1];
+                    $prodName = $product['product'];
+                    $prodPrice = $product['price'];
+                    $imageName = $product['image'];
+                }
+
             include_once("controlsForm.php");
             include_once ("productForm.php");
             break;
@@ -139,48 +141,76 @@ switch($action){
 
     case 'Update':
         if($_SESSION["manageProducts"] === "TRUE"){
-            if(!isset($_FILES['file'])){
-                $_FILES['file']['name'] = null;
+            if(!isset($_POST['keepImage'])){
+                if(!isset($_FILES['file'])){
+                    $_FILES['file']['name'] = null;
 
-            } else{
-                $imageName = $_FILES['file']['name'];
-                $temp_name = $_FILES['file']['tmp_name'];
-            }
-            if(isset($temp_name)){
-                if(!empty($imageName)){
-                    $location = 'uploads/';
-                    if(move_uploaded_file($temp_name, $location . $imageName)){
-                        echo 'Uploaded';
-                    }
-                }else{
-                    echo "upload 1";
+                } else{
+                    $imageName = $_FILES['file']['name'];
+                    $temp_name = $_FILES['file']['tmp_name'];
                 }
-            }
-
-            echo updateAProduct($db, $pk, $prodName, $id, $prodPrice, $imageName);
-            break;
+                if(isset($temp_name)){
+                    if(!empty($imageName)){
+                        $location = 'uploads/';
+                        if(move_uploaded_file($temp_name, $location . $imageName)){
+                            echo 'Uploaded';
+                        }
+                    }else{
+                        echo "upload 1";
+                    }
+                }
+                echo updateAProduct($db, $pk, $prodName, $id, $prodPrice, $imageName);
+                break;
             }else{
+                echo updateAProduct($db, $pk, $prodName, $id, $prodPrice, $imageName);
+                break;
+            }
+        }else{
             echo updateACategory($db, $prodCategory, $id);
             break;
         }
-       // break;
+
 
     case 'Delete':
-        var_dump($action);
-        if($action === "Delete"){
-            $_SESSION['button'] = "Delete Record";
+        $_SESSION['button'] = "Delete Record";
+
+        if($_SESSION['manageProducts'] === "TRUE"){
+            //get product with pk passed from table function
+            $products = getAProduct($db, $pk);
+            $pk =getPK($db, $prodName);
+            //loop through array assign data -- use to repopulate update from
+
+            foreach($products as $product){
+                $result_explode = explode('|', $id);
+                $id = $result_explode[0];
+                $_SESSION['category'] = $result_explode[1];
+                $prodName = $product['product'];
+                $prodPrice = $product['price'];
+                $imageName = $product['image'];
+            }
+
+            include_once("controlsForm.php");
+            include_once ("productForm.php");
+            break;
+        }else{
+            if(strlen($id) > 0){
+                $result_explode = explode('|', $id);
+                $id = $result_explode[0];
+                $_SESSION['category'] = $result_explode[1];
+            }
+            include_once("controlsForm.php");
+            include_once ("categoriesForm.php");
+            break;
+
         }
-        if(strlen($id) > 0){
-            $result_explode = explode('|', $id);
-            $id = $result_explode[0];
-            $_SESSION['category'] = $result_explode[1];
-        }
-        include_once("controlsForm.php");
-        include_once ("categoriesForm.php");
-        break;
+
     case 'Delete Record':
-        echo deleteACategory($db, $id);
-        break;
+        if($_SESSION['manageProducts'] === "TRUE"){
+            echo deleteProduct($db, $pk);
+        }else{
+            echo deleteACategory($db, $id);
+            break;
+        }
 }
 
 
