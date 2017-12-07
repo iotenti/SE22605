@@ -1,10 +1,4 @@
 <?php
-$action = filter_input(INPUT_POST, 'action', FILTER_SANITIZE_STRING) ?? NULL;
-switch($action){
-    case 'log out':
-        session_destroy();
-        header('Location: loginPage.php');
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,9 +12,11 @@ switch($action){
 <body>
 <header>
     <nav>
-        <form method="post" action="#">
-            <input type="submit" name="action" value="log out" />
-        </form>
+        <div style="margin:20px; float:right;">
+            <form method="post" action="#">
+                <input type="submit" name="action" value="Clear Cart" /> || <input type="submit" name="action" value="log out" />
+            </form>
+        </div>
     </nav>
 </header>
 <section>

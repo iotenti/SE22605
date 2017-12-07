@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: 005505537
- * Date: 11/27/2017
- * Time: 8:48 AM
- */
+
 require_once ("assets/dbconn.php");
 require_once ("assets/functions.php");
 include_once ("assets/header.php");
@@ -18,7 +13,10 @@ $prodPrice = filter_input(INPUT_POST, 'prodPrice', FILTER_SANITIZE_STRING) ?? NU
 $imageName = filter_input(INPUT_POST, 'imageName', FILTER_SANITIZE_STRING) ?? NULL;
 $hiddenImageName = filter_input(INPUT_POST, 'hiddenImageName', FILTER_SANITIZE_STRING) ?? NULL;
 //$prod =  filter_input(INPUT_GET, 'prod', FILTER_SANITIZE_STRING) ?? NULL;
-$cart = [];
+
+if(!isset($_SESSION['cart'])){
+    $_SESSION['cart'] = [];
+}
 
 include_once ("assets/viewProds.php");
 
@@ -38,28 +36,12 @@ switch($action) {
         break;
     case 'Add':
         $product = getAProduct($db, $pk);// get product added to cart
-    //print_r($product);
-        //loop through array assign data -- use to repopulate update from
-
-        foreach($product as $toCart){
-            $pk = $toCart['product_id'];
-            $prodName = $toCart['product'];
-            $prodPrice = $toCart['price'];
-            $imageName = $toCart['image'];
-        }
-        $prod = [
-            'id'=>$pk,
-            'name'=>$prodName,
-            'price'=>$prodPrice,
-            'image'=>$imageName];
-        $cart[0] = $prod;
 
 
-        print_r($cart[0]);
-        //$cart = $prod;
-
-
-
+        addToCart($db, $product);
+        break;
+    case 'Clear Cart':
+        $_SESSION['cart'] = [];
 }
 
 

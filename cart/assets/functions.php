@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: 005505537
- * Date: 11/27/2017
- * Time: 8:50 AM
- */
+session_start();
 function checkUserName($db, $email){
     try{//CHECK TO SEE IF RECORD EXISTS
         $sql = $db->prepare("SELECT * FROM users WHERE `email`='$email'");
@@ -126,6 +121,33 @@ function getProductsAsAdminTable($products){
         $table .= "</div>" . PHP_EOL;
     }
     return $table;
+}
+function addToCart($db, $product){
+
+    foreach($product as $toCart){
+        $pk = $toCart['product_id'];
+        $prodName = $toCart['product'];
+        $prodPrice = $toCart['price'];
+        $imageName = $toCart['image'];
+    }
+    $prod = [
+        'id'=>$pk,
+        'name'=>$prodName,
+        'price'=>$prodPrice,
+        'image'=>$imageName];
+
+    $_SESSION['cart'][] = $prod;
+
+    echo "prod: <br />";
+    print_r($prod);
+    echo "<br /> cart : <br />";
+   print_r($_SESSION['cart']);
+    echo "<br />";
+    for($i=0; $i <= 5; $i++){
+        print_r($_SESSION['cart'][$i]);
+        echo "<br />";
+
+    }
 }
 function getProductsAsFrontEndTable($products){
     if(count($products) > 0){ //if there is data...    ////make headers
