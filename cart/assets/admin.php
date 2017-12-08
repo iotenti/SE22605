@@ -24,7 +24,7 @@ $error = "<div style='margin-top:20px; color:red;'>";
 ?>
 
 <h1>Welcome to admin pag!!</h1>
-
+<!--<img src="uploads\1Vl8PZ6g.jpg" width="50%" height="50%">!-->
 <?php
 print_r($action);
 echo "<br />";
@@ -122,20 +122,20 @@ switch($action){
             }
             include_once("controlsForm.php");
             include_once ("categoriesForm.php");
+            break;
         }
-        break;
+
 
     case 'Add':
-        if($action === "Add"){
-            $_SESSION['button'] = "Add Product";
+        $_SESSION['button'] = "Add Product";
+
+        if(strlen($id) > 0){
+            $result_explode = explode('|', $id);
+            $id = $result_explode[0];
+            $_SESSION['category'] = $result_explode[1];
         }
-            if(strlen($id) > 0){
-                $result_explode = explode('|', $id);
-                $id = $result_explode[0];
-                $_SESSION['category'] = $result_explode[1];
-            }
-            include_once("controlsForm.php");
-            include_once ("productForm.php");
+        include_once("controlsForm.php");
+        include_once ("productForm.php");
 
         break;
 
@@ -207,6 +207,7 @@ switch($action){
     case 'Delete Record':
         if($_SESSION['manageProducts'] === "TRUE"){
             echo deleteProduct($db, $pk);
+            break;
         }else{
             echo deleteACategory($db, $id);
             break;

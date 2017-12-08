@@ -1,9 +1,13 @@
 <?php
+$keepImage = filter_input(INPUT_POST, 'hiddenImageName', FILTER_SANITIZE_STRING) ?? "hidden";
 
-if($action === "Add" || $action ==="Edit" || $action === "Delete" && isset($_SESSION['category'])){
+if($action === "Add" || $action === "Edit" || $action === "Delete" && isset($_SESSION['category'])){ // to repurpose this form I use this if statement to hide buttons depending on $action
     $hidden="";
 }else{
     $hidden="hidden";
+}
+if($action === "Edit"){
+    $keepImage = "";
 }
 ?>
 <div style="margin:20px;">
@@ -29,7 +33,7 @@ if($action === "Add" || $action ==="Edit" || $action === "Delete" && isset($_SES
                 </td>
             </tr>
             <tr>
-                <td>keep image?  <input type="checkbox" name="keepImage" id="keepImage" /></td>
+                <td <?php echo $keepImage ?>>keep image?  <input type="checkbox" name="keepImage" id="keepImage" /></td>
             </tr>
         </table>
         <br />

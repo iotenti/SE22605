@@ -104,12 +104,15 @@ function getProductsAsAdminTable($products){
         $table .= "</tr>";
         foreach($products as $product){ //make a table
             $pk = $product['product_id'];
+            $path = "<img src='uploads/";
+            $image = $product['image'];
             $table .= "<tr><td>" . $product['product_id'] . "</td>";
             $id = $product['category_id'];
             $id = getCategory($db, $id);
+
             $table .= "<td>" . $product['product'] . "</td>";
             $table .= "<td>" . $product['price'] . "</td>";
-            $table .= "<td>" . $product['image'] . "</td>";
+            $table .= "<td>" . $path . $image . "' width='30%' hieght='30%'>" . "</td>";
             $table .= "<td>" . "<a href='admin.php?pk=$pk&id=$id&action=Edit'>Edit</a> | <a href='admin.php?pk=$pk&id=$id&action=Delete'>Delete</a>" . "</td>";
         }
         $table .= "</table>" . PHP_EOL;
