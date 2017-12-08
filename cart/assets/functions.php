@@ -94,26 +94,26 @@ function getProductsAsAdminTable($products){
 
         $db = dbConn();
         $table = "<div style='float:left; position:absolute; margin-left:500px;'>" . PHP_EOL;
-        $table .= "<table>" . PHP_EOL;
+        $table .= "<table class='admin'>" . PHP_EOL;
         $table .= "<tr>" . PHP_EOL;
-        $table .= "<th>Product ID</th>" . PHP_EOL;
-        $table .= "<th>Product Name</th>" . PHP_EOL;
-        $table .= "<th>Price</th>" . PHP_EOL;
-        $table .= "<th>Image</th>" . PHP_EOL;
-        $table .= "<th>&nbsp;</th>" . PHP_EOL;
+        $table .= "<th class='admin'>Product ID</th>" . PHP_EOL;
+        $table .= "<th class='admin'>Product Name</th>" . PHP_EOL;
+        $table .= "<th class='admin'>Price</th>" . PHP_EOL;
+        $table .= "<th class='admin'>Image</th>" . PHP_EOL;
+        $table .= "<th class='admin'>&nbsp;</th>" . PHP_EOL;
         $table .= "</tr>";
         foreach($products as $product){ //make a table
             $pk = $product['product_id'];
             $path = "<img src='uploads/";
             $image = $product['image'];
-            $table .= "<tr><td>" . $product['product_id'] . "</td>";
+            $table .= "<tr><td class='admin'>" . $product['product_id'] . "</td>";
             $id = $product['category_id'];
             $id = getCategory($db, $id);
 
-            $table .= "<td>" . $product['product'] . "</td>";
-            $table .= "<td>" . $product['price'] . "</td>";
-            $table .= "<td>" . $path . $image . "' width='30%' hieght='30%'>" . "</td>";
-            $table .= "<td>" . "<a href='admin.php?pk=$pk&id=$id&action=Edit'>Edit</a> | <a href='admin.php?pk=$pk&id=$id&action=Delete'>Delete</a>" . "</td>";
+            $table .= "<td class='admin'>" . $product['product'] . "</td>";
+            $table .= "<td class='admin'>" . $product['price'] . "</td>";
+            $table .= "<td class='admin'>" . $path . $image . "'>" . "</td>";
+            $table .= "<td class='admin'>" . "<a href='admin.php?pk=$pk&id=$id&action=Edit'>Edit</a> | <a href='admin.php?pk=$pk&id=$id&action=Delete'>Delete</a>" . "</td>";
         }
         $table .= "</table>" . PHP_EOL;
         $table .= "</div>" . PHP_EOL;
@@ -156,23 +156,26 @@ function getProductsAsFrontEndTable($products){
 
         $db = dbConn();
         $table = "<div style='float:left; position:absolute; margin-left:500px;'>" . PHP_EOL;
-        $table .= "<table>" . PHP_EOL;
+        $table .= "<table class='front'>" . PHP_EOL;
         $table .= "<tr>" . PHP_EOL;
-        $table .= "<th>Product ID</th>" . PHP_EOL;
-        $table .= "<th>Product Name</th>" . PHP_EOL;
-        $table .= "<th>Price</th>" . PHP_EOL;
-        $table .= "<th>Image</th>" . PHP_EOL;
-        $table .= "<th>&nbsp;</th>" . PHP_EOL;
+        $table .= "<th class='front'>Product ID</th>" . PHP_EOL;
+        $table .= "<th class='front'>Product Name</th>" . PHP_EOL;
+        $table .= "<th class='front'>Price</th>" . PHP_EOL;
+        $table .= "<th class='front'>Image</th>" . PHP_EOL;
+        $table .= "<th class='front'>&nbsp;</th>" . PHP_EOL;
         $table .= "</tr>";
         foreach($products as $product){ //make a table
             $pk = $product['product_id'];
-            $table .= "<tr><td>" . $product['product_id'] . "</td>";
+            $path = "<img src='assets/uploads/";
+            $image = $product['image'];
+            $table .= "<tr><td class='front'>" . $product['product_id'] . "</td>";
             $id = $product['category_id'];
             $id = getCategory($db, $id);
-            $table .= "<td>" . $product['product'] . "</td>";
-            $table .= "<td>" . $product['price'] . "</td>";
-            $table .= "<td>" . $product['image'] . "</td>";
-            $table .= "<td>" . "<a href='index.php?pk=$pk&id=$id&action=Add'>Add to cart</a>" . "</td>";
+
+            $table .= "<td class='front'>" . $product['product'] . "</td>";
+            $table .= "<td class='front'>" . $product['price'] . "</td>";
+            $table .= "<td class='front'>" . $path . $image . "'>" . "</td>";
+            $table .= "<td class='front'>" . "<a href='index.php?pk=$pk&id=$id&action=Add'>Add to cart</a>" . "</td>";
         }
         $table .= "</table>" . PHP_EOL;
         $table .= "</div>" . PHP_EOL;
