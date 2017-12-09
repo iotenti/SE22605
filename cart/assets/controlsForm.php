@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once("dbconn.php"); //require this file or fatal error.
 require_once("functions.php");
 $db = dbConn(); // run function that connects to the db and store that connection in a var called db.

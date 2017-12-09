@@ -1,5 +1,4 @@
 <?php
-session_start(); //indicates that this script needs access to session vars
 if($_SESSION['username'] == NULL || !isset($_SESSION['username']) ){
     header('Location: loginPage.php');
 }
@@ -177,7 +176,7 @@ switch($action){
         if($_SESSION['manageProducts'] === "TRUE"){
             //get product with pk passed from table function
             $products = getAProduct($db, $pk);
-            $pk =getPK($db, $prodName);
+            $pk = getPK($db, $prodName);
             //loop through array assign data -- use to repopulate update from
 
             foreach($products as $product){

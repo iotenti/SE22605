@@ -1,4 +1,5 @@
 <?php
+session_start();
 ?>
 <div style="margin:20px;">
     <form method="post" action="#">

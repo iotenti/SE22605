@@ -82,7 +82,7 @@ function getAProduct($db, $pk){
         $sql = $db->prepare("SELECT * FROM products WHERE product_id=:product_id"); //get products with primary key of desired category
         $sql->bindParam(':product_id', $pk); //bind the var
         $sql->execute(); //do it
-        $products = $sql->fetchALL(PDO::FETCH_ASSOC);
+        $products = $sql->fetch(PDO::FETCH_ASSOC);
 
     }catch(PDOException $e) {
         die("There was a problem getting records from the db ---- " . $e);
@@ -124,7 +124,7 @@ function getProductsAsAdminTable($products){
     }
     return $table;
 }
-function addToCart($db, $product){
+function addToCart($product){
 
     foreach($product as $toCart){
         $pk = $toCart['product_id'];
@@ -139,17 +139,7 @@ function addToCart($db, $product){
         'image'=>$imageName];
 
     $_SESSION['cart'][] = $prod;
-
-    echo "prod: <br />";
-    print_r($prod);
-    echo "<br /> cart : <br />";
-   print_r($_SESSION['cart']);
-    echo "<br />";
-    for($i=0; $i <= 5; $i++){
-        print_r($_SESSION['cart'][$i]);
-        echo "<br />";
-
-    }
+    print_r($_SESSION['cart']);
 }
 function getProductsAsFrontEndTable($products){
     if(count($products) > 0){ //if there is data...    ////make headers
@@ -176,6 +166,38 @@ function getProductsAsFrontEndTable($products){
             $table .= "<td class='front'>" . $product['price'] . "</td>";
             $table .= "<td class='front'>" . $path . $image . "'>" . "</td>";
             $table .= "<td class='front'>" . "<a href='index.php?pk=$pk&id=$id&action=Add'>Add to cart</a>" . "</td>";
+        }
+        $table .= "</table>" . PHP_EOL;
+        $table .= "</div>" . PHP_EOL;
+    }else{ //no data, error message
+        $table = "<div style='float:right; margin-right:1000px;'>" . PHP_EOL;
+        $table .= "NO DATA TO TABLE" . PHP_EOL;
+        $table .= "</div>" . PHP_EOL;
+    }
+    return $table;
+}
+function getProductsAsCartTable(){
+    if(isset($_SESSION['cart'])){ //if there is data...    ////make headers
+
+        $table = "<div style='float:left; position:absolute; margin-left:500px;'>" . PHP_EOL;
+        $table .= "<table class='front'>" . PHP_EOL;
+        $table .= "<tr>" . PHP_EOL;
+        $table .= "<th class='front'>Product ID</th>" . PHP_EOL;
+        $table .= "<th class='front'>Product Name</th>" . PHP_EOL;
+        $table .= "<th class='front'>Price</th>" . PHP_EOL;
+        $table .= "<th class='front'>Image</th>" . PHP_EOL;
+        $table .= "<th class='front'>&nbsp;</th>" . PHP_EOL;
+        $table .= "</tr>";
+
+        foreach($_SESSION['cart'] as $key => $product){ //make a table
+print_r($product);
+            $path = "<img src='uploads/";
+            $image = $product['image'];
+            $table .= "<tr><td class='front'>" . $product['product_id'] . "</td>";
+            $table .= "<td class='front'>" . $product['product'] . "</td>";
+            $table .= "<td class='front'>" . $product['price'] . "</td>";
+            $table .= "<td class='front'>" . $path . $image . "'>" . "</td>";
+            $table .= "<td class='front'>" . "<a href='index.php?key=$key&action=Remove'>Remove Item</a>" . "</td>";
         }
         $table .= "</table>" . PHP_EOL;
         $table .= "</div>" . PHP_EOL;

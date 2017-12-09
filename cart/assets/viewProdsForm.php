@@ -17,5 +17,8 @@ $dropdown = getCategoriesDropDown($db);
         </table>
         <br />
         <input type="submit" name="action" value="Submit" />
+        <br />
+        <input type="submit" name="action" value="View Cart" />
+
     </form>
 </div>

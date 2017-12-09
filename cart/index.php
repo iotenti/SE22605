@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require_once ("assets/dbconn.php");
 require_once ("assets/functions.php");
 include_once ("assets/header.php");
@@ -14,11 +14,16 @@ $imageName = filter_input(INPUT_POST, 'imageName', FILTER_SANITIZE_STRING) ?? NU
 $hiddenImageName = filter_input(INPUT_POST, 'hiddenImageName', FILTER_SANITIZE_STRING) ?? NULL;
 //$prod =  filter_input(INPUT_GET, 'prod', FILTER_SANITIZE_STRING) ?? NULL;
 
-if(!isset($_SESSION['cart'])){
-    $_SESSION['cart'] = [];
+echo $action;
+echo "<br />";
+
+if(!isset($_SESSION['button'])){
+    $_SESSION['button'] = "Submit";
 }
 
-include_once ("assets/viewProds.php");
+//print_r( $_SESSION['cart']);
+
+include_once("assets/viewProdsForm.php");
 
 
 
@@ -30,17 +35,28 @@ switch($action) {
     case 'log out':
         break;
     case 'Submit':
-        print_r($id);
         $products = getProducts($db, $id);
         echo getProductsAsFrontEndTable($products);
         break;
+
     case 'Add':
+        //$_SESSION['button'] = "View Cart";
+        if(!isset($_SESSION['cart'])){
+            $_SESSION['cart'] = [];
+        }
         $product = getAProduct($db, $pk);// get product added to cart
-        addToCart($db, $product);
+        print_r($product);
+
+        $_SESSION['cart'][] = $product;
+        break;
+
+    case 'View Cart':
+        include_once("assets/cart.php");
         break;
 
     case 'Clear Cart':
         $_SESSION['cart'] = [];
+        break;
 }
 
 
