@@ -1,4 +1,4 @@
 <?php
-echo getProductsAsCartTable();
+echo getCartTable();
 ?>
 <h1>hi</h1>

@@ -82,6 +82,18 @@ function getAProduct($db, $pk){
         $sql = $db->prepare("SELECT * FROM products WHERE product_id=:product_id"); //get products with primary key of desired category
         $sql->bindParam(':product_id', $pk); //bind the var
         $sql->execute(); //do it
+        $products = $sql->fetchAll(PDO::FETCH_ASSOC);
+
+    }catch(PDOException $e) {
+        die("There was a problem getting records from the db ---- " . $e);
+    }
+    return $products;
+}
+function getAProductForCart($db, $pk){
+    try{
+        $sql = $db->prepare("SELECT * FROM products WHERE product_id=:product_id"); //get products with primary key of desired category
+        $sql->bindParam(':product_id', $pk); //bind the var
+        $sql->execute(); //do it
         $products = $sql->fetch(PDO::FETCH_ASSOC);
 
     }catch(PDOException $e) {
@@ -176,7 +188,7 @@ function getProductsAsFrontEndTable($products){
     }
     return $table;
 }
-function getProductsAsCartTable(){
+function getCartTable(){
     if(isset($_SESSION['cart'])){ //if there is data...    ////make headers
 
         $table = "<div style='float:left; position:absolute; margin-left:500px;'>" . PHP_EOL;
@@ -188,18 +200,21 @@ function getProductsAsCartTable(){
         $table .= "<th class='front'>Image</th>" . PHP_EOL;
         $table .= "<th class='front'>&nbsp;</th>" . PHP_EOL;
         $table .= "</tr>";
-
+        $price = 0;
         foreach($_SESSION['cart'] as $key => $product){ //make a table
-print_r($product);
-            $path = "<img src='uploads/";
+            $path = "<img src='assets/uploads/";
             $image = $product['image'];
             $table .= "<tr><td class='front'>" . $product['product_id'] . "</td>";
             $table .= "<td class='front'>" . $product['product'] . "</td>";
             $table .= "<td class='front'>" . $product['price'] . "</td>";
             $table .= "<td class='front'>" . $path . $image . "'>" . "</td>";
             $table .= "<td class='front'>" . "<a href='index.php?key=$key&action=Remove'>Remove Item</a>" . "</td>";
+
+            $price += $product['price'];
+
         }
         $table .= "</table>" . PHP_EOL;
+        $table .= "<h4>Total: $$price</h4>";
         $table .= "</div>" . PHP_EOL;
     }else{ //no data, error message
         $table = "<div style='float:right; margin-right:1000px;'>" . PHP_EOL;

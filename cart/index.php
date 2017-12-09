@@ -35,7 +35,9 @@ switch($action) {
     case 'log out':
         break;
     case 'Submit':
+        //get products
         $products = getProducts($db, $id);
+        //put products in a table with cart adding capabilities
         echo getProductsAsFrontEndTable($products);
         break;
 
@@ -44,17 +46,20 @@ switch($action) {
         if(!isset($_SESSION['cart'])){
             $_SESSION['cart'] = [];
         }
-        $product = getAProduct($db, $pk);// get product added to cart
-        print_r($product);
-
+        // get product added to cart
+        $product = getAProductForCart($db, $pk);
+        //add product to cart
         $_SESSION['cart'][] = $product;
+        echo "Added to cart!";
         break;
 
     case 'View Cart':
+        //view cart
         include_once("assets/cart.php");
         break;
 
     case 'Clear Cart':
+        //clear cart
         $_SESSION['cart'] = [];
         break;
 }

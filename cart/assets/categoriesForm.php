@@ -1,5 +1,7 @@
 <?php
-session_start();
+if(!isset($_SESSION)){
+    session_start();
+}
 ?>
 <div style="margin:20px;">
     <form method="post" action="#">
