@@ -12,10 +12,7 @@ $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING) ?? NULL;
 $logInPwd = filter_input(INPUT_POST, 'pwd', FILTER_SANITIZE_STRING) ?? NULL;
 $error = "<div style='margin-top:20px; color:red;'>";
 ?>
-<div style="height:100px; margin:auto;">
-    <a href="signupPage.php">Sign up</a>
-</div>
-<div style="height:300px;">
+<div class="login">
     <?php
     include_once ("loginForm.php");
 

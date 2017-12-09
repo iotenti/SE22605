@@ -13,8 +13,9 @@ function checkUserName($db, $email){
 }
 function addUser($db, $email, $pwd){
     try{
+        //hash the password
         $hash = password_hash($pwd, PASSWORD_DEFAULT);
-
+        //jam a new user into the db with hashed pass
         $sql = $db->prepare("INSERT INTO users VALUES (null, :email, :password, NOW())");
         $sql->bindParam(':email', $email);
         $sql->bindParam(':password', $hash);
@@ -28,6 +29,7 @@ function addUser($db, $email, $pwd){
 }
 function addCategory($db, $prodCategory){
     try{
+        //insert new category
         $sql = $db->prepare("INSERT INTO `categories`(`category_id`, `category`) VALUES (null, :category)");
         $sql->bindParam(':category', $prodCategory);
         $sql->execute();
@@ -139,23 +141,6 @@ function getProductsAsAdminTable($products){
     }
     return $table;
 }
-function addToCart($product){
-
-    foreach($product as $toCart){
-        $pk = $toCart['product_id'];
-        $prodName = $toCart['product'];
-        $prodPrice = $toCart['price'];
-        $imageName = $toCart['image'];
-    }
-    $prod = [
-        'id'=>$pk,
-        'name'=>$prodName,
-        'price'=>$prodPrice,
-        'image'=>$imageName];
-
-    $_SESSION['cart'][] = $prod;
-    print_r($_SESSION['cart']);
-}
 function getProductsAsFrontEndTable($products){
     if(count($products) > 0){ //if there is data...    ////make headers
 
@@ -180,13 +165,13 @@ function getProductsAsFrontEndTable($products){
             $table .= "<td class='front'>" . $product['product'] . "</td>";
             $table .= "<td class='front'>" . $product['price'] . "</td>";
             $table .= "<td class='front'>" . $path . $image . "'>" . "</td>";
-            $table .= "<td class='front'>" . "<a href='index.php?pk=$pk&id=$id&action=Add'>Add to cart</a>" . "</td>";
+            $table .= "<td class='front'>" . "<a href='index.php?pk=$pk&id=$id&action=Add'>Add to cart</a>" . "</td>"; //pass the primary key and category id and change $action
         }
         $table .= "</table>" . PHP_EOL;
         $table .= "</div>" . PHP_EOL;
     }else{ //no data, error message
         $table = "<div style='float:right; margin-right:1000px;'>" . PHP_EOL;
-        $table .= "NO DATA TO TABLE" . PHP_EOL;
+        $table .= "Please select a category" . PHP_EOL;
         $table .= "</div>" . PHP_EOL;
     }
     return $table;
@@ -211,7 +196,7 @@ function getCartTable(){
             $table .= "<td class='front'>" . $product['product'] . "</td>";
             $table .= "<td class='front'>" . $product['price'] . "</td>";
             $table .= "<td class='front'>" . $path . $image . "'>" . "</td>";
-            $table .= "<td class='front'>" . "<a href='index.php?key=$key&action=Remove'>Remove Item</a>" . "</td>";
+            $table .= "<td class='front'>" . "<a href='index.php?key=$key&action=Remove'>Remove Item</a>" . "</td>"; //pass the key and change the $action
 
             $price += $product['price'];
 
@@ -221,7 +206,7 @@ function getCartTable(){
         $table .= "</div>" . PHP_EOL;
     }else{ //no data, error message
         $table = "<div style='float:right; margin-right:1000px;'>" . PHP_EOL;
-        $table .= "NO DATA TO TABLE" . PHP_EOL;
+        $table .= "Cart empty" . PHP_EOL;
         $table .= "</div>" . PHP_EOL;
     }
     return $table;

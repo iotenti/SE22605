@@ -24,9 +24,8 @@ $prodPrice = filter_input(INPUT_POST, 'prodPrice', FILTER_SANITIZE_STRING) ?? NU
 $imageName = filter_input(INPUT_POST, 'imageName', FILTER_SANITIZE_STRING) ?? NULL;
 $error = "<div style='margin-top:20px; color:red;'>";
 ?>
+<h1>Admin tools</h1>
 
-<h1>Welcome to admin pag!!</h1>
-<!--<img src="uploads\1Vl8PZ6g.jpg" width="50%" height="50%">!-->
 <?php
 switch($action){
     case 'log out':

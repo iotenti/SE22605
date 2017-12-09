@@ -19,10 +19,7 @@ $error = "<div style='margin-top:20px; color:red;'>";
 
 
 ?>
-<div style="height:100px">
-    <a href="loginPage.php">Log in</a>
-</div>
-<div style="height:300px">
+<div class="login">
 <?php
 include_once("signupForm.php");
 switch($action){

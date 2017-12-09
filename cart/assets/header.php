@@ -23,14 +23,22 @@
             vertical-align: middle;
             max-width: 300px;
         }
+        .login{
+            padding-top:30px;
+            padding-left:50px;
+            height:350px;
+            margin:auto;
+
+        }
     </style>
 </head>
 <body>
 <header>
     <nav>
         <div style="margin:20px; float:right;">
+            <a href="/cart/index.php">Store</a> || <a href="/cart/assets/loginPage.php">Log In</a> || <a href="/cart/assets/signupPage.php">Sign Up</a> || <a href="/cart/assets/admin.php">Admin</a>
             <form method="post" action="#">
-                <input type="submit" name="action" value="clear cart" /> || <a href="/cart/assets/loginPage.php">Log In</a> || <a href="/cart/assets/signupPage.php">Sign Up</a> || <a href="/cart/assets/admin.php">admin</a> ||
+                <input type="submit" name="action" value="clear cart" />
             </form>
         </div>
     </nav>

@@ -18,6 +18,9 @@ $hiddenImageName = filter_input(INPUT_POST, 'hiddenImageName', FILTER_SANITIZE_S
 if(!isset($_SESSION['button'])){
     $_SESSION['button'] = "Submit";
 }
+?>
+<h1>Store</h1>
+<?php
 include_once("assets/viewProdsForm.php");
 
 switch($action) {
@@ -30,7 +33,7 @@ switch($action) {
     case 'admin':
         include_once ("assets/admin.php");
         break;
-    case 'Submit':
+    case 'Shop':
         //get products
         $products = getProducts($db, $id);
         //put products in a table with cart adding capabilities
