@@ -1,4 +1,7 @@
 <?php
+if(!isset($_SESSION)){
+    session_start();
+}
 $keepImage = filter_input(INPUT_POST, 'hiddenImageName', FILTER_SANITIZE_STRING) ?? "hidden";
 
 if($action === "Add" || $action === "Edit" || $action === "Delete" && isset($_SESSION['category'])){ // to repurpose this form I use this if statement to hide buttons depending on $action

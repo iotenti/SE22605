@@ -1,5 +1,7 @@
 <?php
-session_start();
+if(!isset($_SESSION)){
+    session_start();
+}
 require_once ("dbconn.php");
 require_once ("functions.php");
 include_once ("header.php");

@@ -1,5 +1,7 @@
 <?php
-session_start();
+if(!isset($_SESSION)){
+    session_start();
+}
 require_once ("assets/dbconn.php");
 require_once ("assets/functions.php");
 include_once ("assets/header.php");
@@ -12,27 +14,21 @@ $prodName = filter_input(INPUT_POST, 'prodName', FILTER_SANITIZE_STRING) ?? NULL
 $prodPrice = filter_input(INPUT_POST, 'prodPrice', FILTER_SANITIZE_STRING) ?? NULL;
 $imageName = filter_input(INPUT_POST, 'imageName', FILTER_SANITIZE_STRING) ?? NULL;
 $hiddenImageName = filter_input(INPUT_POST, 'hiddenImageName', FILTER_SANITIZE_STRING) ?? NULL;
-//$prod =  filter_input(INPUT_GET, 'prod', FILTER_SANITIZE_STRING) ?? NULL;
-
-echo $action;
-echo "<br />";
 
 if(!isset($_SESSION['button'])){
     $_SESSION['button'] = "Submit";
 }
-
-//print_r( $_SESSION['cart']);
-
 include_once("assets/viewProdsForm.php");
-
-
 
 switch($action) {
     case 'log in':
+        include_once ("assets/loginPage.php");
         break;
     case 'sign up':
+        include_once ("assets/signupPage.php");
         break;
-    case 'log out':
+    case 'admin':
+        include_once ("assets/admin.php");
         break;
     case 'Submit':
         //get products
@@ -50,7 +46,17 @@ switch($action) {
         $product = getAProductForCart($db, $pk);
         //add product to cart
         $_SESSION['cart'][] = $product;
-        echo "Added to cart!";
+        echo "<h4>Added to cart!</h4>";
+        break;
+
+    case 'Remove':
+        //if key can be got, get it.
+        $key = $_GET['key'];
+        //remove item with that key from the array
+        unset($_SESSION['cart'][$key]);
+        echo "<h4>Item Removed</h4>";
+        //call table again
+        include_once("assets/cart.php");
         break;
 
     case 'View Cart':
@@ -58,7 +64,7 @@ switch($action) {
         include_once("assets/cart.php");
         break;
 
-    case 'Clear Cart':
+    case 'clear cart':
         //clear cart
         $_SESSION['cart'] = [];
         break;

@@ -1,4 +1,7 @@
 <?php
+if(!isset($_SESSION)){
+    session_start();
+}
 echo getCartTable();
 ?>
-<h1>hi</h1>
+

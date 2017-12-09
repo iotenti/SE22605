@@ -1,4 +1,7 @@
 <?php
+if(!isset($_SESSION)){
+    session_start();
+}
 require_once("dbconn.php"); //require this file or fatal error.
 require_once("functions.php");
 $db = dbConn(); // run function that connects to the db and store that connection in a var called db.
@@ -14,11 +17,8 @@ $dropdown = getCategoriesDropDown($db);
                     </select>
                 </td>
             </tr>
+            <tr><td><input type="submit" name="action" value="Submit" /></td></tr>
+            <tr><td><input type="submit" name="action" value="View Cart" /></td></tr>
         </table>
-        <br />
-        <input type="submit" name="action" value="Submit" />
-        <br />
-        <input type="submit" name="action" value="View Cart" />
-
     </form>
 </div>

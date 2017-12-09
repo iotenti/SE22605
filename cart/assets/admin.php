@@ -22,7 +22,6 @@ $pk =  filter_input(INPUT_GET, 'pk', FILTER_SANITIZE_STRING) ?? NULL;
 $prodName = filter_input(INPUT_POST, 'prodName', FILTER_SANITIZE_STRING) ?? NULL;
 $prodPrice = filter_input(INPUT_POST, 'prodPrice', FILTER_SANITIZE_STRING) ?? NULL;
 $imageName = filter_input(INPUT_POST, 'imageName', FILTER_SANITIZE_STRING) ?? NULL;
-//$hiddenImageName = filter_input(INPUT_POST, 'hiddenImageName', FILTER_SANITIZE_STRING) ?? NULL;
 $error = "<div style='margin-top:20px; color:red;'>";
 ?>
 
@@ -34,6 +33,10 @@ switch($action){
         //destroy session when logout case
         session_destroy();
         header('Location: loginPage.php');
+        break;
+
+    case 'Store':
+        include_once ("../index.php");
         break;
 
     case 'Manage Categories':

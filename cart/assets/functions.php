@@ -1,4 +1,7 @@
 <?php
+if(!isset($_SESSION)){
+    session_start();
+}
 function checkUserName($db, $email){
     try{//CHECK TO SEE IF RECORD EXISTS
         $sql = $db->prepare("SELECT * FROM users WHERE `email`='$email'");

@@ -32,6 +32,7 @@
             <form method="post" action="#">
                 <input type="submit" name="action" value="Manage Categories" /> ||  <input type="submit" name="action" value="Manage Products" /> || <input type="submit" name="action" value="log out" />
             </form>
+            <a href="../index.php">View Store</a>
         </div>
     </nav>
 </header>

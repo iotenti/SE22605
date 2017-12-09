@@ -1,4 +1,5 @@
 <?php
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,7 +30,7 @@
     <nav>
         <div style="margin:20px; float:right;">
             <form method="post" action="#">
-                <input type="submit" name="action" value="Clear Cart" /> || <input type="submit" name="action" value="log out" />
+                <input type="submit" name="action" value="clear cart" /> || <a href="/cart/assets/loginPage.php">Log In</a> || <a href="/cart/assets/signupPage.php">Sign Up</a> || <a href="/cart/assets/admin.php">admin</a> ||
             </form>
         </div>
     </nav>
