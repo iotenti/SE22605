@@ -10,6 +10,7 @@ if(!isset($_SESSION['message'])){
 }
 require_once ("dbconn.php");
 require_once ("functions.php");
+include_once ("top.php");
 $db = dbConn();
 $action = filter_input(INPUT_POST, 'action', FILTER_SANITIZE_STRING) ?? null;
 $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING) ?? null;
@@ -18,18 +19,22 @@ $heard_from = filter_input(INPUT_POST, 'heard_from', FILTER_SANITIZE_STRING) ?? 
 $contact_via = filter_input(INPUT_POST, 'contact_via', FILTER_SANITIZE_STRING) ?? null;
 $comments = filter_input(INPUT_POST, 'comments', FILTER_SANITIZE_STRING) ?? null;
 
+$display = "<div style='margin:30px;'>";
+$display .= "<p>";
 
-        echo $action;
+        echo "email address: " . $email;
         echo "<br />";
-        echo $email;
+        echo "Phone Number: ". $phone;
         echo "<br />";
-        echo $phone;
+        echo "Heard about us from: " . $heard_from;
         echo "<br />";
-        echo $heard_from;
+        echo "Contact by way of: " . $contact_via;
         echo "<br />";
-        echo $contact_via;
+        echo "comments: " . $comments;
         echo "<br />";
-        echo $comments;
-        echo "<br />";
-        echo "<br />";
-        echo addAccount($db, $email, $phone, $heard_from, $contact_via, $comments);
+$display .= "</p>";
+$display .= "</div>";
+
+
+
+include_once ("bottom.php");

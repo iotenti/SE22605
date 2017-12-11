@@ -6,39 +6,43 @@
  * Time: 7:40 AM
  */
 ?>
-<form action="#" method="post">
+<div style="margin:30px;">
+    <form action="#" method="post">
 
-    <fieldset>
-        <legend>Account Information</legend>
-        <label>E-Mail:</label>
-        <input type="text" name="email" value="" class="textbox"/>
-        <br />
+        <fieldset>
+            <legend>Account Information</legend>
+            <label>E-Mail:</label>
+            <input type="text" name="email" value="<?php echo $email ?>" class="textbox"/>
+            <br />
 
-        <label>Phone Number:</label>
-        <input type="text" name="phone" value="" class="textbox"/>
-    </fieldset>
+            <label>Phone Number:</label>
+            <input type="text" name="phone" value="<?php echo $phone ?>" class="textbox"/>
+        </fieldset>
 
-    <fieldset>
-        <legend>Settings</legend>
+        <fieldset>
+            <legend>Settings</legend>
 
-        <p>How did you hear about us?</p>
-        <input type="radio" name="heard_from" value="Search Engine" />
-        Search engine<br />
-        <input type="radio" name="heard_from" value="Friend" />
-        Word of mouth<br />
-        <input type=radio name="heard_from" value="Other" />
-        Other<br />
+            <p>How did you hear about us?</p>
+            <input type="radio" name="heard_from" value="Search Engine" />
+            Search engine<br />
+            <input type="radio" name="heard_from" value="Friend" />
+            Word of mouth<br />
+            <input type=radio name="heard_from" value="Other" />
+            Other<br />
 
-        <p>Contact via:</p>
-        <select name="contact_via">
-            <option value="email">Email</option>
-            <option value="text">Text Message</option>
-            <option value="phone">Phone</option>
-        </select>
+            <p>Contact via:</p>
+            <select name="contact_via">
+                <option value="email">Email</option>
+                <option value="text">Text Message</option>
+                <option value="phone">Phone</option>
+            </select>
 
-        <p>Comments: (optional)</p>
-        <textarea name="comments" rows="4" cols="50"></textarea>
-    </fieldset>
+            <p>Comments: (optional)</p>
+            <textarea name="comments" rows="4" cols="50"></textarea>
+        </fieldset>
 
-    <input type="submit" name="action" value='<?php echo $_SESSION['button'] ?>'/>
-</form>
+        <input type="submit" name="action" value='<?php echo $_SESSION['button'] ?>'/>
+        <input type="submit" name="action" value="view" />
+    </form>
+
+</div>

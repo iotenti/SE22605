@@ -8,7 +8,7 @@
 function dbConn(){ //function to connect to database
     $dsn = "mysql:host=localhost;dbname=phpclassfall2017"; //connection string dumped into var dsn
     $username = "PHPClassFall2017"; //username and password put into vars.
-    $password = "se266";
+    $password = "SE266";
     try{
         $db = new PDO($dsn, $username, $password); //PHP Data Object, connection string, password, username used as vars for security? ?
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);//not sure.
