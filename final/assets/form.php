@@ -40,7 +40,5 @@
         <textarea name="comments" rows="4" cols="50"></textarea>
     </fieldset>
 
-    <input type="submit" name="action" value="Submit" />
-
-
+    <input type="submit" name="action" value='<?php echo $_SESSION['button'] ?>'/>
 </form>

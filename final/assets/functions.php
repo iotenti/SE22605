@@ -22,3 +22,12 @@ function addAccount($db, $email, $phone, $heard_from, $contact_via, $comments){
         die("There was a problem connecting to the database");
     }
 }
+function checkEmail($db, $email){
+    try{//CHECK TO SEE IF RECORD EXISTS
+        $sql = $db->prepare("SELECT * FROM account WHERE `email`='$email'");
+        $sql->execute();
+        return $sql->RowCount();
+    }catch(PDOException $e){//if it fails, throw the exception and display error message.
+        die("There was a problem");
+    }
+}
