@@ -11,13 +11,19 @@
     <title>The Guitar Studio</title>
 </head>
 <body>
-<div class="col-lg-12">
-    <div class="header">
-        <nav>
-            <a herf="dailySchedule.php">Today's Schedule</a>
-        </nav>
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <!-- button stuff??? !-->
+            
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="daily.php"></a></li>
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
 <section>
-    <div class="container-fluid">
+    <div class="container body-content">
 
