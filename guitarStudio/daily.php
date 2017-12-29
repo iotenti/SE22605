@@ -2,7 +2,7 @@
 include_once("assets/header.php");
 
 ?>
-
+    <div id="txt"></div>
     <div class="col-lg-12">
         <h1>Daily Schedule</h1>
     </div>

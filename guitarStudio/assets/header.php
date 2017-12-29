@@ -10,7 +10,7 @@
     <link href="css/style.css" rel="stylesheet">
     <title>The Guitar Studio</title>
 </head>
-<body>
+<body onload="startTime()">
 <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
