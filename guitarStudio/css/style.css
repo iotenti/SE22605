@@ -1,4 +1,43 @@
 div.homepage {
     margin-top:80px;
-    min-height:1200px;
 }
+.time {
+    padding:10px;
+    text-align:right;
+    padding-right:4px;
+    border:1px dashed grey;
+    border-radius:9px;
+}
+
+.lesson {
+    padding-top:8px;
+    width:150px;
+    height:40px;
+    background-color:lightgray;
+    text-align:center;
+    font-size:18px;
+    border-radius:9px;
+
+
+}
+.hourLesson {
+    padding-top:29px;
+    width:150px;
+    height:80px;
+    background-color:lightgray;
+    text-align:center;
+    font-size:18px;
+    border-radius:9px;
+}
+th.schedule {
+    text-align:center;
+    font-size:26px;
+    border-bottom:1px solid #ddd;
+}
+td.schedule {
+    border-bottom:1px solid #ddd;
+}
+div.schedule {
+    margin-top:50px;
+}
+
