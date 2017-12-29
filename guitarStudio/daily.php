@@ -1,25 +1,25 @@
 <?php
 include_once("assets/header.php");
 
-$timeZone = new DateTimeZone('America/New_York');
-$today = date('l F d o e');
-$dt = new DateTime($today, $timeZone);
-
 ?>
 
     <div class="col-lg-12">
         <h1>Daily Schedule</h1>
     </div>
     <div class="col-sm-4">
-        <h3><?php echo var_dump($dt)?></h3>
+        <h3><?php echo date('l F d o') ?></h3>
     </div>
     <div class="col-sm-4"></div>
     <div class="col-sm-4">
         <h3><?php echo date('g:i a') ?></h3>
     </div>
+    <div class="col-lg-12">
+        
+    </div>
 
 
 <?php
+
 include_once("assets/footer.php");
 
 

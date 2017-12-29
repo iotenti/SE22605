@@ -23,7 +23,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                    <li> <a class="navbar-brand" href="index.php">Home</a></li>
-                    <li><a href="assets/daily.php">Today</a></li>
+                    <li><a href="daily.php">Today</a></li>
                 </ul>
             </div>
         </div>
