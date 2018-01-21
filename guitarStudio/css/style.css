@@ -40,4 +40,8 @@ td.schedule {
 div.schedule {
     margin-top:50px;
 }
+div.center {
+    margin:auto;
+    width:50%;
+}
 

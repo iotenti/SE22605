@@ -14,7 +14,7 @@ include_once("assets/header.php");
         <h3><?php echo date('g:i a') ?></h3>
     </div>
     <div class="col-lg-8 schedule">
-        <table class="table-striped">
+        <table class="table-striped center">
             <thead>
             <tr>
                 <th class="schedule"></th>
