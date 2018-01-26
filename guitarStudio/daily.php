@@ -95,7 +95,7 @@ include_once("assets/header.php");
             <tr>
                 <td class="time">7 pm</td>
                 <td><div></div></td>
-                <td><div class="hourLesson">Beth</div></td>
+                <td rowspan="2"><div class="hourLesson">Beth</div></td>
             </tr>
             <tr>
                 <td class="time">7:30 pm</td>

@@ -319,3 +319,4 @@ function deleteACategory($db, $id){
     }
 }
 
+
